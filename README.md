@@ -1,0 +1,1 @@
+# projeto-analises-acoes-bolsa-valores
