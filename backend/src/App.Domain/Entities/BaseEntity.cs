@@ -13,6 +13,7 @@ namespace App.Domain.Entities
         public int Id { get; set; } 
 
         [Required]
+        [MaxLength(1)]
         public string Status { 
             get { return _status; }
             set { _status = value == null ? STATUS_ATIVO : value; } 

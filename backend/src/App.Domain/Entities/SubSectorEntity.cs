@@ -9,6 +9,7 @@ namespace App.Domain.Entities
     public class SubSectorEntity : BaseEntity
     {
         [Required]
+        [MaxLength(100)]
         public string Nome { get; set; }
 
         [Required]

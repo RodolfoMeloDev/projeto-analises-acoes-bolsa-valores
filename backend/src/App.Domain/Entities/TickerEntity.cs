@@ -6,6 +6,7 @@ namespace App.Domain.Entities
     public class TickerEntity : BaseEntity
     {
         [Required]
+        [MaxLength(10)]
         public string BaseTicker { get; set; }
         
         [Required]
