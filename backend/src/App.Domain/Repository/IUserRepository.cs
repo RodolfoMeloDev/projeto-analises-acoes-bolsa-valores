@@ -7,7 +7,7 @@ namespace App.Domain.Repository
 {
     public interface IUserRepository : IRepository<UserEntity>
     {
-        Task<UserDto> GetByLogin(string login);
+        Task<UserEntity> GetByLogin(string login);
         
     }
 }

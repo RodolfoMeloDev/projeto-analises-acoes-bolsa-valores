@@ -12,7 +12,7 @@ namespace App.Domain.Models
         }
 
         private bool _ativo;
-        public bool MyProperty
+        public bool Ativo
         {
             get { return _ativo; }
             set { _ativo = value; }
