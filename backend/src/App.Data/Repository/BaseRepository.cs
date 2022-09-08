@@ -27,9 +27,10 @@ namespace App.Data.Repository
 
         private int RetunrNextId(){
             try{
-                var lastId = _dataSet.Max(x => x.Id);
-
-                return lastId + 1;
+                if (_dataSet.Count() == 0)
+                    return 1;
+                else
+                    return _dataSet.Max(n => n.Id) + 1;
 
             } catch (Exception ex){
                 throw ex;

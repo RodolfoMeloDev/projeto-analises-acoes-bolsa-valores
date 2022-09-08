@@ -1,3 +1,4 @@
+using App.Domain.Dtos.Sector;
 using App.Domain.Dtos.User;
 using App.Domain.Entities;
 using AutoMapper;
@@ -12,6 +13,12 @@ namespace App.CrossCutting.Mappings
             CreateMap<UserDtoCreateResult, UserEntity>().ReverseMap();
             CreateMap<UserDtoUpdateResult, UserEntity>().ReverseMap();
             # endregion
+
+            #region Sector
+            CreateMap<SectorDto, SectorEntity>().ReverseMap();
+            CreateMap<SectorDtoCreateResult, SectorEntity>().ReverseMap();
+            CreateMap<SectorDtoUpdateResult, SectorEntity>().ReverseMap();
+            #endregion
         }
     }
 }

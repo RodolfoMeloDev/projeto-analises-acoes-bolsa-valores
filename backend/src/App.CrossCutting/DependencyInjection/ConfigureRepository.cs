@@ -15,6 +15,7 @@ namespace App.CrossCutting.DependencyInjection
             // Banco de dados espera sempre um serviço de scopo
             serviceCollection.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
             serviceCollection.AddScoped<IUserRepository, UserImplementation>();
+            serviceCollection.AddScoped<ISectorRepository, SectorImplementation>();
 
             serviceCollection.AddDbContext<AnaliseDeAcoesContext>(
                     options => options.UseNpgsql(Environment.GetEnvironmentVariable("DB_CONNECTION"))

@@ -17,7 +17,7 @@ namespace App.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetUsers()
+        public async Task<IActionResult> GetAllUsers()
         {
             // aqui está válidando se os parametros da requisição são válidos
             if (!ModelState.IsValid)
@@ -27,7 +27,7 @@ namespace App.Api.Controllers
 
             try
             {
-                return Ok(await _service.GetUsers());
+                return Ok(await _service.GetAllUsers());
             }
             catch (ArgumentException e)
             {
@@ -37,7 +37,7 @@ namespace App.Api.Controllers
 
         [HttpGet]
         [Route("{id}", Name = "GetUserWithId")]
-        public async Task<ActionResult> GetUser(int id)
+        public async Task<IActionResult> GetById(int id)
         {
             if (!ModelState.IsValid)
             {
@@ -46,7 +46,7 @@ namespace App.Api.Controllers
 
             try
             {
-                return Ok(await _service.GetUser(id));                
+                return Ok(await _service.GetUserById(id));                
             }
             catch (ArgumentException e)
             {
@@ -56,7 +56,7 @@ namespace App.Api.Controllers
 
         [HttpGet]
         [Route("Login/{login}")]
-        public async Task<ActionResult> GetByLogin(string login)
+        public async Task<IActionResult> GetByLogin(string login)
         {
             if (!ModelState.IsValid)
             {
@@ -65,7 +65,7 @@ namespace App.Api.Controllers
 
             try
             {
-                var result = await _service.GetLogin(login);
+                var result = await _service.GetUserByLogin(login);
 
                 if (result != null)
                     return Ok(result);
@@ -133,7 +133,7 @@ namespace App.Api.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        public async Task<IActionResult> DeleteCity(int id)
+        public async Task<IActionResult> DeleteUser(int id)
         {
             if (!ModelState.IsValid)
             {

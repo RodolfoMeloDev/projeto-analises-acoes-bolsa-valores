@@ -1,10 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using App.Domain.Dtos.User;
 using App.Domain.Entities;
-using App.Domain.Interfaces.Services;
 using App.Domain.Interfaces.Services.User;
 using App.Domain.Models;
 using App.Domain.Repository;
@@ -24,21 +19,21 @@ namespace App.Service.Services
             _mapper = mapper;
         }
 
-        public async Task<UserDto> GetLogin(string login)
+        public async Task<UserDto> GetUserByLogin(string login)
         {
             var entity = await _repository.GetByLogin(login);
 
             return _mapper.Map<UserDto>(entity);
         }
 
-        public async Task<UserDto> GetUser(int id)
+        public async Task<UserDto> GetUserById(int id)
         {
             var entity = await _repository.SelectAsync(id);
 
             return _mapper.Map<UserDto>(entity);
         }
 
-        public async Task<IEnumerable<UserDto>> GetUsers()
+        public async Task<IEnumerable<UserDto>> GetAllUsers()
         {
             var listEntity = await _repository.SelectAllAsync();
 

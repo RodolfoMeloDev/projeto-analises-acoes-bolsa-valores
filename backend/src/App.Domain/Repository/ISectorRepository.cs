@@ -4,8 +4,8 @@ using App.Domain.Interfaces.Services;
 
 namespace App.Domain.Repository
 {
-    public interface IUserRepository : IRepository<UserEntity>
+    public interface ISectorRepository : IRepository<SectorEntity>
     {
-        Task<UserEntity> GetByLogin(string login);        
+        Task<SectorEntity> GetByName(string name);
     }
 }
