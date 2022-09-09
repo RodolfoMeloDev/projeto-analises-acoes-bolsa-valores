@@ -1,3 +1,4 @@
+using System.Linq;
 using App.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +17,16 @@ namespace App.Data.Context
         public DbSet<TickerEntity> Tickers { get; set; }
         public DbSet<FileImportEntity> ArquivosImportacao { get; set; }
         public DbSet<HistoryFileImportEntity> HistoricosArquivoImportacao { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            var cascadeFKs = modelBuilder.Model.GetEntityTypes()
+                .SelectMany(t => t.GetForeignKeys())
+                .Where(fk => !fk.IsOwnership && fk.DeleteBehavior == DeleteBehavior.Cascade);
+
+            foreach (var fk in cascadeFKs)
+                fk.DeleteBehavior = DeleteBehavior.NoAction;
+        }
 
     }
 }
