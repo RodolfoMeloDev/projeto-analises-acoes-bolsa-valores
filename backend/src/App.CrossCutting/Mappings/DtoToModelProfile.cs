@@ -1,4 +1,5 @@
 using App.Domain.Dtos.Sector;
+using App.Domain.Dtos.SubSector;
 using App.Domain.Dtos.User;
 using App.Domain.Models;
 using AutoMapper;
@@ -18,6 +19,12 @@ namespace App.CrossCutting.Mappings
             CreateMap<SectorModel, SectorDto>().ReverseMap();
             CreateMap<SectorModel, SectorDtoCreate>().ReverseMap();
             CreateMap<SectorModel, SectorDtoUpdate>().ReverseMap();
+            #endregion
+
+            #region SubSector
+            CreateMap<SubSectorModel, SubSectorDto>().ReverseMap();
+            CreateMap<SubSectorModel, SubSectorDtoCreate>().ReverseMap();
+            CreateMap<SubSectorModel, SubSectorDtoUpdate>().ReverseMap();
             #endregion
         }
     }

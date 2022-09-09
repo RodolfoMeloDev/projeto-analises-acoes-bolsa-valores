@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 using App.Domain.Dtos.Sector;
 using App.Domain.Interfaces.Services.Sector;
 using Microsoft.AspNetCore.Mvc;
@@ -45,22 +41,6 @@ namespace App.Api.Controllers
             }
             catch (ArgumentException e)
             {                
-                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
-            }
-        }
-
-        [HttpGet]
-        [Route("Nome/{nome}")]
-        public async Task<IActionResult> GetByName(string nome){
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest();
-
-                return Ok(await _service.GetSectorByName(nome));
-            }
-            catch (ArgumentException e)
-            {
                 return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
             }
         }

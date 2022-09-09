@@ -9,6 +9,6 @@ namespace App.Domain.Dtos.SubSector
         public string Nome { get; set; }
 
         [Required(ErrorMessage = "O campo é obrigatório")]
-        public int SectorId { get; set; }
+        public int SetorId { get; set; }
     }
 }

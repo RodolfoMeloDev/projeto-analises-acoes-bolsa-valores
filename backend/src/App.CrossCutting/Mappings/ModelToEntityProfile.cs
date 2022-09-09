@@ -9,6 +9,7 @@ namespace App.CrossCutting.Mappings
         public ModelToEntityProfile(){
             CreateMap<UserEntity, UserModel>().ReverseMap();
             CreateMap<SectorEntity, SectorModel>().ReverseMap();
+            CreateMap<SubSectorEntity, SubSectorModel>().ReverseMap();
         }
     }
 }
