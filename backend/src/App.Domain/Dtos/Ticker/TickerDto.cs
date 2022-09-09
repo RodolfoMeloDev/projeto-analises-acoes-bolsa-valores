@@ -20,6 +20,6 @@ namespace App.Domain.Dtos.Ticker
         public SegmentDto Segmento { get; set; }
         public bool Ativo { get; set; }
         public DateTime DataCadastro { get; set; }
-        public DateTime DataAlteracao { get; set; }
+        public DateTime? DataAlteracao { get; set; }
     }
 }

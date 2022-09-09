@@ -11,6 +11,6 @@ namespace App.Domain.Dtos.Segment
         public SubSectorDto SubSetor { get; set; }
         public bool Status { get; set; }
         public DateTime DataCadastro { get; set; }
-        public DateTime DataAlteracao { get; set; }
+        public DateTime? DataAlteracao { get; set; }
     }
 }
