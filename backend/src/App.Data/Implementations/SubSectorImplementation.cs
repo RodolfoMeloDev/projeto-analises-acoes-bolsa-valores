@@ -22,7 +22,7 @@ namespace App.Data.Implementations
 
         public async Task<SubSectorEntity> ExistSubSector(string name, int sectorId)
         {
-            return await _dataSet.FirstOrDefaultAsync(obj => obj.Nome.Equals(name) && 
+            return await _dataSet.FirstOrDefaultAsync(obj => obj.Nome.Equals(name) &&
                                                              obj.SetorId.Equals(sectorId));
         }
 
@@ -35,25 +35,31 @@ namespace App.Data.Implementations
 
         public async Task<SubSectorEntity> GetByIdComplete(int id)
         {
-            try{
+            try
+            {
                 var result = await _dataSet.Include(s => s.Setor)
-                    .SingleOrDefaultAsync(obj => obj.Id.Equals(id));
+                    .FirstOrDefaultAsync(obj => obj.Id.Equals(id));
 
                 if (result == null)
                     throw new IntegrityException("ID não encontrado");
 
                 return result;
-            }catch (Exception ex){
+            }
+            catch (Exception ex)
+            {
                 throw ex;
             }
         }
 
         public async Task<IEnumerable<SubSectorEntity>> GetAllComplete()
         {
-            try{
+            try
+            {
                 return await _dataSet.Include(s => s.Setor)
                     .ToListAsync();
-            }catch (Exception ex){
+            }
+            catch (Exception ex)
+            {
                 throw ex;
             }
         }

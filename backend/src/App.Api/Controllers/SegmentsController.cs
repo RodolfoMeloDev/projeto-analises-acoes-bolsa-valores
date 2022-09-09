@@ -3,33 +3,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using App.Domain.Dtos.SubSector;
-using App.Domain.Interfaces.Services.SubSector;
+using App.Domain.Dtos.Segment;
+using App.Domain.Interfaces.Services.Segment;
 using Microsoft.AspNetCore.Mvc;
 
 namespace App.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class SubSectorsController : ControllerBase
+    public class SegmentsController : ControllerBase
     {
-        private readonly ISubSectorService _service;
+        private readonly ISegmentService _service;
 
-        public SubSectorsController(ISubSectorService service)
+        public SegmentsController(ISegmentService service)
         {
             _service = service;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllSubSectors()
+        [HttpPost]
+        public async Task<IActionResult> InsertSegment([FromBody] SegmentDtoCreate segment)
         {
             try
             {
                 if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
+                    return BadRequest();
 
-                return Ok(await _service.GetAll());
+                var result = await _service.Insert(segment);
 
+                if (result == null)
+                    return BadRequest();
+
+                return Created(new Uri(Url.Link("GetSegmentWithId", new { id = result.Id })), result);
             }
             catch (ArgumentException e)
             {
@@ -38,31 +42,13 @@ namespace App.Api.Controllers
         }
 
         [HttpGet]
-        [Route("Complete")]
-        public async Task<IActionResult> GetAllCompleteSubSectors()
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
-
-                return Ok(await _service.GetAllComplete());
-
-            }
-            catch (ArgumentException e)
-            {
-                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
-            }
-        }
-
-        [HttpGet]
-        [Route("{id}", Name = "GetSubSectorWithId")]
+        [Route("{id}", Name = "GetSegmentWithId")]
         public async Task<IActionResult> GetById(int id)
         {
             try
             {
                 if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
+                    return BadRequest();
 
                 return Ok(await _service.GetById(id));
             }
@@ -79,9 +65,25 @@ namespace App.Api.Controllers
             try
             {
                 if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
+                    return BadRequest();
 
                 return Ok(await _service.GetByIdComplete(id));
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetByAllSegments()
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest();
+
+                return Ok(await _service.GetAll());
             }
             catch (ArgumentException e)
             {
@@ -96,7 +98,7 @@ namespace App.Api.Controllers
             try
             {
                 if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
+                    return BadRequest();
 
                 return Ok(await _service.GetBySectorId(setorId));
             }
@@ -106,20 +108,33 @@ namespace App.Api.Controllers
             }
         }
 
-        [HttpPost]
-        public async Task<IActionResult> InsertSubSector([FromBody] SubSectorDtoCreate subSector)
+        [HttpGet]
+        [Route("SubSetor/{subSetorId}")]
+        public async Task<IActionResult> GetBySubSetorId(int subSetorId)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest();
 
-                var result = await _service.Insert(subSector);
+                return Ok(await _service.GetBySubSectorId(subSetorId));
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
 
-                if (result == null)
+        [HttpGet]
+        [Route("Complete")]
+        public async Task<IActionResult> GetByAllSegmentsComplete()
+        {
+            try
+            {
+                if (!ModelState.IsValid)
                     return BadRequest();
 
-                return Created(new Uri(Url.Link("GetSubSectorWithId", new { id = result.Id })), result);
+                return Ok(await _service.GetAllComplete());
             }
             catch (ArgumentException e)
             {
@@ -128,14 +143,14 @@ namespace App.Api.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateSubSector([FromBody] SubSectorDtoUpdate subSector)
+        public async Task<IActionResult> UpdateSegment([FromBody] SegmentDtoUpdate segment)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest();
 
-                var result = await _service.Update(subSector);
+                var result = await _service.Update(segment);
 
                 if (result != null)
                     return Ok(result);
@@ -150,7 +165,7 @@ namespace App.Api.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        public async Task<IActionResult> DeleteSubSector(int id)
+        public async Task<IActionResult> DeleteSegment(int id)
         {
             try
             {

@@ -17,21 +17,26 @@ namespace App.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllSectors(){
-            try{
-                if(!ModelState.IsValid)
+        public async Task<IActionResult> GetAllSectors()
+        {
+            try
+            {
+                if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
                 return Ok(await _service.GetAllSectors());
 
-            }catch (ArgumentException e) {
+            }
+            catch (ArgumentException e)
+            {
                 return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
             }
         }
 
         [HttpGet]
         [Route("{id}", Name = "GetSectorWithId")]
-        public async Task<IActionResult> GetById(int id){
+        public async Task<IActionResult> GetById(int id)
+        {
             try
             {
                 if (!ModelState.IsValid)
@@ -40,13 +45,14 @@ namespace App.Api.Controllers
                 return Ok(await _service.GetSectorById(id));
             }
             catch (ArgumentException e)
-            {                
+            {
                 return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
             }
         }
 
         [HttpPost]
-        public async Task<IActionResult> InsertSector([FromBody] SectorDtoCreate sector){
+        public async Task<IActionResult> InsertSector([FromBody] SectorDtoCreate sector)
+        {
             try
             {
                 if (!ModelState.IsValid)
@@ -66,7 +72,8 @@ namespace App.Api.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateSector([FromBody] SectorDtoUpdate sector){
+        public async Task<IActionResult> UpdateSector([FromBody] SectorDtoUpdate sector)
+        {
             try
             {
                 if (!ModelState.IsValid)
@@ -76,8 +83,8 @@ namespace App.Api.Controllers
 
                 if (result != null)
                     return Ok(result);
-                    
-                return BadRequest();                
+
+                return BadRequest();
             }
             catch (ArgumentException e)
             {
@@ -86,7 +93,9 @@ namespace App.Api.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteSector(int id){
+        [Route("{id}")]
+        public async Task<IActionResult> DeleteSector(int id)
+        {
             try
             {
                 if (!ModelState.IsValid)

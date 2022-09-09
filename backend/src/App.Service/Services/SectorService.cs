@@ -24,7 +24,7 @@ namespace App.Service.Services
             var entity = await _repository.GetByName(name);
 
             return _mapper.Map<SectorDto>(entity);
-        }        
+        }
 
         public async Task<SectorDto> GetSectorById(int id)
         {
@@ -44,13 +44,16 @@ namespace App.Service.Services
         {
             var existSector = await _repository.GetByName(sector.Nome);
 
-            if (existSector == null){
+            if (existSector == null)
+            {
                 var model = _mapper.Map<SectorModel>(sector);
                 var entity = _mapper.Map<SectorEntity>(model);
                 var result = await _repository.InsertAsync(entity);
 
                 return _mapper.Map<SectorDtoCreateResult>(result);
-            }else{
+            }
+            else
+            {
                 throw new IntegrityException("O Setor informado já está cadastrado");
             }
         }
@@ -64,9 +67,9 @@ namespace App.Service.Services
             return _mapper.Map<SectorDtoUpdateResult>(result);
         }
 
-        public Task<bool> DeleteSector(int id)
+        public async Task<bool> DeleteSector(int id)
         {
-            return _repository.DeleteAsync(id);
+            return await _repository.DeleteAsync(id);
         }
     }
 }

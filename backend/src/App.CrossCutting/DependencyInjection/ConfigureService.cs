@@ -1,4 +1,5 @@
 using App.Domain.Interfaces.Services.Sector;
+using App.Domain.Interfaces.Services.Segment;
 using App.Domain.Interfaces.Services.SubSector;
 using App.Domain.Interfaces.Services.User;
 using App.Service.Services;
@@ -13,6 +14,7 @@ namespace App.CrossCutting.DependencyInjection
             serviceCollection.AddTransient<IUserService, UserService>();
             serviceCollection.AddTransient<ISectorService, SectorService>();
             serviceCollection.AddTransient<ISubSectorService, SubSectorService>();
+            serviceCollection.AddTransient<ISegmentService, SegmentService>();
         }
     }
 }

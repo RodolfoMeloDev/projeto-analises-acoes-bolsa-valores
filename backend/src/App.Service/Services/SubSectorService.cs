@@ -17,7 +17,7 @@ namespace App.Service.Services
         {
             _repository = repository;
             _mapper = mapper;
-        }        
+        }
 
         public async Task<IEnumerable<SubSectorDto>> GetAll()
         {
@@ -57,21 +57,21 @@ namespace App.Service.Services
         public async Task<SubSectorDtoCreateResult> Insert(SubSectorDtoCreate subSector)
         {
             var existSubSector = await _repository.ExistSubSector(subSector.Nome, subSector.SetorId);
-            
+
             if (existSubSector != null)
                 throw new IntegrityException("O SubSetor já cadastrado.");
 
             var model = _mapper.Map<SubSectorModel>(subSector);
             var entity = _mapper.Map<SubSectorEntity>(model);
             var result = await _repository.InsertAsync(entity);
-            return _mapper.Map<SubSectorDtoCreateResult>(result);            
+            return _mapper.Map<SubSectorDtoCreateResult>(result);
         }
 
         public async Task<SubSectorDtoUpdateResult> Update(SubSectorDtoUpdate subSector)
         {
             var existSubSector = await _repository.ExistSubSector(subSector.Nome, subSector.SetorId);
-            
-            if (existSubSector != null && 
+
+            if (existSubSector != null &&
                 existSubSector.Nome.Equals(subSector.Nome) &&
                 !existSubSector.Id.Equals(subSector.Id))
             {
@@ -79,14 +79,14 @@ namespace App.Service.Services
             }
 
             var model = _mapper.Map<SubSectorModel>(subSector);
-            var entity = _mapper.Map<SubSectorEntity>(model);              
+            var entity = _mapper.Map<SubSectorEntity>(model);
             var result = await _repository.UpdateAsync(entity);
-            return _mapper.Map<SubSectorDtoUpdateResult>(result);            
+            return _mapper.Map<SubSectorDtoUpdateResult>(result);
         }
 
-        public Task<bool> Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            return _repository.DeleteAsync(id);
-        }       
+            return await _repository.DeleteAsync(id);
+        }
     }
 }

@@ -1,4 +1,5 @@
 using App.Domain.Dtos.Sector;
+using App.Domain.Dtos.Segment;
 using App.Domain.Dtos.SubSector;
 using App.Domain.Dtos.User;
 using App.Domain.Entities;
@@ -8,7 +9,8 @@ namespace App.CrossCutting.Mappings
 {
     public class EntityToDtoProfile : Profile
     {
-        public EntityToDtoProfile(){
+        public EntityToDtoProfile()
+        {
             # region User
             CreateMap<UserDto, UserEntity>().ReverseMap();
             CreateMap<UserDtoCreateResult, UserEntity>().ReverseMap();
@@ -26,6 +28,13 @@ namespace App.CrossCutting.Mappings
             CreateMap<SubSectorDtoComplete, SubSectorEntity>().ReverseMap();
             CreateMap<SubSectorDtoCreateResult, SubSectorEntity>().ReverseMap();
             CreateMap<SubSectorDtoUpdateResult, SubSectorEntity>().ReverseMap();
+            #endregion
+
+            #region Segment
+            CreateMap<SegmentDto, SegmentEntity>().ReverseMap();
+            CreateMap<SegmentDtoComplete, SegmentEntity>().ReverseMap();
+            CreateMap<SegmentDtoCreateResult, SegmentEntity>().ReverseMap();
+            CreateMap<SegmentDtoUpdateResult, SegmentEntity>().ReverseMap();
             #endregion
         }
     }
