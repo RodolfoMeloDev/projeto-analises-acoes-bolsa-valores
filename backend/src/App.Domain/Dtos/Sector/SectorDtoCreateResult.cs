@@ -2,10 +2,8 @@ using System;
 
 namespace App.Domain.Dtos.Sector
 {
-    public class SectorDtoCreateResult
+    public class SectorDtoCreateResult : BaseCreateDtoResult
     {
-        public int Id { get; set; }
-        public string Nome { get; set; }
-        public DateTime DataCadastro { get; set; }
+        public string Nome { get; set; }        
     }
 }

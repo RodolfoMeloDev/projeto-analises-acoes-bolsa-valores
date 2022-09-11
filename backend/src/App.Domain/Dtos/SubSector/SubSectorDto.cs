@@ -3,13 +3,9 @@ using App.Domain.Dtos.Sector;
 
 namespace App.Domain.Dtos.SubSector
 {
-    public class SubSectorDto
+    public class SubSectorDto : BaseDto
     {
-        public int Id { get; set; }
         public string Nome { get; set; }
-        public int SetorId { get; set; }
-        public bool Ativo { get; set; }
-        public DateTime DataCadastro { get; set; }
-        public DateTime? DataAlteracao { get; set; }
+        public int SetorId { get; set; }        
     }
 }

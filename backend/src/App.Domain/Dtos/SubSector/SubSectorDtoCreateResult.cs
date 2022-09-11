@@ -2,11 +2,9 @@ using System;
 
 namespace App.Domain.Dtos.SubSector
 {
-    public class SubSectorDtoCreateResult
+    public class SubSectorDtoCreateResult : BaseCreateDtoResult
     {
-        public int Id { get; set; }
         public string Nome { get; set; }
-        public int SetorId { get; set; }
-        public DateTime DataCadastro { get; set; }
+        public int SetorId { get; set; }        
     }
 }

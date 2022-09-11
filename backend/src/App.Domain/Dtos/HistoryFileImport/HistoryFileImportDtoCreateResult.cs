@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace App.Domain.Dtos.HistoryFileImport
 {
-    public class HistoryFileImportDtoCreateResult
+    public class HistoryFileImportDtoCreateResult : BaseCreateDtoResult
     {
-        public int Id { get; set; }
         public int ArquivoImportacaoId { get; set; }    
         public int TickerId { get; set; }
         public float PrecoUnitario { get; set; }
@@ -20,6 +19,5 @@ namespace App.Domain.Dtos.HistoryFileImport
         public float LiquidezMediaDiaria { get; set; }
         public float ValorMercado { get; set; }
         public float VolumeFinanceiro { get; set; }
-        public DateTime DataCadastro { get; set; }
     }
 }

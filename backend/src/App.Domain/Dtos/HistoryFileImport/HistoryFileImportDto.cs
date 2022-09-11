@@ -7,9 +7,8 @@ using App.Domain.Dtos.Ticker;
 
 namespace App.Domain.Dtos.HistoryFileImport
 {
-    public class HistoryFileImportDto
+    public class HistoryFileImportDto : BaseDto
     {
-        public int Id { get; set; }
         public int ArquivoImportacaoId { get; set; }
         public FileImportDto ArquivoImportacao { get; set; }
         public int TickerId { get; set; }
@@ -24,8 +23,5 @@ namespace App.Domain.Dtos.HistoryFileImport
         public float LiquidezMediaDiaria { get; set; }
         public float ValorMercado { get; set; }
         public float VolumeFinanceiro { get; set; }
-        public bool Ativo { get; set; }
-        public DateTime DataCadastro { get; set; }
-        public DateTime DataAlteracao { get; set; }
     }
 }

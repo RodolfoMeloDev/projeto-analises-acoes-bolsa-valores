@@ -4,9 +4,8 @@ using App.Domain.Enums;
 
 namespace App.Domain.Dtos.Ticker
 {
-    public class TickerDto
+    public class TickerDto : BaseDto
     {
-        public int Id { get; set; }
         public string BaseTicker { get; set; }
         public string Ticker { get; set; }
         public string Nome { get; set; }
@@ -17,9 +16,6 @@ namespace App.Domain.Dtos.Ticker
         public TypeTicker Tipo { get; set; }
         public bool RecuperacaoJudicial { get; set; }
         public int SegmentoId { get; set; }
-        public SegmentDto Segmento { get; set; }
-        public bool Ativo { get; set; }
-        public DateTime DataCadastro { get; set; }
-        public DateTime? DataAlteracao { get; set; }
+        public SegmentDto Segmento { get; set; }        
     }
 }
