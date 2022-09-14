@@ -1,35 +1,38 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
-using App.Domain.Dtos.Segment;
-using App.Domain.Interfaces.Services.Segment;
+using System.Threading.Tasks;
+using App.Domain.Dtos.Ticker;
+using App.Domain.Interfaces.Services.Ticker;
 using Microsoft.AspNetCore.Mvc;
 
 namespace App.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class SegmentsController : ControllerBase
+    public class TickersController : ControllerBase
     {
-        private readonly ISegmentService _service;
+        private readonly ITickerService _service;
 
-        public SegmentsController(ISegmentService service)
+        public TickersController(ITickerService service)
         {
             _service = service;
         }
 
         [HttpPost]
-        public async Task<IActionResult> InsertSegment([FromBody] SegmentDtoCreate segment)
-        {
+        public async Task<IActionResult> InsertTicker([FromBody] TickerDtoCreate ticker){
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest();
 
-                var result = await _service.Insert(segment);
+                var result = await _service.Insert(ticker);
 
                 if (result == null)
                     return BadRequest();
 
-                return Created(new Uri(Url.Link("GetSegmentWithId", new { id = result.Id })), result);
+                return Created(new Uri(Url.Link("GetTickerWithId", new { id = result.Id })), result);
             }
             catch (ArgumentException e)
             {
@@ -38,7 +41,7 @@ namespace App.Api.Controllers
         }
 
         [HttpGet]
-        [Route("{id}", Name = "GetSegmentWithId")]
+        [Route("{id}", Name = "GetTickerWithId")]
         public async Task<IActionResult> GetById(int id)
         {
             try
@@ -72,7 +75,7 @@ namespace App.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetByAllSegments()
+        public async Task<IActionResult> GetAllTicker()
         {
             try
             {
@@ -88,42 +91,8 @@ namespace App.Api.Controllers
         }
 
         [HttpGet]
-        [Route("Setor/{setorId}")]
-        public async Task<IActionResult> GetBySetorId(int setorId)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest();
-
-                return Ok(await _service.GetBySectorId(setorId));
-            }
-            catch (ArgumentException e)
-            {
-                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
-            }
-        }
-
-        [HttpGet]
-        [Route("SubSetor/{subSetorId}")]
-        public async Task<IActionResult> GetBySubSetorId(int subSetorId)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest();
-
-                return Ok(await _service.GetBySubSectorId(subSetorId));
-            }
-            catch (ArgumentException e)
-            {
-                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
-            }
-        }
-
-        [HttpGet]
-        [Route("Complete")]
-        public async Task<IActionResult> GetByAllSegmentsComplete()
+        [Route("Complete/")]
+        public async Task<IActionResult> GetAllTickersComplete()
         {
             try
             {
@@ -138,15 +107,66 @@ namespace App.Api.Controllers
             }
         }
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateSegment([FromBody] SegmentDtoUpdate segment)
+        [HttpGet]
+        [Route("Segment/{segment}")]
+        public async Task<IActionResult> GetTickersBySegment(int segment)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest();
 
-                var result = await _service.Update(segment);
+                return Ok(await _service.GetBySegmentId(segment));
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("SubSector/{subSector}")]
+        public async Task<IActionResult> GetTickersBySubSector(int subSector)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest();
+
+                return Ok(await _service.GetBySubSectorId(subSector));
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("Sector/{sector}")]
+        public async Task<IActionResult> GetTickersBySector(int sector)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest();
+
+                return Ok(await _service.GetBySubSectorId(sector));
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateTicker([FromBody] TickerDtoUpdate ticker)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest();
+
+                var result = await _service.Update(ticker);
 
                 if (result != null)
                     return Ok(result);
@@ -161,7 +181,7 @@ namespace App.Api.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        public async Task<IActionResult> DeleteSegment(int id)
+        public async Task<IActionResult> DeleteTicker(int id)
         {
             try
             {

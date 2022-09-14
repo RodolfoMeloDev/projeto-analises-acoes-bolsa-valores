@@ -18,6 +18,7 @@ namespace App.CrossCutting.DependencyInjection
             serviceCollection.AddScoped<ISectorRepository, SectorImplementation>();
             serviceCollection.AddScoped<ISubSectorRepository, SubSectorImplementation>();
             serviceCollection.AddScoped<ISegmentRepository, SegmentImplementation>();
+            serviceCollection.AddScoped<ITickerRepository, TickerImplementation>();
 
             serviceCollection.AddDbContext<AnaliseDeAcoesContext>(
                     options => options.UseNpgsql(Environment.GetEnvironmentVariable("DB_CONNECTION"))

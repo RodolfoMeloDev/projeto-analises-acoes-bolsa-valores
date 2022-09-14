@@ -1,3 +1,5 @@
+using System.ComponentModel;
+
 namespace App.Domain.Enums
 {
     public enum TypeTicker

@@ -1,6 +1,7 @@
 using App.Domain.Dtos.Sector;
 using App.Domain.Dtos.Segment;
 using App.Domain.Dtos.SubSector;
+using App.Domain.Dtos.Ticker;
 using App.Domain.Dtos.User;
 using App.Domain.Entities;
 using AutoMapper;
@@ -35,6 +36,13 @@ namespace App.CrossCutting.Mappings
             CreateMap<SegmentDtoComplete, SegmentEntity>().ReverseMap();
             CreateMap<SegmentDtoCreateResult, SegmentEntity>().ReverseMap();
             CreateMap<SegmentDtoUpdateResult, SegmentEntity>().ReverseMap();
+            #endregion
+
+            #region Ticker
+            CreateMap<TickerDto, TickerEntity>().ReverseMap();
+            CreateMap<TickerDtoComplete, TickerEntity>().ReverseMap();
+            CreateMap<TickerDtoCreateResult, TickerEntity>().ReverseMap();
+            CreateMap<TickerDtoUpdateResult, TickerEntity>().ReverseMap();
             #endregion
         }
     }

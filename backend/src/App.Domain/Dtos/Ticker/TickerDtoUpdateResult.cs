@@ -12,7 +12,18 @@ namespace App.Domain.Dtos.Ticker
         public string CNPJ { get; set; }
         public string Descricao { get; set; }
         public string Site { get; set; }        
-        public TypeTicker Tipo { get; set; }
+        
+        private TypeTicker _tipo;
+        public TypeTicker Tipo 
+        { 
+            get { return _tipo ; } 
+            set { _tipo = value ; }
+        }
+
+        public string NomeTipo{
+            get { return Enum.GetName(typeof(TypeTicker), _tipo) ; }
+        }
+
         public bool RecuperacaoJudicial { get; set; }
         public int SegmentoId { get; set; }        
     }
