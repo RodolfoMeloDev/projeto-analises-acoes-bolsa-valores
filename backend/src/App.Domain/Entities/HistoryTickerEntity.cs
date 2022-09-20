@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace App.Domain.Entities
 {
-    public class HistoryFileImportEntity : BaseEntity
+    public class HistoryTickerEntity : BaseEntity
     {
         [Required]
         public int ArquivoImportacaoId { get; set; }

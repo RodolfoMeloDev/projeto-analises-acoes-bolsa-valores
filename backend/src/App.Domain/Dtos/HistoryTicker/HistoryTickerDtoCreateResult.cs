@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace App.Domain.Dtos.HistoryFileImport
+namespace App.Domain.Dtos.HistoryTicker
 {
-    public class HistoryFileImportDtoCreateResult : BaseCreateDtoResult
+    public class HistoryTickerDtoCreateResult : BaseCreateDtoResult
     {
         public int ArquivoImportacaoId { get; set; }    
         public int TickerId { get; set; }

@@ -14,6 +14,7 @@ namespace App.CrossCutting.Mappings
             CreateMap<SegmentEntity, SegmentModel>().ReverseMap();
             CreateMap<TickerEntity, TickerModel>().ReverseMap();
             CreateMap<FileImportEntity, FileImportModel>().ReverseMap();
+            CreateMap<HistoryTickerEntity, HistoryTickerModel>().ReverseMap();
         }
     }
 }

@@ -1,15 +1,22 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using App.Domain.Dtos.FileImport;
 using App.Domain.Dtos.Ticker;
 
-namespace App.Domain.Dtos.HistoryFileImport
+namespace App.Domain.Dtos.HistoryTicker
 {
-    public class HistoryFileImportDto : BaseDto
+    public class HistoryTickerDto : BaseDto
     {
-        public int ArquivoImportacaoId { get; set; }
+        public HistoryTickerDto(int historicoTickerId, int tickerId, float precoUnitario, float roic, float margemEbit, float precoValorPatrimonial, float valorMercado) 
+        {
+            this.HistoricoTickerId = historicoTickerId;
+    this.TickerId = tickerId;
+    this.PrecoUnitario = precoUnitario;
+    this.Roic = roic;
+    this.MargemEbit = margemEbit;
+    this.PrecoValorPatrimonial = precoValorPatrimonial;
+    this.ValorMercado = valorMercado;
+   
+        }
+                public int HistoricoTickerId { get; set; }
         public FileImportDto ArquivoImportacao { get; set; }
         public int TickerId { get; set; }
         public TickerDto Ticker { get; set; }

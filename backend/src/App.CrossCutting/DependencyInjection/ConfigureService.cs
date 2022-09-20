@@ -1,4 +1,5 @@
 using App.Domain.Interfaces.Services.FileImport;
+using App.Domain.Interfaces.Services.HistoryTicker;
 using App.Domain.Interfaces.Services.Sector;
 using App.Domain.Interfaces.Services.Segment;
 using App.Domain.Interfaces.Services.SubSector;
@@ -19,6 +20,7 @@ namespace App.CrossCutting.DependencyInjection
             serviceCollection.AddTransient<ISegmentService, SegmentService>();
             serviceCollection.AddTransient<ITickerService, TickerService>();
             serviceCollection.AddTransient<IFileImportService, FileImportService>();
+            serviceCollection.AddTransient<IHistoryTickerService, HistoryTickerService>();
         }
     }
 }

@@ -16,7 +16,7 @@ namespace App.Data.Context
         public DbSet<SegmentEntity> Segmentos { get; set; }
         public DbSet<TickerEntity> Tickers { get; set; }
         public DbSet<FileImportEntity> ArquivosImportacao { get; set; }
-        public DbSet<HistoryFileImportEntity> HistoricosArquivoImportacao { get; set; }
+        public DbSet<HistoryTickerEntity> HistoricoTickers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

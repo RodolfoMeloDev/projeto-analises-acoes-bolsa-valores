@@ -20,6 +20,7 @@ namespace App.CrossCutting.DependencyInjection
             serviceCollection.AddScoped<ISegmentRepository, SegmentImplementation>();
             serviceCollection.AddScoped<ITickerRepository, TickerImplementation>();
             serviceCollection.AddScoped<IFileImportRepository, FileImportImplementation>();
+            serviceCollection.AddScoped<IHistoryTickerRepository, HistoryTickerImplementation>();
 
             serviceCollection.AddDbContext<AnaliseDeAcoesContext>(
                     options => options.UseNpgsql(Environment.GetEnvironmentVariable("DB_CONNECTION"))

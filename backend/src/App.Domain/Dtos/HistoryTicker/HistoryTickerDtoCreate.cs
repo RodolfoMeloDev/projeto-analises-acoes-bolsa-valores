@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace App.Domain.Dtos.HistoryFileImport
+namespace App.Domain.Dtos.HistoryTicker
 {
-    public class HistoryFileImportDtoCreate
+    public class HistoryTickerDtoCreate
     {
         [Required(ErrorMessage = "O campo é obrigatório")]
         public int ArquivoImportacaoId { get; set; }
