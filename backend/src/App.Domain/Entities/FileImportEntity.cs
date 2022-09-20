@@ -5,6 +5,7 @@ namespace App.Domain.Entities
 {
     public class FileImportEntity : BaseEntity
     {
+        private DateTime _dataArquivo;
         [Required]
         public int UsuarioId { get; set; }
 
@@ -19,6 +20,10 @@ namespace App.Domain.Entities
         public string Descricao { get; set; }
 
         [Required]
-        public DateTime DataArquivo { get; set; }
+        public DateTime DataArquivo 
+        { 
+            get {return _dataArquivo;} 
+            set { _dataArquivo = (value == DateTime.MinValue ? DateTime.UtcNow : value); } 
+        }
     }
 }
