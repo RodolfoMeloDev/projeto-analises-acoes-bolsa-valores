@@ -1,3 +1,4 @@
+using App.Domain.Dtos.FileImport;
 using App.Domain.Dtos.Sector;
 using App.Domain.Dtos.Segment;
 using App.Domain.Dtos.SubSector;
@@ -40,6 +41,11 @@ namespace App.CrossCutting.Mappings
             CreateMap<TickerModel, TickerDto>().ReverseMap();
             CreateMap<TickerModel, TickerDtoCreate>().ReverseMap();
             CreateMap<TickerModel, TickerDtoUpdate>().ReverseMap();
+            #endregion
+
+            #region  File Import
+            CreateMap<FileImportModel, FileImportDto>().ReverseMap();
+            CreateMap<FileImportModel, FileImportDtoCreate>().ReverseMap();
             #endregion
         }
     }

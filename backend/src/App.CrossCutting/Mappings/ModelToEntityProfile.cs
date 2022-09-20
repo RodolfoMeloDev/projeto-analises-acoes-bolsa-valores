@@ -13,6 +13,7 @@ namespace App.CrossCutting.Mappings
             CreateMap<SubSectorEntity, SubSectorModel>().ReverseMap();
             CreateMap<SegmentEntity, SegmentModel>().ReverseMap();
             CreateMap<TickerEntity, TickerModel>().ReverseMap();
+            CreateMap<FileImportEntity, FileImportModel>().ReverseMap();
         }
     }
 }

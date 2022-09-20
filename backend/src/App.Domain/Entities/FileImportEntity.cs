@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace App.Domain.Entities
@@ -11,6 +12,13 @@ namespace App.Domain.Entities
 
         [Required]
         [MaxLength(100)]
-        public string NomeArquivo { get; set; }        
+        public string NomeArquivo { get; set; }
+
+        [Required]
+        [MaxLength(100)]
+        public string Descricao { get; set; }
+
+        [Required]
+        public DateTime DataArquivo { get; set; }
     }
 }
