@@ -10,52 +10,52 @@ namespace App.Service.Services
 {
     public class FileImportService : IFileImportService
     {
-        private IFileImportRepository _service;
+        private IFileImportRepository _repository;
         private readonly IMapper _mapper;
 
-        public FileImportService(IFileImportRepository service, IMapper mapper)
+        public FileImportService(IFileImportRepository repository, IMapper mapper)
         {
-            _service = service;
+            _repository = repository;
             _mapper = mapper;
         }
 
         public async Task<IEnumerable<FileImportDto>> GetAllFileImport()
         {
-            var listEntity = await _service.SelectAllAsync();
+            var listEntity = await _repository.SelectAllAsync();
 
             return _mapper.Map<IEnumerable<FileImportDto>>(listEntity);
         }
 
         public async Task<FileImportDto> GetFileImportById(int id)
         {
-            var entity = await _service.SelectAsync(id);
+            var entity = await _repository.SelectAsync(id);
 
             return _mapper.Map<FileImportDto>(entity);
         }
 
         public async Task<FileImportDto> GetFileImportByDate(DateTime date)
         {
-            var entity = await _service.GetByDate(date);
+            var entity = await _repository.GetByDate(date);
 
             return _mapper.Map<FileImportDto>(entity);
         }
 
         public async Task<IEnumerable<FileImportDto>> GetFileImportPerPeriod(DateTime dateInitial, DateTime dateFinal)
         {
-            var listEntity = await _service.GetPerPeriod(dateInitial, dateFinal);
+            var listEntity = await _repository.GetPerPeriod(dateInitial, dateFinal);
 
             return _mapper.Map<IEnumerable<FileImportDto>>(listEntity);
         }
 
         public async Task<FileImportDtoCreateResult> InsertFileImport(FileImportDtoCreate fileImport)
         {
-            var existFileImport = await _service.GetByDate(fileImport.DataArquivo);
+            var existFileImport = await _repository.GetByDate(fileImport.DataArquivo);
 
             if (existFileImport == null)
             {
                 var model = _mapper.Map<FileImportModel>(fileImport);
                 var entity = _mapper.Map<FileImportEntity>(model);
-                var result = await _service.InsertAsync(entity);
+                var result = await _repository.InsertAsync(entity);
                 
                 return _mapper.Map<FileImportDtoCreateResult>(result);
             }
@@ -67,7 +67,7 @@ namespace App.Service.Services
 
         public async Task<bool> DeleteFileImport(int id)
         {
-            return await _service.DeleteAsync(id);
+            return await _repository.DeleteAsync(id);
         }        
     }
 }

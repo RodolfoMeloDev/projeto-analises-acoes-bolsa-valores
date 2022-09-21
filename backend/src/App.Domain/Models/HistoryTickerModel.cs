@@ -55,35 +55,35 @@ namespace App.Domain.Models
         public float? DividendYield
         {
             get { return _dividendYield; }
-            set { _dividendYield = value; }
+            set { _dividendYield = (value == 0 ? null : value) ; }
         }
 
          private float? _precoValorPatrimonial;
          public float? PrecoValorPatrimonial
          {
             get { return _precoValorPatrimonial; }
-            set { _precoValorPatrimonial = value; }
+            set { _precoValorPatrimonial = (value == 0 ? null : value) ; }
          }
 
-         private float _liquidezMediaDiaria;
-         public float LiquidezMediaDiaria
+         private float? _liquidezMediaDiaria;
+         public float? LiquidezMediaDiaria
          {
             get { return _liquidezMediaDiaria; }
-            set { _liquidezMediaDiaria = value; }
+            set { _liquidezMediaDiaria = (value == 0 ? null : value) ; }
          }
 
-         private float _valorMercado;
-         public float ValorMercado
+         private float? _valorMercado;
+         public float? ValorMercado
          {
             get { return _valorMercado; }
-            set { _valorMercado = value; }
+            set { _valorMercado = (value == 0 ? null : value) ; }
          }
 
-        private float _volumeFinanceiro;
-        public float VolumeFinanceiro
+        private float? _volumeFinanceiro;
+        public float? VolumeFinanceiro
         {
             get { return _volumeFinanceiro; }
-            set { _volumeFinanceiro = value; }
+            set { _volumeFinanceiro = (value == 0 ? null : value) ; }
         }                
     }
 }

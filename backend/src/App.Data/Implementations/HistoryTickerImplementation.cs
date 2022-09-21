@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using App.Data.Context;
 using App.Data.Repository;
@@ -21,12 +22,13 @@ namespace App.Data.Implementations
         {
             try
             {
-                var result = await _dataSet.FirstOrDefaultAsync(obj => obj.ArquivoImportacaoId.Equals(fileImportId));
+                var listResult = await _dataSet.Where(obj => obj.ArquivoImportacaoId.Equals(fileImportId))
+                    .ToListAsync();
 
-                if (result == null)
+                if (listResult == null)
                     return false;
 
-                _dataSet.Remove(result);
+                _dataSet.RemoveRange(listResult);
                 await _context.SaveChangesAsync();
                 return true;
             }

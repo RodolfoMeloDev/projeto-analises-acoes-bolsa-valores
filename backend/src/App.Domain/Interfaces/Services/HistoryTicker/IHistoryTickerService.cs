@@ -7,7 +7,7 @@ namespace App.Domain.Interfaces.Services.HistoryTicker
     public interface IHistoryTickerService
     {
         Task<IEnumerable<HistoryTickerDto>> GetAllHistoryTicker();
-        Task<HistoryTickerDtoCreate> InsertHistoryTicker(HistoryTickerDtoCreate historyFileImport);
+        Task<HistoryTickerDtoCreateResult> InsertHistoryTicker(HistoryTickerDtoCreate historyTicker);
         Task<bool> DeleteHistoryTickertById(int id);
         Task<bool> DeleteHistoryTickerByFileImport(int fileImportId);
     }
