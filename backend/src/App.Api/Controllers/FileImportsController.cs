@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 using App.Domain.Dtos.FileImport;
 using App.Domain.Interfaces.Services.FileImport;
 using Microsoft.AspNetCore.Mvc;
@@ -22,7 +18,8 @@ namespace App.Api.Controllers
 
         [HttpGet]
         [Route("{id}", Name = "GetFileImportWithId")]
-        public async Task<IActionResult> GetById(int id){
+        public async Task<IActionResult> GetById(int id)
+        {
             try
             {
                 if (!ModelState.IsValid)
@@ -32,13 +29,14 @@ namespace App.Api.Controllers
             }
             catch (ArgumentException e)
             {
-                return StatusCode((int) HttpStatusCode.InternalServerError, e.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
                 throw;
             }
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllFileImport(){
+        public async Task<IActionResult> GetAllFileImport()
+        {
             try
             {
                 if (!ModelState.IsValid)
@@ -48,24 +46,45 @@ namespace App.Api.Controllers
             }
             catch (ArgumentException e)
             {
-                return StatusCode((int) HttpStatusCode.InternalServerError, e.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
                 throw;
             }
         }
 
         [HttpPost]
-        public async Task<IActionResult> InsertFileImport([FromBody] FileImportDtoCreate fileImport){
+        public async Task<IActionResult> InsertFileImport([FromForm] FileImportDtoCreate fileImport)
+        {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest();
 
-                var result = await _service.InsertFileImport(fileImport);
+                if (fileImport.File.Length > 0)
+                {
+                    string pathFile;
+                    CreateDirectory("\\Users\\", out pathFile);
+                    CreateDirectory("\\Users\\1", out pathFile);
 
-                if (result == null)
+                    using (FileStream fileStream = System.IO.File.Create(pathFile + "\\" + fileImport.File.FileName))
+                    {
+                        fileImport.File.CopyTo(fileStream);
+                        fileStream.Flush();
+                    }
+
+                    if (fileImport.DataArquivo.Kind != DateTimeKind.Utc)
+                    {
+                        fileImport.DataArquivo = TimeZoneInfo.ConvertTimeToUtc(fileImport.DataArquivo);
+                    }
+
+                    var result = await _service.InsertFileImport(fileImport);
+
+                    if (result == null)
+                        return BadRequest();
+
+                    return Created(new Uri(Url.Link("GetFileImportWithId", new { id = result.Id })), result);
+                }
+                else
                     return BadRequest();
-
-                return Created(new Uri(Url.Link("GetFileImportWithId", new { id = result.Id })), result);
             }
             catch (ArgumentException e)
             {
@@ -75,7 +94,8 @@ namespace App.Api.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        public async Task<IActionResult> DeleteFileImport(int id){
+        public async Task<IActionResult> DeleteFileImport(int id)
+        {
             try
             {
                 if (!ModelState.IsValid)
@@ -85,8 +105,21 @@ namespace App.Api.Controllers
             }
             catch (ArgumentException e)
             {
-                return StatusCode((int) HttpStatusCode.InternalServerError, e.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
             }
+        }
+
+        private void CreateDirectory(string directory, out string pathFile)
+        {
+            string strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string strWorkPath = System.IO.Path.GetDirectoryName(strExeFilePath);
+
+            if (!Directory.Exists(strWorkPath + directory))
+            {
+                Directory.CreateDirectory(strWorkPath + directory);
+            }
+
+            pathFile = strWorkPath + directory;
         }
     }
 }
