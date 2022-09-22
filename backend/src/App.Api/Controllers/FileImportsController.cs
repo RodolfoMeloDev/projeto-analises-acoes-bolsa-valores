@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 using App.Domain.Dtos.FileImport;
 using App.Domain.Interfaces.Services.FileImport;
 using Microsoft.AspNetCore.Mvc;
@@ -22,7 +18,8 @@ namespace App.Api.Controllers
 
         [HttpGet]
         [Route("{id}", Name = "GetFileImportWithId")]
-        public async Task<IActionResult> GetById(int id){
+        public async Task<IActionResult> GetById(int id)
+        {
             try
             {
                 if (!ModelState.IsValid)
@@ -32,13 +29,14 @@ namespace App.Api.Controllers
             }
             catch (ArgumentException e)
             {
-                return StatusCode((int) HttpStatusCode.InternalServerError, e.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
                 throw;
             }
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllFileImport(){
+        public async Task<IActionResult> GetAllFileImport()
+        {
             try
             {
                 if (!ModelState.IsValid)
@@ -48,24 +46,30 @@ namespace App.Api.Controllers
             }
             catch (ArgumentException e)
             {
-                return StatusCode((int) HttpStatusCode.InternalServerError, e.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
                 throw;
             }
         }
 
         [HttpPost]
-        public async Task<IActionResult> InsertFileImport([FromBody] FileImportDtoCreate fileImport){
+        public async Task<IActionResult> InsertFileImport([FromForm] FileImportDtoCreate fileImport)
+        {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest();
 
-                var result = await _service.InsertFileImport(fileImport);
+                if (fileImport.File.Length > 0)
+                {
+                    var result = await _service.InsertFileImport(fileImport);
 
-                if (result == null)
-                    return BadRequest();
+                    if (result == null)
+                        return BadRequest();
 
-                return Created(new Uri(Url.Link("GetFileImportWithId", new { id = result.Id })), result);
+                    return Created(new Uri(Url.Link("GetFileImportWithId", new { id = result.Id })), result);
+                }
+                else
+                    return StatusCode((int)HttpStatusCode.InternalServerError, "Houve um problema ao carregar o arquivo.");
             }
             catch (ArgumentException e)
             {
@@ -75,7 +79,8 @@ namespace App.Api.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        public async Task<IActionResult> DeleteFileImport(int id){
+        public async Task<IActionResult> DeleteFileImport(int id)
+        {
             try
             {
                 if (!ModelState.IsValid)
@@ -85,7 +90,7 @@ namespace App.Api.Controllers
             }
             catch (ArgumentException e)
             {
-                return StatusCode((int) HttpStatusCode.InternalServerError, e.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
             }
         }
     }

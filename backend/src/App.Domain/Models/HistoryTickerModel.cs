@@ -15,28 +15,28 @@ namespace App.Domain.Models
             get { return _tickerId; }
             set { _tickerId = value; }
         }
-        
+
         private float _precoUnitario;
         public float PrecoUnitario
         {
             get { return _precoUnitario; }
             set { _precoUnitario = value; }
         }
-        
+
         private float _precoLucro;
         public float PrecoLucro
         {
             get { return _precoLucro; }
             set { _precoLucro = value; }
         }
-        
+
         private float _roic;
         public float Roic
         {
             get { return _roic; }
             set { _roic = value; }
         }
-        
+
         private float _evEbit;
         public float EvEbit
         {
@@ -55,35 +55,28 @@ namespace App.Domain.Models
         public float? DividendYield
         {
             get { return _dividendYield; }
-            set { _dividendYield = (value == 0 ? null : value) ; }
+            set { _dividendYield = (value == 0 ? null : value); }
         }
 
-         private float? _precoValorPatrimonial;
-         public float? PrecoValorPatrimonial
-         {
-            get { return _precoValorPatrimonial; }
-            set { _precoValorPatrimonial = (value == 0 ? null : value) ; }
-         }
-
-         private float? _liquidezMediaDiaria;
-         public float? LiquidezMediaDiaria
-         {
-            get { return _liquidezMediaDiaria; }
-            set { _liquidezMediaDiaria = (value == 0 ? null : value) ; }
-         }
-
-         private float? _valorMercado;
-         public float? ValorMercado
-         {
-            get { return _valorMercado; }
-            set { _valorMercado = (value == 0 ? null : value) ; }
-         }
-
-        private float? _volumeFinanceiro;
-        public float? VolumeFinanceiro
+        private float? _precoValorPatrimonial;
+        public float? PrecoValorPatrimonial
         {
-            get { return _volumeFinanceiro; }
-            set { _volumeFinanceiro = (value == 0 ? null : value) ; }
-        }                
+            get { return _precoValorPatrimonial; }
+            set { _precoValorPatrimonial = (value == 0 ? null : value); }
+        }
+
+        private float? _liquidezMediaDiaria;
+        public float? LiquidezMediaDiaria
+        {
+            get { return _liquidezMediaDiaria; }
+            set { _liquidezMediaDiaria = (value == 0 ? null : value); }
+        }
+
+        private float? _valorMercado;
+        public float? ValorMercado
+        {
+            get { return _valorMercado; }
+            set { _valorMercado = (value == 0 ? null : value); }
+        }
     }
 }
