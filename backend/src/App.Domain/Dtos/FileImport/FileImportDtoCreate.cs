@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using App.Domain.Enums;
 using Microsoft.AspNetCore.Http;
 
 namespace App.Domain.Dtos.FileImport
@@ -15,6 +16,9 @@ namespace App.Domain.Dtos.FileImport
 
         [Required(ErrorMessage = "O campo é obrigatório")]
         public DateTime DataArquivo { get; set; }
+
+        [Required(ErrorMessage = "O campo é obrigatório")]
+        public TypeFileImport TipoImportacao { get; set; }
 
         public IFormFile File { get; set; }
     }

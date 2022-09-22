@@ -16,6 +16,5 @@ namespace App.Domain.Dtos.HistoryTicker
         public float? PrecoValorPatrimonial { get; set; }
         public float? LiquidezMediaDiaria { get; set; }
         public float? ValorMercado { get; set; }
-        public float? VolumeFinanceiro { get; set; }
     }
 }

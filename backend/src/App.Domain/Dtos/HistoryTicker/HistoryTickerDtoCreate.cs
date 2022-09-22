@@ -9,7 +9,7 @@ namespace App.Domain.Dtos.HistoryTicker
 
         [Required(ErrorMessage = "O campo é obrigatório")]
         public int TickerId { get; set; }
-        
+
         [Required(ErrorMessage = "O campo é obrigatório")]
         public float PrecoUnitario { get; set; }
 
@@ -24,11 +24,10 @@ namespace App.Domain.Dtos.HistoryTicker
 
         [Required(ErrorMessage = "O campo é obrigatório")]
         public float MargemEbit { get; set; }
-        
-        public float DividendYield { get; set; }
-        public float PrecoValorPatrimonial { get; set; }
-        public float LiquidezMediaDiaria { get; set; }
-        public float ValorMercado { get; set; }
-        public float VolumeFinanceiro { get; set; }        
+
+        public float? DividendYield { get; set; }
+        public float? PrecoValorPatrimonial { get; set; }
+        public float? LiquidezMediaDiaria { get; set; }
+        public float? ValorMercado { get; set; }
     }
 }
