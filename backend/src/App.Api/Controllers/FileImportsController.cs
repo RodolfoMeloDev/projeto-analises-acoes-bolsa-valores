@@ -61,21 +61,6 @@ namespace App.Api.Controllers
 
                 if (fileImport.File.Length > 0)
                 {
-                    string pathFile;
-                    CreateDirectory("\\Users\\", out pathFile);
-                    CreateDirectory("\\Users\\1", out pathFile);
-
-                    using (FileStream fileStream = System.IO.File.Create(pathFile + "\\" + fileImport.File.FileName))
-                    {
-                        fileImport.File.CopyTo(fileStream);
-                        fileStream.Flush();
-                    }
-
-                    if (fileImport.DataArquivo.Kind != DateTimeKind.Utc)
-                    {
-                        fileImport.DataArquivo = TimeZoneInfo.ConvertTimeToUtc(fileImport.DataArquivo);
-                    }
-
                     var result = await _service.InsertFileImport(fileImport);
 
                     if (result == null)
@@ -84,7 +69,7 @@ namespace App.Api.Controllers
                     return Created(new Uri(Url.Link("GetFileImportWithId", new { id = result.Id })), result);
                 }
                 else
-                    return BadRequest();
+                    return StatusCode((int)HttpStatusCode.InternalServerError, "Houve um problema ao carregar o arquivo.");
             }
             catch (ArgumentException e)
             {
@@ -107,19 +92,6 @@ namespace App.Api.Controllers
             {
                 return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
             }
-        }
-
-        private void CreateDirectory(string directory, out string pathFile)
-        {
-            string strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
-            string strWorkPath = System.IO.Path.GetDirectoryName(strExeFilePath);
-
-            if (!Directory.Exists(strWorkPath + directory))
-            {
-                Directory.CreateDirectory(strWorkPath + directory);
-            }
-
-            pathFile = strWorkPath + directory;
         }
     }
 }
