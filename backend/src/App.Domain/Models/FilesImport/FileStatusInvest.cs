@@ -28,8 +28,8 @@ namespace App.Domain.Models.FilesImport
         [Name("liquidez media diaria")]
         public double? LiquidezMediaDiaria { get; set; }
 
-        [Name("vpa")]
-        public double? ValorPatrimonialAtivo { get; set; }
+        [Name("p/vp")]
+        public double? PrecoValorPatrimonial { get; set; }
 
         [Name("valor de mercado")]
         public double? ValorMercado { get; set; }

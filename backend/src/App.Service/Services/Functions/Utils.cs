@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Http;
+
 namespace App.Service.Services.Functions
 {
     public static class Utils
@@ -10,6 +12,28 @@ namespace App.Service.Services.Functions
                 Directory.CreateDirectory(strWorkPath + '\\' + directory);
 
             return strWorkPath + '\\' + directory;
+        }
+
+        public static string CopyFileToServer(IFormFile file, string directoryFile)
+        {
+            try
+            {
+                string pathFile;
+                Utils.CreateDirectory("Users");
+                pathFile = Utils.CreateDirectory("Users\\" + directoryFile) + "\\" + file.FileName;
+
+                using (FileStream fileStream = System.IO.File.Create(pathFile))
+                {
+                    file.CopyTo(fileStream);
+                    fileStream.Flush();
+                }
+
+                return pathFile;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 using App.Domain.Dtos.FileImport;
 using App.Domain.Entities;
+using App.Domain.Enums;
 using App.Domain.Interfaces.Services.FileImport;
 using App.Domain.Models;
 using App.Domain.Repository;
@@ -66,8 +67,16 @@ namespace App.Service.Services
 
                 if (result != null)
                 {
-                    var fileStatusInvest = new FileUploadStatusInvestService(fileImport.File, fileImport.UsuarioId.ToString());
-                    var linesFiles = fileStatusInvest.GetLinesFile();
+                    if (fileImport.TipoImportacao == TypeFileImport.STATUS_INVEST)
+                    {
+                        var fileUpload = new FileUploadStatusInvestService(fileImport.File, fileImport.UsuarioId.ToString());
+                        var linesFiles = fileUpload.GetLinesFile();
+                    }
+                    else
+                    {
+                        var fileUpload = new FileUploadFundamentusService(fileImport.File, fileImport.UsuarioId.ToString());
+                        var linesFiles = fileUpload.GetLinesFile();
+                    }
 
                     var ticker = new TickerEntity();
 

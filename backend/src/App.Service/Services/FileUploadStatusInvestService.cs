@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Text;
 using App.Domain.Interfaces.Services.FileUpload;
 using App.Domain.Models.FilesImport;
 using App.Service.Services.Exceptions;
@@ -19,26 +20,7 @@ namespace App.Service.Services
         {
             _file = file;
             _directoryUser = directoryUser;
-            CopyFileToServer();
-        }
-
-        private void CopyFileToServer()
-        {
-            try
-            {
-                Utils.CreateDirectory("Users");
-                _pathFile = Utils.CreateDirectory("Users\\" + _directoryUser) + "\\" + _file.FileName;
-
-                using (FileStream fileStream = System.IO.File.Create(_pathFile))
-                {
-                    _file.CopyTo(fileStream);
-                    fileStream.Flush();
-                }
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            _pathFile = Utils.CopyFileToServer(_file, _directoryUser);
         }
 
         public IEnumerable<FileStatusInvest> GetLinesFile()
@@ -54,7 +36,7 @@ namespace App.Service.Services
                         PrepareHeaderForMatch = args => args.Header.ToLower(),
                     };
 
-                    using (var reader = new StreamReader(_pathFile))
+                    using (var reader = new StreamReader(_pathFile, Encoding.Latin1))
                     using (var csv = new CsvReader(reader, config))
                     {
                         return csv.GetRecords<FileStatusInvest>().ToList();
