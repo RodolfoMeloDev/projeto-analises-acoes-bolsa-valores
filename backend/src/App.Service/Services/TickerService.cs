@@ -47,6 +47,13 @@ namespace App.Service.Services
             return _mapper.Map<TickerDto>(entity);
         }
 
+        public async Task<TickerDtoComplete> GetByTicker(string ticker)
+        {
+            var entity = await _repository.GetByTickerComplete(ticker);
+
+            return _mapper.Map<TickerDtoComplete>(entity);
+        }
+
         public async Task<TickerDtoComplete> GetByIdComplete(int id)
         {
             var entity = await _repository.GetByIdComplete(id);
@@ -94,7 +101,7 @@ namespace App.Service.Services
             var existTicker = await _repository.ExistTicker(ticker.Ticker);
 
             if (existTicker != null &&
-                ticker.Nome.Equals(existTicker.Nome) &&
+                ticker.Empresa.Equals(existTicker.Empresa) &&
                 !ticker.Id.Equals(existTicker.Id))
             {
                 throw new IntegrityException("O Ticker já está cadastrado.");

@@ -45,29 +45,6 @@ namespace App.Service.Services
                     {
                         return csv.GetRecords<FileFundamentus>().ToList();
                     }
-
-                    // string tempName = Path.GetTempFileName();
-
-                    // using (StreamReader sr = new StreamReader(_pathFile, Encoding.Latin1, false))
-                    // {
-                    //     using (StreamWriter sw = new StreamWriter(tempName, false, Encoding.UTF8))
-                    //     {
-                    //         int charsRead;
-                    //         char[] buffer = new char[128 * 1024];
-                    //         while ((charsRead = sr.ReadBlock(buffer, 0, buffer.Length)) > 0)
-                    //         {
-                    //             sw.Write(buffer, 0, charsRead);
-                    //         }
-                    //     }
-                    // }
-                    // File.Delete(_pathFile);
-                    // File.Move(tempName, _pathFile);
-
-                    // using (var reader = new StreamReader(_pathFile))
-                    // using (var csv = new CsvReader(reader, config))
-                    // {
-                    //     return csv.GetRecords<FileFundamentus>().ToList();
-                    // }
                 }
                 else
                     throw new FileUploadFundamentusException("Não foi possível definir um local para descarregar o arquivo no servidor.");

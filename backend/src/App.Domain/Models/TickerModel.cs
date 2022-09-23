@@ -10,21 +10,14 @@ namespace App.Domain.Models
             get { return _baseTicker; }
             set { _baseTicker = value; }
         }
-        
+
         private string _ticker;
         public string Ticker
         {
-            get { return _ticker  ; }
-            set { _ticker  = value; }
+            get { return _ticker; }
+            set { _ticker = value; }
         }
-        
-        private string _nome;
-        public string Nome
-        {
-            get { return _nome; }
-            set { _nome = value; }
-        }
-        
+
         private string _empresa;
         public string Empresa
         {
@@ -38,28 +31,14 @@ namespace App.Domain.Models
             get { return _cnpj; }
             set { _cnpj = value; }
         }
-        
-        private string _descricao;
-        public string Descricao
-        {
-            get { return _descricao; }
-            set { _descricao = value; }
-        }
-        
-        private string _site;
-        public string Site
-        {
-            get { return _site; }
-            set { _site = value; }
-        }
-        
+
         private TypeTicker _tipo;
         public TypeTicker Tipo
         {
             get { return _tipo; }
             set { _tipo = value; }
         }
-        
+
         private bool _recuperacaoJudicial;
         public bool RecuperacaoJudicial
         {
@@ -67,11 +46,11 @@ namespace App.Domain.Models
             set { _recuperacaoJudicial = value; }
         }
 
-        private int _segmentoId;
-        public int SegmentoId
+        private int? _segmentoId;
+        public int? SegmentoId
         {
             get { return _segmentoId; }
             set { _segmentoId = value; }
-        }                
+        }
     }
 }

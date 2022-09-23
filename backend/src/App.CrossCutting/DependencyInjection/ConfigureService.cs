@@ -1,3 +1,4 @@
+using App.Domain.Interfaces.Services.DataTicker;
 using App.Domain.Interfaces.Services.FileImport;
 using App.Domain.Interfaces.Services.HistoryTicker;
 using App.Domain.Interfaces.Services.Sector;
@@ -5,6 +6,7 @@ using App.Domain.Interfaces.Services.Segment;
 using App.Domain.Interfaces.Services.SubSector;
 using App.Domain.Interfaces.Services.Ticker;
 using App.Domain.Interfaces.Services.User;
+using App.Service;
 using App.Service.Services;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -21,6 +23,7 @@ namespace App.CrossCutting.DependencyInjection
             serviceCollection.AddTransient<ITickerService, TickerService>();
             serviceCollection.AddTransient<IFileImportService, FileImportService>();
             serviceCollection.AddTransient<IHistoryTickerService, HistoryTickerService>();
+            serviceCollection.AddTransient<IDataTickerService, DataTickerService>();
         }
     }
 }
