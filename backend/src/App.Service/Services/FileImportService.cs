@@ -1,9 +1,11 @@
 using App.Domain.Dtos.FileImport;
+using App.Domain.Dtos.HistoryTicker;
 using App.Domain.Dtos.Ticker;
 using App.Domain.Entities;
 using App.Domain.Enums;
 using App.Domain.Interfaces.Services.DataTicker;
 using App.Domain.Interfaces.Services.FileImport;
+using App.Domain.Interfaces.Services.HistoryTicker;
 using App.Domain.Interfaces.Services.Segment;
 using App.Domain.Interfaces.Services.Ticker;
 using App.Domain.Models;
@@ -21,15 +23,17 @@ namespace App.Service.Services
         private ITickerService _tickerService;
         private IDataTickerService _dataTickerService;
         private ISegmentService _segmentService;
+        private IHistoryTickerService _historyTickerService;
         private readonly IMapper _mapper;
 
         public FileImportService(IFileImportRepository repository, ITickerService tickerService, IDataTickerService dataTickerService,
-            ISegmentService segmentService, IMapper mapper)
+            ISegmentService segmentService, IHistoryTickerService historyTickerService, IMapper mapper)
         {
             _repository = repository;
             _tickerService = tickerService;
             _dataTickerService = dataTickerService;
             _segmentService = segmentService;
+            _historyTickerService = historyTickerService;
             _mapper = mapper;
         }
 
@@ -83,14 +87,14 @@ namespace App.Service.Services
                         var fileUpload = new FileUploadStatusInvestService(fileImport.File, fileImport.UsuarioId.ToString());
                         var linesFiles = fileUpload.GetLinesFile();
 
-                        await InsertHistoryTicker(linesFiles);
+                        await InsertHistoryTicker(linesFiles, result.Id);
                     }
                     else
                     {
                         var fileUpload = new FileUploadFundamentusService(fileImport.File, fileImport.UsuarioId.ToString());
                         var linesFiles = fileUpload.GetLinesFile();
 
-                        await InsertHistoryTicker(linesFiles);
+                        await InsertHistoryTicker(linesFiles, result.Id);
                     }
                 }
 
@@ -105,7 +109,7 @@ namespace App.Service.Services
             return await _repository.DeleteAsync(id);
         }
 
-        private async Task<bool> InsertHistoryTicker(IEnumerable<FileStatusInvest> lines)
+        private async Task<bool> InsertHistoryTicker(IEnumerable<FileStatusInvest> lines, int fileImportId)
         {
             var listTickerWebData = await _dataTickerService.GetDataAllTicker();
 
@@ -140,13 +144,34 @@ namespace App.Service.Services
                     }
 
                     await _tickerService.Insert(tickerCreate);
+
+                    // update data ticker
+                    ticker = await _tickerService.GetByTicker(line.Ticker);
                 }
+
+                var historyTicker = new HistoryTickerDtoCreate();
+
+                historyTicker.ArquivoImportacaoId = fileImportId;
+                historyTicker.TickerId = ticker.Id;
+                historyTicker.PrecoUnitario = line.Preco;
+                
+                historyTicker.PrecoLucro = (line.PrecoLucro == null ? 0 : (float)line.PrecoLucro);
+                historyTicker.Roic = (line.Roic == null ? 0 : (float)line.Roic);
+                historyTicker.EvEbit = (line.EvEbit == null ? 0 : (float)line.EvEbit);
+                historyTicker.MargemEbit = (line.MargemEbit == null ? 0 : (float)line.MargemEbit);
+
+                historyTicker.DividendYield = line.DividendYeild;
+                historyTicker.PrecoValorPatrimonial = line.PrecoValorPatrimonial;
+                historyTicker.LiquidezMediaDiaria = line.LiquidezMediaDiaria;
+                historyTicker.ValorMercado = line.ValorMercado;
+
+                await _historyTickerService.InsertHistoryTicker(historyTicker);
             }
 
             return true;
         }
 
-        private async Task<bool> InsertHistoryTicker(IEnumerable<FileFundamentus> lines)
+        private async Task<bool> InsertHistoryTicker(IEnumerable<FileFundamentus> lines, int fileImportId)
         {
             var listTickerWebData = await _dataTickerService.GetDataAllTicker();
 
@@ -181,7 +206,35 @@ namespace App.Service.Services
                     }
 
                     await _tickerService.Insert(tickerCreate);
+
+                    ticker = await _tickerService.GetByTicker(line.Ticker);
                 }
+
+                var historyTicker = new HistoryTickerDtoCreate();
+                bool success;
+                float value = 0;
+
+                historyTicker.ArquivoImportacaoId = fileImportId;
+                historyTicker.TickerId = ticker.Id;
+                historyTicker.PrecoUnitario = line.Preco;
+                
+                historyTicker.PrecoLucro = (line.PrecoLucro == null ? 0 : (float)line.PrecoLucro);
+
+                success = float.TryParse(line.Roic, out value);
+                historyTicker.Roic = (success ? value : 0);
+
+                historyTicker.EvEbit = (line.EvEbit == null ? 0 : (float)line.EvEbit);
+
+                success = float.TryParse(line.MargemEbit, out value);
+                historyTicker.MargemEbit = (success ? value : 0);
+
+                success = float.TryParse(line.DividendYeild, out value);
+                historyTicker.DividendYield = (success ? value : 0);
+                historyTicker.PrecoValorPatrimonial = line.PrecoValorPatrimonial;
+                historyTicker.LiquidezMediaDiaria = line.LiquidezMediaDiaria;
+                historyTicker.ValorMercado = line.ValorMercado;
+
+                await _historyTickerService.InsertHistoryTicker(historyTicker);
             }
 
             return true;

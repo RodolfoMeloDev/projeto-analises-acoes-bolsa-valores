@@ -26,8 +26,8 @@ namespace App.Domain.Dtos.HistoryTicker
         public float MargemEbit { get; set; }
 
         public float? DividendYield { get; set; }
-        public float? PrecoValorPatrimonial { get; set; }
-        public float? LiquidezMediaDiaria { get; set; }
-        public float? ValorMercado { get; set; }
+        public double? PrecoValorPatrimonial { get; set; }
+        public double? LiquidezMediaDiaria { get; set; }
+        public double? ValorMercado { get; set; }
     }
 }
