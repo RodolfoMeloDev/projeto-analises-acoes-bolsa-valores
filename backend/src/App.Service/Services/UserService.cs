@@ -50,9 +50,9 @@ namespace App.Service.Services
                 var result = await _repository.InsertAsync(entity);
 
                 return _mapper.Map<UserDtoCreateResult>(result);
-            }else{
-                throw new IntegrityException("Login já cadastrado!");
             }
+
+            throw new IntegrityException("Login já cadastrado!");            
         }
 
         public async Task<UserDtoUpdateResult> UpdateUser(UserDtoUpdate user)

@@ -18,7 +18,7 @@ namespace App.Data.Implementations
 
         public async Task<UserEntity> GetByLogin(string login)
         {
-            return await _dataSet.FirstOrDefaultAsync(obj => obj.Login.Equals(login));
+            return await _dataSet.FirstOrDefaultAsync(obj => obj.Login.Equals(login.ToUpper()));
         }
     }
 }

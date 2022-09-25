@@ -26,30 +26,11 @@ namespace App.Data.Repository
             return await _dataSet.AnyAsync(obj => obj.Id.Equals(id));
         }
 
-        private int RetunrNextId()
-        {
-            try
-            {
-                if (_dataSet.Count() == 0)
-                    return 1;
-                else
-                    return _dataSet.Max(n => n.Id) + 1;
-
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
         public async Task<T> SelectAsync(int id)
         {
             try
             {
                 var result = await _dataSet.FirstOrDefaultAsync(obj => obj.Id.Equals(id));
-
-                if (result == null)
-                    throw new IntegrityException("ID não encontrado");
 
                 return result;
             }
@@ -75,9 +56,6 @@ namespace App.Data.Repository
         {
             try
             {
-                if (item.Id == 0)
-                    item.Id = RetunrNextId();
-
                 item.DataCadastro = DateTime.UtcNow;
                 item.Ativo = true;
 
@@ -99,7 +77,7 @@ namespace App.Data.Repository
                 var result = await SelectAsync(item.Id);
 
                 if (result == null)
-                    throw new IntegrityException("ID não encontrado");
+                    throw new IntegrityException("A chave de identificação do objeto não foi encontrada, não foi possível atualizar as informações.");
 
                 item.DataCadastro = result.DataCadastro;
                 item.DataAlteracao = DateTime.UtcNow;

@@ -115,6 +115,10 @@ namespace App.Service.Services
 
                 foreach (var line in lines)
                 {
+                    if (line.Preco.Equals(0)){
+                        continue;
+                    }
+                    
                     var historyTicker = new HistoryTickerDtoCreate();
 
                     bool success;

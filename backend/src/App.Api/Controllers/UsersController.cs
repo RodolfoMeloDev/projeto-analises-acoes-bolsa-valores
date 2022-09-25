@@ -19,14 +19,14 @@ namespace App.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllUsers()
         {
-            // aqui está válidando se os parametros da requisição são válidos
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             try
             {
+                // aqui está válidando se os parametros da requisição são válidos
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
                 return Ok(await _service.GetAllUsers());
             }
             catch (ArgumentException e)
@@ -39,13 +39,13 @@ namespace App.Api.Controllers
         [Route("{id}", Name = "GetUserWithId")]
         public async Task<IActionResult> GetById(int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
                 return Ok(await _service.GetUserById(id));                
             }
             catch (ArgumentException e)
@@ -58,47 +58,39 @@ namespace App.Api.Controllers
         [Route("Login/{login}")]
         public async Task<IActionResult> GetByLogin(string login)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             try
             {
-                var result = await _service.GetUserByLogin(login);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
 
-                if (result != null)
-                    return Ok(result);
-
-                return NotFound();
+                return Ok(await _service.GetUserByLogin(login));
             }
             catch (ArgumentException e)
             {
                 return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
-
             }
         }
 
         [HttpPost]
         public async Task<IActionResult> InsertUser([FromBody] UserDtoCreate user)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
+        {           
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
                 var result = await _service.InsertUser(user);
 
-                if (result != null)
-                {
-                    return Created(new Uri(Url.Link("GetUserWithId", new { id = result.Id })), result);
-                }
-                else
+                if (result == null)
                 {
                     return BadRequest();
                 }
+                
+                return Created(new Uri(Url.Link("GetUserWithId", new { id = result.Id })), result);
             }
             catch (ArgumentException e)
             {
@@ -109,21 +101,21 @@ namespace App.Api.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateUser([FromBody] UserDtoUpdate user)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
             try
             {
-                var result = await _service.UpdateUser(user);
-
-                if (result != null)
+                if (!ModelState.IsValid)
                 {
-                    return Ok(result);
+                    return BadRequest(ModelState);
                 }
 
-                return BadRequest();
+                var result = await _service.UpdateUser(user);
+
+                if (result == null)
+                {
+                    return NoContent();
+                }
+                
+                return Ok(result);
             }
             catch (ArgumentException e)
             {
@@ -135,13 +127,13 @@ namespace App.Api.Controllers
         [Route("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
                 return Ok(await _service.DeleteUser(id));
             }
             catch (ArgumentException e)
