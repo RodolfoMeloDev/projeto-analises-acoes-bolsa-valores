@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using App.Data.Context;
@@ -36,6 +37,20 @@ namespace App.Data.Implementations
             {
                 throw ex;
             }
+        }
+
+        public async Task<IEnumerable<HistoryTickerEntity>> GetAllByFileImport(int fileImportId)
+        {
+            return await _dataSet.Where(obj => obj.ArquivoImportacaoId.Equals(fileImportId))
+                                 .ToListAsync();
+        }
+
+        public async Task<IEnumerable<HistoryTickerEntity>> GetAllByTicker(string ticker)
+        {
+            return await _dataSet.Include(obj => obj.ArquivoImportacao)
+                                 .Include(obj => obj.Ticker)
+                                 .Where(obj => obj.Ticker.Ticker.ToLower().Equals(ticker.ToLower()))
+                                 .ToListAsync();
         }
     }
 }

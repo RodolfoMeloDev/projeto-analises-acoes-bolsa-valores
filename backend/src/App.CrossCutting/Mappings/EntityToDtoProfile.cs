@@ -54,6 +54,7 @@ namespace App.CrossCutting.Mappings
 
             #region History Ticker
             CreateMap<HistoryTickerDto, HistoryTickerEntity>().ReverseMap();
+            CreateMap<HistoryTickerDtoComplete, HistoryTickerEntity>().ReverseMap();
             CreateMap<HistoryTickerDtoCreateResult, HistoryTickerEntity>().ReverseMap();
             #endregion
         }

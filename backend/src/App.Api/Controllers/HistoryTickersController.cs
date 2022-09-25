@@ -32,7 +32,7 @@ namespace App.Api.Controllers
                 if (result == null)
                     return BadRequest();
 
-                return Created(new Uri(Url.Link("GetHistoryTickerAll", new { } )), result);
+                return Created(new Uri(Url.Link("GetHistoryTickerAllFileImport", new { } )), result);
             }
             catch (ArgumentException e)
             {
@@ -41,14 +41,30 @@ namespace App.Api.Controllers
         }
 
         [HttpGet]
-        [Route("", Name = "GetHistoryTickerAll")]
-        public async Task<IActionResult> GetAllHistoryTicker(){
+        [Route("FileImport/{fileImportId}", Name = "GetHistoryTickerAllFileImport")]
+        public async Task<IActionResult> GetAllHistoryTickerByFileImport(int fileImportId){
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest();
 
-                return Ok(await _service.GetAllHistoryTicker());
+                return Ok(await _service.GetAllByFileImport(fileImportId));
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode((int) HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("Ticker/{ticker}")]
+        public async Task<IActionResult> GetAllHistoryTickerByTicker(string ticker){
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest();
+
+                return Ok(await _service.GetAllByTicker(ticker));
             }
             catch (ArgumentException e)
             {

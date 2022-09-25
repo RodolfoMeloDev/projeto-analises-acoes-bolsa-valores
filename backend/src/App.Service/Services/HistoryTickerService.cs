@@ -18,9 +18,9 @@ namespace App.Service.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<HistoryTickerDto>> GetAllHistoryTicker()
+        public async Task<IEnumerable<HistoryTickerDto>> GetAllByFileImport(int fileImportId)
         {
-            var listEntity = await _repository.SelectAllAsync();
+            var listEntity = await _repository.GetAllByFileImport(fileImportId);
 
             return _mapper.Map<IEnumerable<HistoryTickerDto>>(listEntity);
         }
@@ -42,6 +42,13 @@ namespace App.Service.Services
         public async Task<bool> DeleteHistoryTickertById(int id)
         {
             return await _repository.DeleteAsync(id);
+        }
+
+        public async Task<IEnumerable<HistoryTickerDtoComplete>> GetAllByTicker(string ticker)
+        {
+            var listEntity = await _repository.GetAllByTicker(ticker);
+
+            return _mapper.Map<IEnumerable<HistoryTickerDtoComplete>>(listEntity);
         }
     }
 }
