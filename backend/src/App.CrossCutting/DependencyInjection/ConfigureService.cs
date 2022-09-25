@@ -1,5 +1,6 @@
 using App.Domain.Interfaces.Services.DataTicker;
 using App.Domain.Interfaces.Services.FileImport;
+using App.Domain.Interfaces.Services.Formula;
 using App.Domain.Interfaces.Services.HistoryTicker;
 using App.Domain.Interfaces.Services.Sector;
 using App.Domain.Interfaces.Services.Segment;
@@ -27,6 +28,7 @@ namespace App.CrossCutting.DependencyInjection
             serviceCollection.AddTransient<IDataTickerService, DataTickerService>();
             serviceCollection.AddTransient<IFilesService<FileStatusInvest>, FileStatusInvestService>();
             serviceCollection.AddTransient<IFilesService<FileFundamentus>, FileFundamentusService>();
+            //serviceCollection.AddTransient<IFormulaService, FormulaService>();
         }
     }
 }

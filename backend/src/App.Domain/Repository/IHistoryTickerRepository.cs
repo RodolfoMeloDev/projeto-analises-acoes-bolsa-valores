@@ -9,6 +9,7 @@ namespace App.Domain.Repository
     {
         Task<bool> DeleteByFileImport(int fileImportId);   
         Task<IEnumerable<HistoryTickerEntity>> GetAllByFileImport(int fileImportId);
+        Task<IEnumerable<HistoryTickerEntity>> GetAllByFileImportComplete(int fileImportId);
         Task<IEnumerable<HistoryTickerEntity>> GetAllByTicker(string ticker);
     }
 }

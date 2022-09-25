@@ -50,5 +50,12 @@ namespace App.Service.Services
 
             return _mapper.Map<IEnumerable<HistoryTickerDtoComplete>>(listEntity);
         }
+
+        public async Task<IEnumerable<HistoryTickerDtoComplete>> GetAllByFileImportComplete(int fileImportId)
+        {
+            var listEntity = await _repository.GetAllByFileImportComplete(fileImportId);
+
+            return _mapper.Map<IEnumerable<HistoryTickerDtoComplete>>(listEntity);
+        }
     }
 }
