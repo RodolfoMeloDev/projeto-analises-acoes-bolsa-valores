@@ -122,10 +122,10 @@ namespace App.Service.Services
                                                     .FirstOrDefault().Id;
                     historyTicker.ArquivoImportacaoId = fileImportId;
                     historyTicker.PrecoUnitario = line.Preco;                    
-                    historyTicker.PrecoLucro = (line.PrecoLucro == null ? 0 : (float)line.PrecoLucro);
-                    historyTicker.Roic = (line.Roic == null ? 0 : (float)line.Roic);
-                    historyTicker.EvEbit = (line.EvEbit == null ? 0 : (float)line.EvEbit);
-                    historyTicker.MargemEbit = (line.MargemEbit == null ? 0 : (float)line.MargemEbit);
+                    historyTicker.PrecoLucro = (line.PrecoLucro == null ? 0 : (decimal)line.PrecoLucro);
+                    historyTicker.Roic = (line.Roic == null ? 0 : (decimal)line.Roic);
+                    historyTicker.EvEbit = (line.EvEbit == null ? 0 : (decimal)line.EvEbit);
+                    historyTicker.MargemEbit = (line.MargemEbit == null ? 0 : (decimal)line.MargemEbit);
                     historyTicker.DividendYield = line.DividendYeild;
                     historyTicker.PrecoValorPatrimonial = line.PrecoValorPatrimonial;
                     historyTicker.LiquidezMediaDiaria = line.LiquidezMediaDiaria;

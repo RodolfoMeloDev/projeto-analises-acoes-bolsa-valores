@@ -16,64 +16,64 @@ namespace App.Domain.Models
             set { _tickerId = value; }
         }
 
-        private float _precoUnitario;
-        public float PrecoUnitario
+        private decimal _precoUnitario;
+        public decimal PrecoUnitario
         {
             get { return _precoUnitario; }
             set { _precoUnitario = value; }
         }
 
-        private float _precoLucro;
-        public float PrecoLucro
+        private decimal _precoLucro;
+        public decimal PrecoLucro
         {
             get { return _precoLucro; }
             set { _precoLucro = value; }
         }
 
-        private float _roic;
-        public float Roic
+        private decimal _roic;
+        public decimal Roic
         {
             get { return _roic; }
             set { _roic = value; }
         }
 
-        private float _evEbit;
-        public float EvEbit
+        private decimal _evEbit;
+        public decimal EvEbit
         {
             get { return _evEbit; }
             set { _evEbit = value; }
         }
 
-        private float _margemEbit;
-        public float MargemEbit
+        private decimal _margemEbit;
+        public decimal MargemEbit
         {
             get { return _margemEbit; }
             set { _margemEbit = value; }
         }
 
-        private float? _dividendYield;
-        public float? DividendYield
+        private decimal? _dividendYield;
+        public decimal? DividendYield
         {
             get { return _dividendYield; }
             set { _dividendYield = (value == 0 ? null : value); }
         }
 
-        private float? _precoValorPatrimonial;
-        public float? PrecoValorPatrimonial
+        private decimal? _precoValorPatrimonial;
+        public decimal? PrecoValorPatrimonial
         {
             get { return _precoValorPatrimonial; }
             set { _precoValorPatrimonial = (value == 0 ? null : value); }
         }
 
-        private float? _liquidezMediaDiaria;
-        public float? LiquidezMediaDiaria
+        private decimal? _liquidezMediaDiaria;
+        public decimal? LiquidezMediaDiaria
         {
             get { return _liquidezMediaDiaria; }
             set { _liquidezMediaDiaria = (value == 0 ? null : value); }
         }
 
-        private float? _valorMercado;
-        public float? ValorMercado
+        private decimal? _valorMercado;
+        public decimal? ValorMercado
         {
             get { return _valorMercado; }
             set { _valorMercado = (value == 0 ? null : value); }

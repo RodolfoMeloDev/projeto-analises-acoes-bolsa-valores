@@ -15,23 +15,24 @@ namespace App.Domain.Entities
         public TickerEntity Ticker { get; set; }
 
         [Required]
-        public float PrecoUnitario { get; set; }
+        [DataType(DataType.Currency)]
+        public decimal PrecoUnitario { get; set; }
 
         [Required]
-        public float PrecoLucro { get; set; }
+        public decimal PrecoLucro { get; set; }
 
         [Required]
-        public float Roic { get; set; }
+        public decimal Roic { get; set; }
 
         [Required]
-        public float EvEbit { get; set; }
+        public decimal EvEbit { get; set; }
 
         [Required]
-        public float MargemEbit { get; set; }
+        public decimal MargemEbit { get; set; }
 
-        public float? DividendYield { get; set; }
-        public float? PrecoValorPatrimonial { get; set; }
-        public float? LiquidezMediaDiaria { get; set; }
-        public float? ValorMercado { get; set; }
+        public decimal? DividendYield { get; set; }
+        public decimal? PrecoValorPatrimonial { get; set; }
+        public decimal? LiquidezMediaDiaria { get; set; }
+        public decimal? ValorMercado { get; set; }
     }
 }

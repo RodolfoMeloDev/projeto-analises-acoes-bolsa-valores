@@ -13,10 +13,10 @@ namespace App.Domain.Models.FilesImport
         public string Ticker { get; set; }
 
         [Name("cotação", "cotacao", "cota,ìo")]
-        public float Preco { get; set; }
+        public decimal Preco { get; set; }
 
         [Name("p/l")]
-        public float? PrecoLucro { get; set; }
+        public decimal? PrecoLucro { get; set; }
 
         [Name("div.yield")]
         public string DividendYeild
@@ -33,7 +33,7 @@ namespace App.Domain.Models.FilesImport
         }
 
         [Name("ev/ebit")]
-        public float? EvEbit { get; set; }
+        public decimal? EvEbit { get; set; }
 
         [Name("roic")]
         public string Roic
@@ -43,13 +43,13 @@ namespace App.Domain.Models.FilesImport
         }
 
         [Name("liq.2meses")]
-        public double? LiquidezMediaDiaria { get; set; }
+        public decimal? LiquidezMediaDiaria { get; set; }
 
         [Name("p/vp")]
-        public double? PrecoValorPatrimonial { get; set; }
+        public decimal? PrecoValorPatrimonial { get; set; }
 
         [Name("valor de mercado")]
         [Optional]
-        public double? ValorMercado { get; set; }
+        public decimal? ValorMercado { get; set; }
     }
 }

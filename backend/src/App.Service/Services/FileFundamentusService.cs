@@ -118,24 +118,24 @@ namespace App.Service.Services
                     var historyTicker = new HistoryTickerDtoCreate();
 
                     bool success;
-                    float value = 0;
+                    decimal value = 0;
 
                     historyTicker.ArquivoImportacaoId = fileImportId;
                     historyTicker.TickerId = tickers.Where(t => t.Ticker.Equals(line.Ticker))
                                                     .FirstOrDefault().Id;
                     historyTicker.PrecoUnitario = line.Preco;
                     
-                    historyTicker.PrecoLucro = (line.PrecoLucro == null ? 0 : (float)line.PrecoLucro);
+                    historyTicker.PrecoLucro = (line.PrecoLucro == null ? 0 : (decimal)line.PrecoLucro);
 
-                    success = float.TryParse(line.Roic, out value);
+                    success = decimal.TryParse(line.Roic, out value);
                     historyTicker.Roic = (success ? value : 0);
 
-                    historyTicker.EvEbit = (line.EvEbit == null ? 0 : (float)line.EvEbit);
+                    historyTicker.EvEbit = (line.EvEbit == null ? 0 : (decimal)line.EvEbit);
 
-                    success = float.TryParse(line.MargemEbit, out value);
+                    success = decimal.TryParse(line.MargemEbit, out value);
                     historyTicker.MargemEbit = (success ? value : 0);
 
-                    success = float.TryParse(line.DividendYeild, out value);
+                    success = decimal.TryParse(line.DividendYeild, out value);
                     historyTicker.DividendYield = (success ? value : 0);
                     historyTicker.PrecoValorPatrimonial = line.PrecoValorPatrimonial;
                     historyTicker.LiquidezMediaDiaria = line.LiquidezMediaDiaria;
