@@ -1,3 +1,4 @@
+using System.Transactions;
 using App.Domain.Dtos.FileImport;
 using App.Domain.Entities;
 using App.Domain.Enums;
@@ -63,40 +64,50 @@ namespace App.Service.Services
 
             if (existFileImport == null)
             {
-                var model = _mapper.Map<FileImportModel>(fileImport);
-                model.NomeArquivo = fileImport.File.FileName;
-
-                var entity = _mapper.Map<FileImportEntity>(model);
-                var result = await _repository.InsertAsync(entity);
-
-                if (result != null)
+                using (var scope = new TransactionScope(TransactionScopeOption.Required,
+                                                        new TransactionOptions { 
+                                                            IsolationLevel = IsolationLevel.ReadCommitted
+                                                            },
+                                                        TransactionScopeAsyncFlowOption.Enabled
+                                                       ))
                 {
-                    // get date api
-                    var listTickerWebData = await _dataTickerService.GetDataAllTicker();
-                    // relation ticker with sector/subsector and segments
-                    await _dataTickerService.ImportSegmentsSubSectorsAndSectors(listTickerWebData);
-                        
-                    if (fileImport.TipoImportacao == TypeFileImport.STATUS_INVEST)
-                    {
-                        var linesFiles = _statusInvestService.GetLinesFile(fileImport.File, fileImport.UsuarioId.ToString());
+                    var model = _mapper.Map<FileImportModel>(fileImport);
+                    model.NomeArquivo = fileImport.File.FileName;
 
-                        if (await _statusInvestService.InsertListTickers(linesFiles, listTickerWebData))
+                    var entity = _mapper.Map<FileImportEntity>(model);
+                    var result = await _repository.InsertAsync(entity);
+
+                    if (result != null)
+                    {
+                        // get date api
+                        var listTickerWebData = await _dataTickerService.GetDataAllTicker();
+                        // relation ticker with sector/subsector and segments
+                        await _dataTickerService.ImportSegmentsSubSectorsAndSectors(listTickerWebData);
+                            
+                        if (fileImport.TipoImportacao == TypeFileImport.STATUS_INVEST)
                         {
-                            await _statusInvestService.InsertHistoryTickers(linesFiles, result.Id);
+                            var linesFiles = _statusInvestService.GetLinesFile(fileImport.File, fileImport.UsuarioId.ToString());
+
+                            if (await _statusInvestService.InsertListTickers(linesFiles, listTickerWebData))
+                            {
+                                await _statusInvestService.InsertHistoryTickers(linesFiles, result.Id);
+                            }
+                        }
+                        else
+                        {
+                            var linesFiles = _fundamentusService.GetLinesFile(fileImport.File, fileImport.UsuarioId.ToString());
+
+                            if (await _fundamentusService.InsertListTickers(linesFiles, listTickerWebData))
+                            {
+                                await _fundamentusService.InsertHistoryTickers(linesFiles, result.Id);
+                            }
                         }
                     }
-                    else
-                    {
-                        var linesFiles = _fundamentusService.GetLinesFile(fileImport.File, fileImport.UsuarioId.ToString());
 
-                        if (await _fundamentusService.InsertListTickers(linesFiles, listTickerWebData))
-                        {
-                            await _fundamentusService.InsertHistoryTickers(linesFiles, result.Id);
-                        }
-                    }
-                }
+                    scope.Complete();
 
-                return _mapper.Map<FileImportDtoCreateResult>(result);
+                    return _mapper.Map<FileImportDtoCreateResult>(result);
+                }                
             }
             else
                 throw new IntegrityException("Já existe uma importação para está Data");
