@@ -61,7 +61,7 @@ namespace App.Service
                     var resultSubSector = new SubSectorDtoCreateResult();
 
                     var sector = listSector.Where(s => s.Nome.Equals(ticker.setor_economico))
-                                        .FirstOrDefault();
+                                           .FirstOrDefault();
 
                     if (sector == null)
                     {
@@ -74,7 +74,7 @@ namespace App.Service
                     }
 
                     var subSector = listSubSector.Where(ss => ss.Nome.Equals(ticker.subsetor) && ss.Setor.Nome.Equals(ticker.setor_economico))
-                                                .FirstOrDefault();
+                                                 .FirstOrDefault();
 
                     if (subSector == null)
                     {
@@ -90,7 +90,7 @@ namespace App.Service
                     var segment = listSegment.Where(sg => sg.Nome.Equals(ticker.segmento) &&
                                                         sg.SubSetor.Nome.Equals(ticker.subsetor) &&
                                                         sg.SubSetor.Setor.Nome.Equals(ticker.setor_economico))
-                                            .FirstOrDefault();
+                                             .FirstOrDefault();
 
                     if (segment == null)
                     {

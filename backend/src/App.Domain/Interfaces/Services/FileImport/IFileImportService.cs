@@ -8,9 +8,8 @@ namespace App.Domain.Interfaces.Services.FileImport
     public interface IFileImportService
     {
         Task<FileImportDto> GetFileImportById(int id);
-        Task<IEnumerable<FileImportDto>> GetAllFileImport();
-        Task<IEnumerable<FileImportDto>> GetFileImportPerPeriod(DateTime dateInitial, DateTime dateFinal);
-        Task<FileImportDto> GetFileImportByDate(DateTime date);
+        Task<IEnumerable<FileImportDto>> GetAllFileImport(int UsuarioId);
+        Task<FileImportDto> GetFileImportByDate(int UsuarioId, DateTime date);
         Task<FileImportDtoCreateResult> InsertFileImport(FileImportDtoCreate fileImport);
         Task<bool> DeleteFileImport(int id);
     }

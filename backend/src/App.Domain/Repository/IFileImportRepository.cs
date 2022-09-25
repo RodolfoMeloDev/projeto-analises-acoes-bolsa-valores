@@ -8,7 +8,7 @@ namespace App.Domain.Repository
 {
     public interface IFileImportRepository : IRepository<FileImportEntity>
     {
-        Task<IEnumerable<FileImportEntity>> GetPerPeriod(DateTime dateInitial, DateTime dateFinal);
-        Task<FileImportEntity> GetByDate(DateTime date);
+        Task<FileImportEntity> GetByDate(int userId, DateTime date);
+        Task<IEnumerable<FileImportEntity>> GetAllFileImport(int userId);
     }
 }

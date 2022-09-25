@@ -35,14 +35,33 @@ namespace App.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllFileImport()
+        [Route("User/{userId}")]
+        public async Task<IActionResult> GetAllFileImport(int userId)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest();
 
-                return Ok(await _service.GetAllFileImport());
+                return Ok(await _service.GetAllFileImport(userId));
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+                throw;
+            }
+        }
+
+        [HttpGet]
+        [Route("User/{userId}/Date/{dateFile}")]
+        public async Task<IActionResult> GetAllFileImport(int userId, DateTime dateFile)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest();
+
+                return Ok(await _service.GetFileImportByDate(userId, dateFile));
             }
             catch (ArgumentException e)
             {
