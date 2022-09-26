@@ -8,7 +8,7 @@ using AutoMapper;
 namespace App.Service.Services
 {
     public class HistoryTickerService : IHistoryTickerService
-    {       
+    {
         private IHistoryTickerRepository _repository;
         private readonly IMapper _mapper;
 
@@ -47,6 +47,13 @@ namespace App.Service.Services
         public async Task<IEnumerable<HistoryTickerDtoComplete>> GetAllByTicker(string ticker)
         {
             var listEntity = await _repository.GetAllByTicker(ticker);
+
+            return _mapper.Map<IEnumerable<HistoryTickerDtoComplete>>(listEntity);
+        }
+
+        public async Task<IEnumerable<HistoryTickerDtoComplete>> GetAllByFileImportComplete(int fileImportId)
+        {
+            var listEntity = await _repository.GetAllByFileImportComplete(fileImportId);
 
             return _mapper.Map<IEnumerable<HistoryTickerDtoComplete>>(listEntity);
         }

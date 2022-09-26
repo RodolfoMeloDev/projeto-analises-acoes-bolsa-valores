@@ -45,6 +45,14 @@ namespace App.Data.Implementations
                                  .ToListAsync();
         }
 
+        public async Task<IEnumerable<HistoryTickerEntity>> GetAllByFileImportComplete(int fileImportId)
+        {
+            return await _dataSet.Include(obj => obj.ArquivoImportacao)
+                                 .Include(obj => obj.Ticker)
+                                 .Where(obj => obj.ArquivoImportacaoId.Equals(fileImportId))
+                                 .ToListAsync();
+        }
+
         public async Task<IEnumerable<HistoryTickerEntity>> GetAllByTicker(string ticker)
         {
             return await _dataSet.Include(obj => obj.ArquivoImportacao)

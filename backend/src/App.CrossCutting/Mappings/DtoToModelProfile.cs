@@ -1,4 +1,5 @@
 using App.Domain.Dtos.FileImport;
+using App.Domain.Dtos.Formula;
 using App.Domain.Dtos.HistoryTicker;
 using App.Domain.Dtos.Sector;
 using App.Domain.Dtos.Segment;

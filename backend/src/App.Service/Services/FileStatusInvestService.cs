@@ -20,7 +20,7 @@ namespace App.Service.Services
     public class FileStatusInvestService : IFilesService<FileStatusInvest>
     {
         private string? _pathFile;
-        
+
         private ISegmentService _segmentService;
         private ITickerService _tickerService;
         private IHistoryTickerService _historyTickerService;
@@ -29,7 +29,7 @@ namespace App.Service.Services
         {
             _segmentService = segmentService;
             _tickerService = tickerService;
-            _historyTickerService = historyTickerService;            
+            _historyTickerService = historyTickerService;
         }
 
         public IEnumerable<FileStatusInvest> GetLinesFile(IFormFile file, string directoryUser)
@@ -63,7 +63,7 @@ namespace App.Service.Services
         }
 
         public async Task<bool> InsertListTickers(IEnumerable<FileStatusInvest> lines, IEnumerable<DataTickerModel> listTickerWeb)
-        {            
+        {
             try
             {
                 var listSegment = await _segmentService.GetAllComplete();
@@ -78,10 +78,11 @@ namespace App.Service.Services
                                                                       .FirstOrDefault();
 
                         TickerDtoCreate tickerCreate = new TickerDtoCreate();
-                        
+
                         tickerCreate.Ticker = line.Ticker;
+                        tickerCreate.BaseTicker = line.Ticker.Substring(0, 4);
                         tickerCreate.Tipo = TypeTicker.ACAO;
-                        tickerCreate.RecuperacaoJudicial = false;                    
+                        tickerCreate.RecuperacaoJudicial = false;
 
                         if (tickerWebData != null)
                         {
@@ -97,15 +98,15 @@ namespace App.Service.Services
                         }
 
                         await _tickerService.Insert(tickerCreate);
-                    }                
+                    }
                 }
 
                 return true;
             }
             catch (Exception e)
-            {                
+            {
                 throw e;
-            }            
+            }
         }
 
         public async Task<bool> InsertHistoryTickers(IEnumerable<FileStatusInvest> lines, int fileImportId)
@@ -116,16 +117,17 @@ namespace App.Service.Services
 
                 foreach (var line in lines)
                 {
-                    if (line.Preco.Equals(0)){
+                    if (line.Preco.Equals(0))
+                    {
                         continue;
                     }
-                    
+
                     var historyTicker = new HistoryTickerDtoCreate();
 
                     historyTicker.TickerId = tickers.Where(t => t.Ticker.Equals(line.Ticker))
                                                     .FirstOrDefault().Id;
                     historyTicker.ArquivoImportacaoId = fileImportId;
-                    historyTicker.PrecoUnitario = line.Preco;                    
+                    historyTicker.PrecoUnitario = line.Preco;
                     historyTicker.PrecoLucro = (line.PrecoLucro == null ? 0 : (decimal)line.PrecoLucro);
                     historyTicker.Roic = (line.Roic == null ? 0 : (decimal)line.Roic);
                     historyTicker.EvEbit = (line.EvEbit == null ? 0 : (decimal)line.EvEbit);
@@ -141,7 +143,7 @@ namespace App.Service.Services
                 return true;
             }
             catch (Exception e)
-            {                
+            {
                 throw e;
             }
         }

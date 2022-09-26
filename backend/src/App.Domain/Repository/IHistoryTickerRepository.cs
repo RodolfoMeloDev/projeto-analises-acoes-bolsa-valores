@@ -7,8 +7,9 @@ namespace App.Domain.Repository
 {
     public interface IHistoryTickerRepository : IRepository<HistoryTickerEntity>
     {
-        Task<bool> DeleteByFileImport(int fileImportId);   
+        Task<bool> DeleteByFileImport(int fileImportId);
         Task<IEnumerable<HistoryTickerEntity>> GetAllByFileImport(int fileImportId);
+        Task<IEnumerable<HistoryTickerEntity>> GetAllByFileImportComplete(int fileImportId);
         Task<IEnumerable<HistoryTickerEntity>> GetAllByTicker(string ticker);
     }
 }
