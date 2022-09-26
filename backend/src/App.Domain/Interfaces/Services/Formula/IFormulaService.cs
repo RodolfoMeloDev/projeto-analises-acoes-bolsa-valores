@@ -7,6 +7,6 @@ namespace App.Domain.Interfaces.Services.Formula
     public interface IFormulaService
     {
         Task<IEnumerable<FormulaDto>> Greenblatt(int fileImportId);
-        Task<IEnumerable<FormulaDto>> Greenblatt(int fileImportId, OptionsFormula optionsFormula);
+        Task<IEnumerable<FormulaDto>> Greenblatt(OptionsFormula optionsFormula);
     }
 }

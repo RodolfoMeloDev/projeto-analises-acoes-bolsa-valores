@@ -12,5 +12,8 @@ namespace App.Domain.Dtos.Formula
         public decimal MargemEbit { get; set; }
         public decimal LiquidezMediaDiaria { get; set; }
         public bool RecuperacaoJudicial { get; set; }
+        public int PontuacaoEvEbit { get; set; }
+        public int PontuacaoRoic { get; set; }
+        public int PontuacaoFinal { get; set; }
     }
 }

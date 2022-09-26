@@ -28,7 +28,7 @@ namespace App.CrossCutting.DependencyInjection
             serviceCollection.AddTransient<IDataTickerService, DataTickerService>();
             serviceCollection.AddTransient<IFilesService<FileStatusInvest>, FileStatusInvestService>();
             serviceCollection.AddTransient<IFilesService<FileFundamentus>, FileFundamentusService>();
-            //serviceCollection.AddTransient<IFormulaService, FormulaService>();
+            serviceCollection.AddTransient<IFormulaService, FormulaService>();
         }
     }
 }

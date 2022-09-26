@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using App.Domain.Dtos.Formula;
 using App.Domain.Interfaces.Services.Formula;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,7 +21,7 @@ namespace App.Api.Controllers
         }
 
         [HttpGet]
-        [Route("{Greenblatt/{fileImportId}}")]
+        [Route("Greenblatt/{fileImportId}")]
         public async Task<IActionResult> ReturnDataGreenblatt(int fileImportId)
         {
             try
@@ -29,6 +30,23 @@ namespace App.Api.Controllers
                     return BadRequest();
 
                 return Ok(await _service.Greenblatt(fileImportId));
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("Greenblatt/Options")]
+        public async Task<IActionResult> ReturnDataGreenblattOptions([FromQuery] OptionsFormula optionsFormula)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest();
+
+                return Ok(await _service.Greenblatt(optionsFormula));
             }
             catch (ArgumentException e)
             {

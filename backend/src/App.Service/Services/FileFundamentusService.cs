@@ -29,7 +29,7 @@ namespace App.Service.Services
         {
             _segmentService = segmentService;
             _tickerService = tickerService;
-            _historyTickerService = historyTickerService;            
+            _historyTickerService = historyTickerService;
         }
 
         public IEnumerable<FileFundamentus> GetLinesFile(IFormFile file, string directoryUser)
@@ -78,10 +78,11 @@ namespace App.Service.Services
                                                                       .FirstOrDefault();
 
                         TickerDtoCreate tickerCreate = new TickerDtoCreate();
-                        
+
                         tickerCreate.Ticker = line.Ticker;
+                        tickerCreate.BaseTicker = line.Ticker.Substring(0, 4);
                         tickerCreate.Tipo = TypeTicker.ACAO;
-                        tickerCreate.RecuperacaoJudicial = false;                    
+                        tickerCreate.RecuperacaoJudicial = false;
 
                         if (tickerWebData != null)
                         {
@@ -97,13 +98,13 @@ namespace App.Service.Services
                         }
 
                         await _tickerService.Insert(tickerCreate);
-                    }                
+                    }
                 }
 
                 return true;
             }
             catch (Exception e)
-            {                
+            {
                 throw e;
             }
         }
@@ -115,10 +116,11 @@ namespace App.Service.Services
 
                 foreach (var line in lines)
                 {
-                    if (line.Preco.Equals(0)){
+                    if (line.Preco.Equals(0))
+                    {
                         continue;
                     }
-                    
+
                     var historyTicker = new HistoryTickerDtoCreate();
 
                     bool success;
@@ -128,7 +130,7 @@ namespace App.Service.Services
                     historyTicker.TickerId = tickers.Where(t => t.Ticker.Equals(line.Ticker))
                                                     .FirstOrDefault().Id;
                     historyTicker.PrecoUnitario = line.Preco;
-                    
+
                     historyTicker.PrecoLucro = (line.PrecoLucro == null ? 0 : (decimal)line.PrecoLucro);
 
                     success = decimal.TryParse(line.Roic, out value);
@@ -151,7 +153,7 @@ namespace App.Service.Services
                 return true;
             }
             catch (Exception e)
-            {                
+            {
                 throw e;
             }
         }

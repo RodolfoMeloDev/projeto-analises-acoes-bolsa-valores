@@ -8,7 +8,7 @@ using AutoMapper;
 namespace App.Service.Services
 {
     public class HistoryTickerService : IHistoryTickerService
-    {       
+    {
         private IHistoryTickerRepository _repository;
         private readonly IMapper _mapper;
 
