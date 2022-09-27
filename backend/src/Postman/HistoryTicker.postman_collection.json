@@ -1,0 +1,105 @@
+{
+	"info": {
+		"_postman_id": "35f15b43-140f-42ce-8742-339a44e97a5f",
+		"name": "HistoryTicker",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Insert",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"arquivoImportacaoId\": 0,\r\n  \"tickerId\": 0,\r\n  \"precoUnitario\": 0,\r\n  \"precoLucro\": 0,\r\n  \"roic\": 0,\r\n  \"evEbit\": 0,\r\n  \"margemEbit\": 0,\r\n  \"dividendYield\": 0,\r\n  \"precoValorPatrimonial\": 0,\r\n  \"liquidezMediaDiaria\": 0,\r\n  \"valorMercado\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7206/api/HistoryTickers/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7206",
+					"path": [
+						"api",
+						"HistoryTickers",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7206/api/HistoryTickers/FileImport/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7206",
+					"path": [
+						"api",
+						"HistoryTickers",
+						"FileImport",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetByTicker",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7206/api/HistoryTickers/Ticker/vale3",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7206",
+					"path": [
+						"api",
+						"HistoryTickers",
+						"Ticker",
+						"vale3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetByFileImport",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7206/api/HistoryTickers/FileImport/3",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7206",
+					"path": [
+						"api",
+						"HistoryTickers",
+						"FileImport",
+						"3"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

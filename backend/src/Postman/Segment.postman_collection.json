@@ -1,0 +1,216 @@
+{
+	"info": {
+		"_postman_id": "730c44ab-91d4-42d7-9f19-ba662788e728",
+		"name": "Segment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Insert",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nome\": \"string\",\r\n  \"subSetorId\": 10\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7206/api/Segments",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7206",
+					"path": [
+						"api",
+						"Segments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 90,\r\n  \"nome\": \"string\",\r\n  \"subSetorId\": 10,\r\n  \"ativo\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7206/api/Segments",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7206",
+					"path": [
+						"api",
+						"Segments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7206/api/Segments/90",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7206",
+					"path": [
+						"api",
+						"Segments",
+						"90"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7206/api/Segments/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7206",
+					"path": [
+						"api",
+						"Segments",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllSegments",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7206/api/Segments",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7206",
+					"path": [
+						"api",
+						"Segments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetCompleteById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7206/api/Segments/Complete/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7206",
+					"path": [
+						"api",
+						"Segments",
+						"Complete",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllCompleteSegments",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7206/api/Segments/Complete",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7206",
+					"path": [
+						"api",
+						"Segments",
+						"Complete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetSegmentsBySector",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7206/api/Segments/Setor/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7206",
+					"path": [
+						"api",
+						"Segments",
+						"Setor",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetSegmentsBySubSector",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7206/api/Segments/SubSetor/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7206",
+					"path": [
+						"api",
+						"Segments",
+						"SubSetor",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

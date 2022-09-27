@@ -1,0 +1,155 @@
+{
+	"info": {
+		"_postman_id": "e7600a83-4108-443f-b2f4-eda74fcca065",
+		"name": "FileImport",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Insert",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "UsuarioId",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "Descricao",
+							"value": "Status Invest",
+							"type": "default"
+						},
+						{
+							"key": "DataArquivo",
+							"value": "2022-09-26",
+							"type": "default"
+						},
+						{
+							"key": "TipoArquivo",
+							"value": "2",
+							"type": "default"
+						},
+						{
+							"key": "File",
+							"type": "file",
+							"src": "/C:/Users/rodolfomelo/Downloads/fundamentus.csv"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://localhost:7206/api/FileImports/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7206",
+					"path": [
+						"api",
+						"FileImports",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7206/api/FileImports/2",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7206",
+					"path": [
+						"api",
+						"FileImports",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7206/api/FileImports/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7206",
+					"path": [
+						"api",
+						"FileImports",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetByUserId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7206/api/FileImports/User/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7206",
+					"path": [
+						"api",
+						"FileImports",
+						"User",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetByDate",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7206/api/FileImports/FilesByDate?userId=1&dateFile=2022-09-27",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7206",
+					"path": [
+						"api",
+						"FileImports",
+						"FilesByDate"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "1"
+						},
+						{
+							"key": "dateFile",
+							"value": "2022-09-27"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

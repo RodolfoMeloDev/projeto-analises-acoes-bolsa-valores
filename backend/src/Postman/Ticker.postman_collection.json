@@ -1,0 +1,261 @@
+{
+	"info": {
+		"_postman_id": "ff243a9e-b563-4465-83b5-0f4e73736246",
+		"name": "Ticker",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Insert",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"baseTicker\": \"string\",\r\n  \"ticker\": \"string\",\r\n  \"empresa\": \"string\",\r\n  \"cnpj\": \"string\",\r\n  \"tipo\": 0,\r\n  \"recuperacaoJudicial\": true,\r\n  \"segmentoId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7206/api/Tickers",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7206",
+					"path": [
+						"api",
+						"Tickers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 2004,\r\n  \"baseTicker\": \"string\",\r\n  \"ticker\": \"string2\",\r\n  \"empresa\": \"string\",\r\n  \"cnpj\": \"string\",\r\n  \"tipo\": 0,\r\n  \"recuperacaoJudicial\": true,\r\n  \"segmentoId\": 1,\r\n  \"ativo\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7206/api/Tickers",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7206",
+					"path": [
+						"api",
+						"Tickers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7206/api/Tickers/2004",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7206",
+					"path": [
+						"api",
+						"Tickers",
+						"2004"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7206/api/Tickers/1403",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7206",
+					"path": [
+						"api",
+						"Tickers",
+						"1403"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetByTicker",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7206/api/Tickers/Complete/Ticker/DMMO3",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7206",
+					"path": [
+						"api",
+						"Tickers",
+						"Complete",
+						"Ticker",
+						"DMMO3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllTickers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7206/api/Tickers",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7206",
+					"path": [
+						"api",
+						"Tickers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetCompleteById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7206/api/Tickers/Complete/1403",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7206",
+					"path": [
+						"api",
+						"Tickers",
+						"Complete",
+						"1403"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllCompleteTickers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7206/api/Tickers/Complete",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7206",
+					"path": [
+						"api",
+						"Tickers",
+						"Complete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetTickersBySegment",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7206/api/Tickers/Segment/14",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7206",
+					"path": [
+						"api",
+						"Tickers",
+						"Segment",
+						"14"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetTickersBySubSector",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7206/api/Tickers/SubSector/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7206",
+					"path": [
+						"api",
+						"Tickers",
+						"SubSector",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetTickersBySector",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7206/api/Tickers/Sector/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7206",
+					"path": [
+						"api",
+						"Tickers",
+						"Sector",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
