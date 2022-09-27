@@ -1,4 +1,5 @@
 using System;
+using App.Domain.Enums;
 
 namespace App.Domain.Models
 {
@@ -15,14 +16,14 @@ namespace App.Domain.Models
         public string NomeArquivo
         {
             get { return _nomeArquivo; }
-            set { _nomeArquivo = value; }
+            set { _nomeArquivo = (string.IsNullOrEmpty(value) ? null : value.ToUpper()); }
         }
-        
+
         private string _descricao;
         public string Descricao
         {
             get { return _descricao; }
-            set { _descricao = value; }
+            set { _descricao = (string.IsNullOrEmpty(value) ? null : value.ToUpper()); }
         }
 
         private DateTime _dataArquivo;
@@ -31,6 +32,14 @@ namespace App.Domain.Models
             get { return _dataArquivo; }
             set { _dataArquivo = value; }
         }
-           
+
+        private TypeFileImport _tipoArquivo;
+        public TypeFileImport TipoArquivo
+        {
+            get { return _tipoArquivo; }
+            set { _tipoArquivo = value; }
+        }
+
+
     }
 }

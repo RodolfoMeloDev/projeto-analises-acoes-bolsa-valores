@@ -6,8 +6,8 @@ namespace App.Domain.Models
         public string Nome
         {
             get { return _nome; }
-            set { _nome = value; }
+            set { _nome = (string.IsNullOrEmpty(value) ? null : value.ToUpper()); }
         }
-        
+
     }
 }

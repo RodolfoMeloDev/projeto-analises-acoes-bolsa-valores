@@ -4,8 +4,14 @@ namespace App.Domain.Models.FilesImport
 {
     public class FileStatusInvest
     {
+        private string _ticker;
+
         [Name("ticker")]
-        public string Ticker { get; set; }
+        public string Ticker
+        {
+            get { return _ticker; }
+            set { _ticker = (string.IsNullOrEmpty(value) ? null : value.ToUpper()); }
+        }
 
         [Name("preco")]
         public decimal Preco { get; set; }

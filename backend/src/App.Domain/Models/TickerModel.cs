@@ -8,28 +8,28 @@ namespace App.Domain.Models
         public string BaseTicker
         {
             get { return _baseTicker; }
-            set { _baseTicker = value; }
+            set { _baseTicker = (string.IsNullOrEmpty(value) ? null : value.ToUpper()); }
         }
 
         private string _ticker;
         public string Ticker
         {
             get { return _ticker; }
-            set { _ticker = value; }
+            set { _ticker = (string.IsNullOrEmpty(value) ? null : value.ToUpper()); }
         }
 
         private string _empresa;
         public string Empresa
         {
             get { return _empresa; }
-            set { _empresa = value; }
+            set { _empresa = (string.IsNullOrEmpty(value) ? null : value.ToUpper()); }
         }
 
         private string _cnpj;
         public string CNPJ
         {
             get { return _cnpj; }
-            set { _cnpj = value; }
+            set { _cnpj = (string.IsNullOrEmpty(value) ? null : value.ToUpper()); }
         }
 
         private TypeTicker _tipo;

@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using App.Domain.Enums;
 
 namespace App.Domain.Entities
 {
@@ -20,10 +21,13 @@ namespace App.Domain.Entities
         public string Descricao { get; set; }
 
         [Required]
-        public DateTime DataArquivo 
-        { 
-            get {return _dataArquivo;} 
-            set { _dataArquivo = (value == DateTime.MinValue ? DateTime.UtcNow : value); } 
+        public DateTime DataArquivo
+        {
+            get { return _dataArquivo; }
+            set { _dataArquivo = (value == DateTime.MinValue ? DateTime.UtcNow : value); }
         }
+
+        [Required]
+        public TypeFileImport TipoArquivo { get; set; }
     }
 }

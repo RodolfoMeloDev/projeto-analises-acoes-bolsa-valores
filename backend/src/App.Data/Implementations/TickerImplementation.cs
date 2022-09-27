@@ -20,7 +20,7 @@ namespace App.Data.Implementations
 
         public async Task<TickerEntity> ExistTicker(string ticker)
         {
-            return await _dataSet.FirstOrDefaultAsync(obj => obj.Ticker.Equals(ticker));
+            return await _dataSet.FirstOrDefaultAsync(obj => obj.Ticker.Equals(ticker.ToUpper()));
         }
 
         public async Task<IEnumerable<TickerEntity>> GetAllComplete()
@@ -71,7 +71,7 @@ namespace App.Data.Implementations
             return await _dataSet.Include(sg => sg.Segmento)
                 .ThenInclude(ss => ss.SubSetor)
                 .ThenInclude(s => s.Setor)
-                .FirstOrDefaultAsync(obj => obj.Ticker.Equals(ticker));
+                .FirstOrDefaultAsync(obj => obj.Ticker.Equals(ticker.ToUpper()));
         }
     }
 }

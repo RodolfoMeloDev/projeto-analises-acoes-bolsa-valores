@@ -21,7 +21,8 @@ namespace App.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> InserHistoryTicker([FromBody] HistoryTickerDtoCreate historyTicker){
+        public async Task<IActionResult> InserHistoryTicker([FromBody] HistoryTickerDtoCreate historyTicker)
+        {
             try
             {
                 if (!ModelState.IsValid)
@@ -32,17 +33,18 @@ namespace App.Api.Controllers
                 if (result == null)
                     return BadRequest();
 
-                return Created(new Uri(Url.Link("GetHistoryTickerAllFileImport", new { } )), result);
+                return Created(new Uri(Url.Link("GetHistoryTickerAllFileImport", new { })), result);
             }
             catch (ArgumentException e)
             {
-                return StatusCode((int) HttpStatusCode.InternalServerError, e.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
             }
         }
 
         [HttpGet]
         [Route("FileImport/{fileImportId}", Name = "GetHistoryTickerAllFileImport")]
-        public async Task<IActionResult> GetAllHistoryTickerByFileImport(int fileImportId){
+        public async Task<IActionResult> GetAllHistoryTickerByFileImport(int fileImportId)
+        {
             try
             {
                 if (!ModelState.IsValid)
@@ -52,13 +54,14 @@ namespace App.Api.Controllers
             }
             catch (ArgumentException e)
             {
-                return StatusCode((int) HttpStatusCode.InternalServerError, e.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
             }
         }
 
         [HttpGet]
         [Route("Ticker/{ticker}")]
-        public async Task<IActionResult> GetAllHistoryTickerByTicker(string ticker){
+        public async Task<IActionResult> GetAllHistoryTickerByTicker(string ticker)
+        {
             try
             {
                 if (!ModelState.IsValid)
@@ -68,29 +71,14 @@ namespace App.Api.Controllers
             }
             catch (ArgumentException e)
             {
-                return StatusCode((int) HttpStatusCode.InternalServerError, e.Message);
-            }
-        }
-
-        [HttpDelete]
-        [Route("{id}")]
-        public async Task<IActionResult> DeleteHistotyTicker(int id){
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest();
-
-                return Ok(await _service.DeleteHistoryTickertById(id));
-            }
-            catch (ArgumentException e)
-            {
-                return StatusCode((int) HttpStatusCode.InternalServerError, e.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
             }
         }
 
         [HttpDelete]
         [Route("FileImport/{fileImportId}")]
-        public async Task<IActionResult> DeleteHistotyTickerByFileImport(int fileImportId){
+        public async Task<IActionResult> DeleteHistotyTickerByFileImport(int fileImportId)
+        {
             try
             {
                 if (!ModelState.IsValid)
@@ -100,7 +88,7 @@ namespace App.Api.Controllers
             }
             catch (ArgumentException e)
             {
-                return StatusCode((int) HttpStatusCode.InternalServerError, e.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
             }
         }
     }

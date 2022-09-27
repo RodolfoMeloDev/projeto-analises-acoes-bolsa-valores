@@ -5,12 +5,17 @@ namespace App.Domain.Models.FilesImport
 {
     public class FileFundamentus
     {
+        private string _ticker;
         private string _margemEbit;
         private string _dividendYeild;
         private string _roic;
 
         [Name("papel")]
-        public string Ticker { get; set; }
+        public string Ticker
+        {
+            get { return _ticker; }
+            set { _ticker = (string.IsNullOrEmpty(value) ? null : value.ToUpper()); }
+        }
 
         [Name("cotação", "cotacao", "cota,ìo")]
         public decimal Preco { get; set; }
@@ -22,14 +27,14 @@ namespace App.Domain.Models.FilesImport
         public string DividendYeild
         {
             get { return _dividendYeild; }
-            set { _dividendYeild = value.ToString().Replace("%", ""); }
+            set { _dividendYeild = (string.IsNullOrEmpty(value) ? null : value.ToUpper().ToString().Replace("%", "")); }
         }
 
         [Name("mrg ebit")]
         public string MargemEbit
         {
             get { return _margemEbit; }
-            set { _margemEbit = value.ToString().Replace("%", ""); }
+            set { _margemEbit = (string.IsNullOrEmpty(value) ? null : value.ToUpper().ToString().Replace("%", "")); }
         }
 
         [Name("ev/ebit")]
@@ -39,7 +44,7 @@ namespace App.Domain.Models.FilesImport
         public string Roic
         {
             get { return _roic; }
-            set { _roic = value.ToString().Replace("%", ""); }
+            set { _roic = (string.IsNullOrEmpty(value) ? null : value.ToUpper().ToString().Replace("%", "")); }
         }
 
         [Name("liq.2meses")]

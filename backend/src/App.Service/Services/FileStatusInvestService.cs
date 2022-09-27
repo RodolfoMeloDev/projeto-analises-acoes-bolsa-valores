@@ -147,5 +147,10 @@ namespace App.Service.Services
                 throw e;
             }
         }
+
+        public async Task<bool> DeleteHistoryTickers(int fileImportId)
+        {
+            return await _historyTickerService.DeleteHistoryTickerByFileImport(fileImportId);
+        }
     }
 }

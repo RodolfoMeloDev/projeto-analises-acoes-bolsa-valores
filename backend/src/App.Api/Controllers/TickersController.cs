@@ -21,7 +21,8 @@ namespace App.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> InsertTicker([FromBody] TickerDtoCreate ticker){
+        public async Task<IActionResult> InsertTicker([FromBody] TickerDtoCreate ticker)
+        {
             try
             {
                 if (!ModelState.IsValid)
@@ -100,6 +101,23 @@ namespace App.Api.Controllers
                     return BadRequest();
 
                 return Ok(await _service.GetAllComplete());
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("Complete/Ticker/{ticker}")]
+        public async Task<IActionResult> GetByTickerComplete(string ticker)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest();
+
+                return Ok(await _service.GetByTicker(ticker));
             }
             catch (ArgumentException e)
             {

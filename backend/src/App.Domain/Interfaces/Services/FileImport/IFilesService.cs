@@ -10,5 +10,6 @@ namespace App.Domain.Interfaces.Services.FileImport
         IEnumerable<T> GetLinesFile(IFormFile file, string directoryUser);
         Task<bool> InsertListTickers(IEnumerable<T> lines, IEnumerable<DataTickerModel> listTickerWeb);
         Task<bool> InsertHistoryTickers(IEnumerable<T> lines, int fileImportId);
+        Task<bool> DeleteHistoryTickers(int fileImportId);
     }
 }

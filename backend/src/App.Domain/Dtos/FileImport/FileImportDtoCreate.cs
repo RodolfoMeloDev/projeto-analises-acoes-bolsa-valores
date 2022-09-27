@@ -18,7 +18,7 @@ namespace App.Domain.Dtos.FileImport
         public DateTime DataArquivo { get; set; }
 
         [Required(ErrorMessage = "O campo é obrigatório")]
-        public TypeFileImport TipoImportacao { get; set; }
+        public TypeFileImport TipoArquivo { get; set; }
 
         public IFormFile File { get; set; }
     }

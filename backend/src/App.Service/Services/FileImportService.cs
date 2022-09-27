@@ -65,9 +65,10 @@ namespace App.Service.Services
             if (existFileImport == null)
             {
                 using (var scope = new TransactionScope(TransactionScopeOption.Required,
-                                                        new TransactionOptions { 
+                                                        new TransactionOptions
+                                                        {
                                                             IsolationLevel = IsolationLevel.ReadCommitted
-                                                            },
+                                                        },
                                                         TransactionScopeAsyncFlowOption.Enabled
                                                        ))
                 {
@@ -83,8 +84,8 @@ namespace App.Service.Services
                         var listTickerWebData = await _dataTickerService.GetDataAllTicker();
                         // relation ticker with sector/subsector and segments
                         await _dataTickerService.ImportSegmentsSubSectorsAndSectors(listTickerWebData);
-                            
-                        if (fileImport.TipoImportacao == TypeFileImport.STATUS_INVEST)
+
+                        if (fileImport.TipoArquivo == TypeFileImport.STATUS_INVEST)
                         {
                             var linesFiles = _statusInvestService.GetLinesFile(fileImport.File, fileImport.UsuarioId.ToString());
 
@@ -107,7 +108,7 @@ namespace App.Service.Services
                     scope.Complete();
 
                     return _mapper.Map<FileImportDtoCreateResult>(result);
-                }                
+                }
             }
             else
                 throw new IntegrityException("Já existe uma importação para está Data");
@@ -115,7 +116,32 @@ namespace App.Service.Services
 
         public async Task<bool> DeleteFileImport(int id)
         {
-            return await _repository.DeleteAsync(id);
+            using (var scope = new TransactionScope(TransactionScopeOption.Required,
+                                                        new TransactionOptions
+                                                        {
+                                                            IsolationLevel = IsolationLevel.ReadCommitted
+                                                        },
+                                                        TransactionScopeAsyncFlowOption.Enabled
+                                                       ))
+            {
+                var fileImport = await _repository.SelectAsync(id);
+                bool itensRemoved = false;
+
+                if (fileImport != null)
+                {
+                    if (fileImport.TipoArquivo == TypeFileImport.STATUS_INVEST)
+                        itensRemoved = await _statusInvestService.DeleteHistoryTickers(id);
+                    else
+                        itensRemoved = await _fundamentusService.DeleteHistoryTickers(id);
+
+                    if (itensRemoved)
+                        itensRemoved = await _repository.DeleteAsync(id);
+                }
+
+                scope.Complete();
+
+                return itensRemoved;
+            }
         }
     }
 }

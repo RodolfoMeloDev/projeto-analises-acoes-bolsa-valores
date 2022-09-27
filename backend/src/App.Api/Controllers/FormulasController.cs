@@ -38,7 +38,7 @@ namespace App.Api.Controllers
         }
 
         [HttpGet]
-        [Route("Greenblatt/Options")]
+        [Route("Greenblatt/Parameters")]
         public async Task<IActionResult> ReturnDataGreenblattOptions([FromBody] OptionsFormula optionsFormula)
         {
             try

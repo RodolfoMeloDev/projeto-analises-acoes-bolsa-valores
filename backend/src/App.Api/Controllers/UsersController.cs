@@ -46,7 +46,7 @@ namespace App.Api.Controllers
                     return BadRequest(ModelState);
                 }
 
-                return Ok(await _service.GetUserById(id));                
+                return Ok(await _service.GetUserById(id));
             }
             catch (ArgumentException e)
             {
@@ -55,8 +55,8 @@ namespace App.Api.Controllers
         }
 
         [HttpGet]
-        [Route("Login/{login}")]
-        public async Task<IActionResult> GetByLogin(string login)
+        [Route("Login")]
+        public async Task<IActionResult> GetByLogin([FromQuery] string login)
         {
             try
             {
@@ -75,7 +75,7 @@ namespace App.Api.Controllers
 
         [HttpPost]
         public async Task<IActionResult> InsertUser([FromBody] UserDtoCreate user)
-        {           
+        {
             try
             {
                 if (!ModelState.IsValid)
@@ -89,7 +89,7 @@ namespace App.Api.Controllers
                 {
                     return BadRequest();
                 }
-                
+
                 return Created(new Uri(Url.Link("GetUserWithId", new { id = result.Id })), result);
             }
             catch (ArgumentException e)
@@ -114,7 +114,7 @@ namespace App.Api.Controllers
                 {
                     return NoContent();
                 }
-                
+
                 return Ok(result);
             }
             catch (ArgumentException e)

@@ -21,7 +21,7 @@ namespace App.Data.Implementations
 
         public async Task<SegmentEntity> ExistSegment(string name, int subSectorId)
         {
-            return await _dataSet.FirstOrDefaultAsync(obj => obj.Nome.Equals(name) &&
+            return await _dataSet.FirstOrDefaultAsync(obj => obj.Nome.Equals(name.ToUpper()) &&
                                                        obj.SubSetorId.Equals(subSectorId));
         }
 

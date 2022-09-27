@@ -22,7 +22,7 @@ namespace App.Data.Implementations
 
         public async Task<SubSectorEntity> ExistSubSector(string name, int sectorId)
         {
-            return await _dataSet.FirstOrDefaultAsync(obj => obj.Nome.Equals(name) &&
+            return await _dataSet.FirstOrDefaultAsync(obj => obj.Nome.Equals(name.ToUpper()) &&
                                                              obj.SetorId.Equals(sectorId));
         }
 

@@ -10,7 +10,7 @@ namespace App.Data.Implementations
     public class SectorImplementation : BaseRepository<SectorEntity>, ISectorRepository
     {
         private DbSet<SectorEntity> _dataSet;
-        
+
         public SectorImplementation(AnaliseDeAcoesContext context) : base(context)
         {
             _dataSet = context.Set<SectorEntity>();
@@ -18,7 +18,7 @@ namespace App.Data.Implementations
 
         public async Task<SectorEntity> GetByName(string name)
         {
-            return await _dataSet.FirstOrDefaultAsync(obj => obj.Nome.Equals(name));
+            return await _dataSet.FirstOrDefaultAsync(obj => obj.Nome.Equals(name.ToUpper()));
         }
     }
 }

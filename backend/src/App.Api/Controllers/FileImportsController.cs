@@ -53,8 +53,8 @@ namespace App.Api.Controllers
         }
 
         [HttpGet]
-        [Route("User/{userId}/Date/{dateFile}")]
-        public async Task<IActionResult> GetAllFileImport(int userId, DateTime dateFile)
+        [Route("FilesByDate")]
+        public async Task<IActionResult> GetAllFileImport([FromQuery] int userId, DateTime dateFile)
         {
             try
             {

@@ -57,7 +57,7 @@ namespace App.Data.Implementations
         {
             return await _dataSet.Include(obj => obj.ArquivoImportacao)
                                  .Include(obj => obj.Ticker)
-                                 .Where(obj => obj.Ticker.Ticker.ToLower().Equals(ticker.ToLower()))
+                                 .Where(obj => obj.Ticker.Ticker.Equals(ticker.ToUpper()))
                                  .ToListAsync();
         }
     }
