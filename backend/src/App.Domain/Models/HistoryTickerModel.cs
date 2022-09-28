@@ -20,35 +20,35 @@ namespace App.Domain.Models
         public decimal PrecoUnitario
         {
             get { return _precoUnitario; }
-            set { _precoUnitario = decimal.Round(value, 2); }
+            set { _precoUnitario = value; }
         }
 
         private decimal _precoLucro;
         public decimal PrecoLucro
         {
             get { return _precoLucro; }
-            set { _precoLucro = decimal.Round(value, 2); }
+            set { _precoLucro = value; }
         }
 
         private decimal _roic;
         public decimal Roic
         {
             get { return _roic; }
-            set { _roic = decimal.Round(value, 2); }
+            set { _roic = value; }
         }
 
         private decimal _evEbit;
         public decimal EvEbit
         {
             get { return _evEbit; }
-            set { _evEbit = decimal.Round(value, 2); }
+            set { _evEbit = value; }
         }
 
         private decimal _margemEbit;
         public decimal MargemEbit
         {
             get { return _margemEbit; }
-            set { _margemEbit = decimal.Round(value, 2); }
+            set { _margemEbit = value; }
         }
 
         private decimal? _dividendYield;
@@ -97,14 +97,14 @@ namespace App.Domain.Models
         public decimal? Dpa
         {
             get { return _dpa; }
-            set { _dpa = (_dividendYield != null ? decimal.Round((decimal)_precoUnitario * ((decimal)_dividendYield / 100), 2) : null); }
+            set { _dpa = (_dividendYield != null ? (decimal)_precoUnitario * ((decimal)_dividendYield / 100) : null); }
         }
 
         private decimal? _payout;
         public decimal? Payout
         {
             get { return _payout; }
-            set { _payout = (_lpa == 0 ? 0 : (_dpa != null ? decimal.Round(((decimal)_dpa / _lpa) * 100, 2) : null)); }
+            set { _payout = (_lpa == 0 ? 0 : (_dpa != null ? ((decimal)_dpa / _lpa) * 100 : null)); }
         }
 
         private decimal? _cagrLucro;
@@ -118,14 +118,14 @@ namespace App.Domain.Models
         public decimal CrescimentoEsperado
         {
             get { return _crescimentoEsperado; }
-            set { _crescimentoEsperado = (_payout != null ? decimal.Round(((100 - (decimal)_payout) * _roe) / 100, 2) : _roe); }
+            set { _crescimentoEsperado = (_payout != null ? ((100 - (decimal)_payout) * _roe) / 100 : _roe); }
         }
 
         private decimal _mediaCrescimento;
         public decimal MediaCrescimento
         {
             get { return _mediaCrescimento; }
-            set { _mediaCrescimento = (_cagrLucro == null ? _crescimentoEsperado : decimal.Round(((decimal)_cagrLucro + _crescimentoEsperado) / 2, 2)); }
+            set { _mediaCrescimento = (_cagrLucro == null ? _crescimentoEsperado : ((decimal)_cagrLucro + _crescimentoEsperado) / 2); }
         }
     }
 }

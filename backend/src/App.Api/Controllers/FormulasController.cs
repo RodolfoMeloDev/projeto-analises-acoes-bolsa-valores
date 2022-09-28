@@ -87,5 +87,22 @@ namespace App.Api.Controllers
                 return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
             }
         }
+
+        [HttpGet]
+        [Route("ValuetionByBazin/{fileImportId}")]
+        public async Task<IActionResult> ReturnDataValuetionByBazin(int fileImportId)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest();
+
+                return Ok(await _service.ValuetionByBazin(fileImportId));
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
     }
 }

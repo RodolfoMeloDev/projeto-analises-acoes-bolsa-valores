@@ -10,5 +10,7 @@ namespace App.Domain.Interfaces.Services.Formula
         Task<IEnumerable<FormulaDto>> Greenblatt(OptionsFormula optionsFormula);
         Task<IEnumerable<FormulaDto>> PriceAndProfit(int fileImportId);
         Task<IEnumerable<FormulaDto>> PriceAndProfit(OptionsFormula optionsFormula);
+        Task<IEnumerable<FormulaDto>> ValuetionByBazin(int fileImportId);
+        Task<IEnumerable<FormulaDto>> ValuetionByBazin(OptionsFormula optionsFormula);
     }
 }

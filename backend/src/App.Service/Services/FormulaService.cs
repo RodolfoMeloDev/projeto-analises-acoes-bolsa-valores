@@ -1,8 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using App.Domain.Dtos.Formula;
 using App.Domain.Dtos.HistoryTicker;
 using App.Domain.Interfaces.Services.Formula;
@@ -26,7 +21,7 @@ namespace App.Service.Services
             var liqMedDiariaRemove = historyTicker.Where(obj => obj.LiquidezMediaDiaria == null);
             historyTicker = historyTicker.Except(liqMedDiariaRemove)
                                          .ToList();
-                                             
+
             if (optionsFormula.RemoverItensComValorNegativo)
             {
                 var evEbitNegative = historyTicker.Where(obj => obj.EvEbit < 0);
@@ -207,17 +202,53 @@ namespace App.Service.Services
             return listReturn.OrderByDescending(obj => obj.PontuacaoFinal);
         }
 
+        private IOrderedEnumerable<FormulaDto> ReturnListOrderedValuetionByBazin(IEnumerable<HistoryTickerDtoComplete> listTickers)
+        {
+            List<FormulaDto> listReturn = new List<FormulaDto>();
+            int nPosicao = 0;
+
+            foreach (var item in listTickers)
+            {
+                if (item.Dpa == 0 || item.Dpa == null)
+                {
+                    continue;
+                }
+
+                nPosicao++;
+                var ticker = new FormulaDto();
+
+                ticker.BaseTicker = item.Ticker.BaseTicker;
+                ticker.Ticker = item.Ticker.Ticker;
+                ticker.Preco = item.PrecoUnitario;
+                ticker.DividendYield = (item.DividendYield == null ? 0 : (decimal)item.DividendYield);
+                ticker.PrecoLucro = item.PrecoLucro;
+                ticker.EvEbit = item.EvEbit;
+                ticker.Roic = item.Roic;
+                ticker.MargemEbit = item.MargemEbit;
+                ticker.LiquidezMediaDiaria = (item.LiquidezMediaDiaria == null ? 0 : (decimal)item.LiquidezMediaDiaria);
+                ticker.RecuperacaoJudicial = item.Ticker.RecuperacaoJudicial;
+
+                decimal _precoJusto = (decimal)item.Dpa / (decimal)0.06;
+
+                ticker.Desconto = decimal.Round(((_precoJusto - item.PrecoUnitario) / _precoJusto) * 100, 2);
+
+                listReturn.Add(ticker);
+            }
+
+            return listReturn.OrderByDescending(obj => obj.Desconto);
+        }
+
         public async Task<IEnumerable<FormulaDto>> Greenblatt(OptionsFormula optionsFormula)
-        {          
+        {
             try
             {
                 return ReturnListOrderedGreenBlatt(
-                    await ReturnListWithParametersExecuted(optionsFormula));                
+                    await ReturnListWithParametersExecuted(optionsFormula));
             }
             catch (Exception e)
-            {                
+            {
                 throw e;
-            }  
+            }
         }
 
         public async Task<IEnumerable<FormulaDto>> Greenblatt(int fileImportId)
@@ -249,16 +280,43 @@ namespace App.Service.Services
         }
 
         public async Task<IEnumerable<FormulaDto>> PriceAndProfit(OptionsFormula optionsFormula)
-        {          
+        {
             try
             {
                 return ReturnListOrderedPriceAndProfit(
-                    await ReturnListWithParametersExecuted(optionsFormula));                
+                    await ReturnListWithParametersExecuted(optionsFormula));
             }
             catch (Exception e)
-            {                
+            {
                 throw e;
-            }  
+            }
+        }
+
+        public async Task<IEnumerable<FormulaDto>> ValuetionByBazin(int fileImportId)
+        {
+            try
+            {
+                var historyTicker = await _historyTickerService.GetAllByFileImportComplete(fileImportId);
+
+                return ReturnListOrderedValuetionByBazin(historyTicker);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task<IEnumerable<FormulaDto>> ValuetionByBazin(OptionsFormula optionsFormula)
+        {
+            try
+            {
+                return ReturnListOrderedValuetionByBazin(
+                    await ReturnListWithParametersExecuted(optionsFormula));
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
     }
 }

@@ -15,5 +15,6 @@ namespace App.Domain.Dtos.Formula
         public int PontuacaoEvEbit { get; set; }
         public int PontuacaoRoic { get; set; }
         public int PontuacaoFinal { get; set; }
+        public decimal Desconto { get; set; }
     }
 }
