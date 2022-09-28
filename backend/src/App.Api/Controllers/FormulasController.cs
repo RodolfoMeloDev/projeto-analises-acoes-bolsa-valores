@@ -53,5 +53,39 @@ namespace App.Api.Controllers
                 return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
             }
         }
+
+        [HttpGet]
+        [Route("PriceAndProfit/{fileImportId}")]
+        public async Task<IActionResult> ReturnDataPriceAndProfit(int fileImportId)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest();
+
+                return Ok(await _service.PriceAndProfit(fileImportId));
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("PriceAndProfit/Parameters")]
+        public async Task<IActionResult> ReturnDataPriceAndProfitOptions([FromBody] OptionsFormula optionsFormula)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest();
+
+                return Ok(await _service.PriceAndProfit(optionsFormula));
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
     }
 }
