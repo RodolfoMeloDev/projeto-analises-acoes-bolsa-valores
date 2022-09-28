@@ -19,51 +19,14 @@ namespace App.Service.Services
             _historyTickerService = historyTickerService;
         }
 
-        private IOrderedEnumerable<FormulaDto> ReturnListOrderedGreenBlatt(IEnumerable<HistoryTickerDtoComplete> listTickers)
-        {
-            var historyTickerOrdered = listTickers.OrderBy(obj => obj.EvEbit);
-
-            List<FormulaDto> listReturn = new List<FormulaDto>();
-            int nPosicao = 0;
-
-            foreach (var item in historyTickerOrdered)
-            {
-                nPosicao++;
-                var ticker = new FormulaDto();
-
-                ticker.BaseTicker = item.Ticker.BaseTicker;
-                ticker.Ticker = item.Ticker.Ticker;
-                ticker.Preco = item.PrecoUnitario;
-                ticker.DividendYield = (item.DividendYield == null ? 0 : (decimal)item.DividendYield);
-                ticker.PrecoLucro = item.PrecoLucro;
-                ticker.EvEbit = item.EvEbit;
-                ticker.Roic = item.Roic;
-                ticker.MargemEbit = item.MargemEbit;
-                ticker.LiquidezMediaDiaria = (item.LiquidezMediaDiaria == null ? 0 : (decimal)item.LiquidezMediaDiaria);
-                ticker.RecuperacaoJudicial = item.Ticker.RecuperacaoJudicial;
-                ticker.PontuacaoEvEbit = (listTickers.Count() - nPosicao);
-
-                listReturn.Add(ticker);
-            }
-
-            historyTickerOrdered = listTickers.OrderByDescending(obj => obj.Roic);
-            nPosicao = 0;
-
-            foreach (var item in historyTickerOrdered)
-            {
-                nPosicao++;
-                var index = listReturn.FindIndex(0, listReturn.Count(), o => o.Ticker.Equals(item.Ticker.Ticker));
-                listReturn[index].PontuacaoRoic = (listTickers.Count() - nPosicao);
-                listReturn[index].PontuacaoFinal = listReturn[index].PontuacaoRoic + listReturn[index].PontuacaoEvEbit;
-            }
-
-            return listReturn.OrderByDescending(obj => obj.PontuacaoFinal);
-        }
-
-        public async Task<IEnumerable<FormulaDto>> Greenblatt(OptionsFormula optionsFormula)
+        private async Task<IEnumerable<HistoryTickerDtoComplete>> ReturnListWithParametersExecuted(OptionsFormula optionsFormula)
         {
             var historyTicker = await _historyTickerService.GetAllByFileImportComplete(optionsFormula.FileImportId);
 
+            var liqMedDiariaRemove = historyTicker.Where(obj => obj.LiquidezMediaDiaria == null);
+            historyTicker = historyTicker.Except(liqMedDiariaRemove)
+                                         .ToList();
+                                             
             if (optionsFormula.RemoverItensComValorNegativo)
             {
                 var evEbitNegative = historyTicker.Where(obj => obj.EvEbit < 0);
@@ -169,9 +132,92 @@ namespace App.Service.Services
                                              .ToList();
             }
 
-            historyTickerOrdered = historyTicker.OrderBy(obj => obj.Ticker.Ticker);
+            return historyTicker;
+        }
 
-            return ReturnListOrderedGreenBlatt(historyTickerOrdered);
+        private IOrderedEnumerable<FormulaDto> ReturnListOrderedGreenBlatt(IEnumerable<HistoryTickerDtoComplete> listTickers)
+        {
+            var historyTickerOrdered = listTickers.OrderBy(obj => obj.EvEbit);
+
+            List<FormulaDto> listReturn = new List<FormulaDto>();
+            int nPosicao = 0;
+
+            foreach (var item in historyTickerOrdered)
+            {
+                nPosicao++;
+                var ticker = new FormulaDto();
+
+                ticker.BaseTicker = item.Ticker.BaseTicker;
+                ticker.Ticker = item.Ticker.Ticker;
+                ticker.Preco = item.PrecoUnitario;
+                ticker.DividendYield = (item.DividendYield == null ? 0 : (decimal)item.DividendYield);
+                ticker.PrecoLucro = item.PrecoLucro;
+                ticker.EvEbit = item.EvEbit;
+                ticker.Roic = item.Roic;
+                ticker.MargemEbit = item.MargemEbit;
+                ticker.LiquidezMediaDiaria = (item.LiquidezMediaDiaria == null ? 0 : (decimal)item.LiquidezMediaDiaria);
+                ticker.RecuperacaoJudicial = item.Ticker.RecuperacaoJudicial;
+                ticker.PontuacaoEvEbit = (listTickers.Count() - nPosicao);
+
+                listReturn.Add(ticker);
+            }
+
+            historyTickerOrdered = listTickers.OrderByDescending(obj => obj.Roic);
+            nPosicao = 0;
+
+            foreach (var item in historyTickerOrdered)
+            {
+                nPosicao++;
+                var index = listReturn.FindIndex(0, listReturn.Count(), o => o.Ticker.Equals(item.Ticker.Ticker));
+                listReturn[index].PontuacaoRoic = (listTickers.Count() - nPosicao);
+                listReturn[index].PontuacaoFinal = listReturn[index].PontuacaoRoic + listReturn[index].PontuacaoEvEbit;
+            }
+
+            return listReturn.OrderByDescending(obj => obj.PontuacaoFinal)
+                             .ThenByDescending(obj => obj.LiquidezMediaDiaria);
+        }
+
+        private IOrderedEnumerable<FormulaDto> ReturnListOrderedPriceAndProfit(IEnumerable<HistoryTickerDtoComplete> listTickers)
+        {
+            var historyTickerOrdered = listTickers.OrderBy(obj => obj.PrecoLucro);
+
+            List<FormulaDto> listReturn = new List<FormulaDto>();
+            int nPosicao = 0;
+
+            foreach (var item in historyTickerOrdered)
+            {
+                nPosicao++;
+                var ticker = new FormulaDto();
+
+                ticker.BaseTicker = item.Ticker.BaseTicker;
+                ticker.Ticker = item.Ticker.Ticker;
+                ticker.Preco = item.PrecoUnitario;
+                ticker.DividendYield = (item.DividendYield == null ? 0 : (decimal)item.DividendYield);
+                ticker.PrecoLucro = item.PrecoLucro;
+                ticker.EvEbit = item.EvEbit;
+                ticker.Roic = item.Roic;
+                ticker.MargemEbit = item.MargemEbit;
+                ticker.LiquidezMediaDiaria = (item.LiquidezMediaDiaria == null ? 0 : (decimal)item.LiquidezMediaDiaria);
+                ticker.RecuperacaoJudicial = item.Ticker.RecuperacaoJudicial;
+                ticker.PontuacaoFinal = (listTickers.Count() - nPosicao);
+
+                listReturn.Add(ticker);
+            }
+
+            return listReturn.OrderByDescending(obj => obj.PontuacaoFinal);
+        }
+
+        public async Task<IEnumerable<FormulaDto>> Greenblatt(OptionsFormula optionsFormula)
+        {          
+            try
+            {
+                return ReturnListOrderedGreenBlatt(
+                    await ReturnListWithParametersExecuted(optionsFormula));                
+            }
+            catch (Exception e)
+            {                
+                throw e;
+            }  
         }
 
         public async Task<IEnumerable<FormulaDto>> Greenblatt(int fileImportId)
@@ -186,6 +232,33 @@ namespace App.Service.Services
             {
                 throw e;
             }
+        }
+
+        public async Task<IEnumerable<FormulaDto>> PriceAndProfit(int fileImportId)
+        {
+            try
+            {
+                var historyTicker = await _historyTickerService.GetAllByFileImportComplete(fileImportId);
+
+                return ReturnListOrderedPriceAndProfit(historyTicker);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task<IEnumerable<FormulaDto>> PriceAndProfit(OptionsFormula optionsFormula)
+        {          
+            try
+            {
+                return ReturnListOrderedPriceAndProfit(
+                    await ReturnListWithParametersExecuted(optionsFormula));                
+            }
+            catch (Exception e)
+            {                
+                throw e;
+            }  
         }
     }
 }

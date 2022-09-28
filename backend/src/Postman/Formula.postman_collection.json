@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "1226e23b-0278-4c5b-8c85-24f60b8607ae",
+		"_postman_id": "a3c2a56e-4ceb-444d-840f-35e163cbae2b",
 		"name": "Formula",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -37,7 +37,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"fileImportId\": 3,\r\n  \"incluirItensRecuperacaoJudicial\": false,\r\n  \"removerMenorLiquidez\": true,\r\n  \"removerItensComValorZerado\": true,\r\n  \"removerItensComValorNegativo\": true,\r\n  \"liquidezMinima\": null,\r\n  \"evEbitMinima\": null,\r\n  \"evEbitMaxima\": null,\r\n  \"plMinima\": null,\r\n  \"plMaxima\": null,\r\n  \"margemEbitMinima\": null,\r\n  \"margemEbitMaxima\": null\r\n}",
+					"raw": "{\r\n  \"fileImportId\": 7,\r\n  \"incluirItensRecuperacaoJudicial\": false,\r\n  \"removerMenorLiquidez\": true,\r\n  \"removerItensComValorZerado\": true,\r\n  \"removerItensComValorNegativo\": true,\r\n  \"liquidezMinima\": 300000,\r\n  \"evEbitMinima\": null,\r\n  \"evEbitMaxima\": null,\r\n  \"plMinima\": null,\r\n  \"plMaxima\": null,\r\n  \"margemEbitMinima\": null,\r\n  \"margemEbitMaxima\": null\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -55,6 +55,62 @@
 						"api",
 						"Formulas",
 						"Greenblatt",
+						"Parameters"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetByPriceAndProfit",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7206/api/Formulas/PriceAndProfit/6",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7206",
+					"path": [
+						"api",
+						"Formulas",
+						"PriceAndProfit",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetByPriceAndProfitWithParameters",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"fileImportId\": 7,\r\n  \"incluirItensRecuperacaoJudicial\": false,\r\n  \"removerMenorLiquidez\": true,\r\n  \"removerItensComValorZerado\": true,\r\n  \"removerItensComValorNegativo\": true,\r\n  \"liquidezMinima\": 300000,\r\n  \"evEbitMinima\": null,\r\n  \"evEbitMaxima\": null,\r\n  \"plMinima\": null,\r\n  \"plMaxima\": null,\r\n  \"margemEbitMinima\": null,\r\n  \"margemEbitMaxima\": null\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7206/api/Formulas/PriceAndProfit/Parameters",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7206",
+					"path": [
+						"api",
+						"Formulas",
+						"PriceAndProfit",
 						"Parameters"
 					]
 				}
