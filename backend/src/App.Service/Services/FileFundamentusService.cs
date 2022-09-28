@@ -144,6 +144,13 @@ namespace App.Service.Services
 
                     success = decimal.TryParse(line.DividendYeild, out value);
                     historyTicker.DividendYield = (success ? value : 0);
+
+                    success = decimal.TryParse(line.Roe, out value);
+                    historyTicker.Roe = (success ? value : 0);
+
+                    success = decimal.TryParse(line.CAGRLucro, out value);
+                    historyTicker.CAGRLucro = (success ? (value == 0 ? null : value) : null);
+
                     historyTicker.PrecoValorPatrimonial = line.PrecoValorPatrimonial;
                     historyTicker.LiquidezMediaDiaria = line.LiquidezMediaDiaria;
                     historyTicker.ValorMercado = line.ValorMercado;

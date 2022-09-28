@@ -19,6 +19,7 @@ namespace App.Domain.Entities
         public decimal PrecoUnitario { get; set; }
 
         [Required]
+        [DataType(DataType.Currency)]
         public decimal PrecoLucro { get; set; }
 
         [Required]
@@ -30,8 +31,23 @@ namespace App.Domain.Entities
         [Required]
         public decimal MargemEbit { get; set; }
 
+        [Required]
+        public decimal Lpa { get; set; }
+
+        [Required]
+        public decimal Roe { get; set; }
+
+        [Required]
+        public decimal CrescimentoEsperado { get; set; }
+
+        [Required]
+        public decimal MediaCrescimento { get; set; }
+
         public decimal? DividendYield { get; set; }
         public decimal? PrecoValorPatrimonial { get; set; }
+        public decimal? Dpa { get; set; }
+        public decimal? Payout { get; set; }
+        public decimal? CAGRLucro { get; set; }
         public decimal? LiquidezMediaDiaria { get; set; }
         public decimal? ValorMercado { get; set; }
     }

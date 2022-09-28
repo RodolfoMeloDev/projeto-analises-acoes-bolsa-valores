@@ -1,4 +1,3 @@
-using System.Globalization;
 using CsvHelper.Configuration.Attributes;
 
 namespace App.Domain.Models.FilesImport
@@ -9,6 +8,8 @@ namespace App.Domain.Models.FilesImport
         private string _margemEbit;
         private string _dividendYeild;
         private string _roic;
+        private string _roe;
+        private string _cagrLucro;
 
         [Name("papel")]
         public string Ticker
@@ -56,5 +57,19 @@ namespace App.Domain.Models.FilesImport
         [Name("valor de mercado")]
         [Optional]
         public decimal? ValorMercado { get; set; }
+
+        [Name("roe")]
+        public string Roe
+        {
+            get { return _roe; }
+            set { _roe = (string.IsNullOrEmpty(value) ? null : value.ToUpper().ToString().Replace("%", "")); }
+        }
+
+        [Name("cresc. rec.5a")]
+        public string CAGRLucro
+        {
+            get { return _cagrLucro; }
+            set { _cagrLucro = (string.IsNullOrEmpty(value) ? null : value.ToUpper().ToString().Replace("%", "")); }
+        }
     }
 }

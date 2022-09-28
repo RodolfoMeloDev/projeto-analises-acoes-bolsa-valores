@@ -117,7 +117,7 @@ namespace App.Service.Services
 
                 foreach (var line in lines)
                 {
-                    if (line.Preco.Equals(0))
+                    if (line.Preco.Equals(0) || line.LiquidezMediaDiaria == null)
                     {
                         continue;
                     }
@@ -132,6 +132,9 @@ namespace App.Service.Services
                     historyTicker.Roic = (line.Roic == null ? 0 : (decimal)line.Roic);
                     historyTicker.EvEbit = (line.EvEbit == null ? 0 : (decimal)line.EvEbit);
                     historyTicker.MargemEbit = (line.MargemEbit == null ? 0 : (decimal)line.MargemEbit);
+                    historyTicker.Lpa = (line.Lpa == null ? 0 : (decimal)line.Lpa);
+                    historyTicker.Roe = (line.Roe == null ? 0 : (decimal)line.Roe);
+                    historyTicker.CAGRLucro = line.CAGRLucro;
                     historyTicker.DividendYield = line.DividendYeild;
                     historyTicker.PrecoValorPatrimonial = line.PrecoValorPatrimonial;
                     historyTicker.LiquidezMediaDiaria = line.LiquidezMediaDiaria;

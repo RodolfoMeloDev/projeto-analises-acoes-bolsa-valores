@@ -39,5 +39,14 @@ namespace App.Domain.Models.FilesImport
 
         [Name("valor de mercado")]
         public decimal? ValorMercado { get; set; }
+
+        [Name("lpa")]
+        public decimal? Lpa { get; set; }
+
+        [Name("roe")]
+        public decimal? Roe { get; set; }
+
+        [Name("cagr lucros 5 anos")]
+        public decimal? CAGRLucro { get; set; }
     }
 }

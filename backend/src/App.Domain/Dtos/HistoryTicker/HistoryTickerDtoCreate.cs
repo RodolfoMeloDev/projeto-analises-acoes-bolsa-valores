@@ -25,8 +25,23 @@ namespace App.Domain.Dtos.HistoryTicker
         [Required(ErrorMessage = "O campo é obrigatório")]
         public decimal MargemEbit { get; set; }
 
+        [Required(ErrorMessage = "O campo é obrigatório")]
+        public decimal Lpa { get; set; }
+
+        [Required(ErrorMessage = "O campo é obrigatório")]
+        public decimal Roe { get; set; }
+
+        [Required(ErrorMessage = "O campo é obrigatório")]
+        public decimal CrescimentoEsperado { get; set; }
+
+        [Required(ErrorMessage = "O campo é obrigatório")]
+        public decimal MediaCrescimento { get; set; }
+
         public decimal? DividendYield { get; set; }
         public decimal? PrecoValorPatrimonial { get; set; }
+        public decimal? Dpa { get; set; }
+        public decimal? Payout { get; set; }
+        public decimal? CAGRLucro { get; set; }
         public decimal? LiquidezMediaDiaria { get; set; }
         public decimal? ValorMercado { get; set; }
     }
