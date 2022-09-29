@@ -16,24 +16,17 @@ namespace App.Service.Services.Functions
 
         public static string CopyFileToServer(IFormFile file, string directoryFile)
         {
-            try
-            {
-                string pathFile;
-                Utils.CreateDirectory("Users");
-                pathFile = Utils.CreateDirectory("Users\\" + directoryFile) + "\\" + file.FileName;
+            string pathFile;
+            Utils.CreateDirectory("Users");
+            pathFile = Utils.CreateDirectory("Users\\" + directoryFile) + "\\" + file.FileName;
 
-                using (FileStream fileStream = System.IO.File.Create(pathFile))
-                {
-                    file.CopyTo(fileStream);
-                    fileStream.Flush();
-                }
-
-                return pathFile;
-            }
-            catch (Exception e)
+            using (FileStream fileStream = System.IO.File.Create(pathFile))
             {
-                throw e;
+                file.CopyTo(fileStream);
+                fileStream.Flush();
             }
+
+            return pathFile;
         }
     }
 }

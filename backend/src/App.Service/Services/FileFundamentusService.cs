@@ -34,136 +34,112 @@ namespace App.Service.Services
 
         public IEnumerable<FileFundamentus> GetLinesFile(IFormFile file, string directoryUser)
         {
-            try
-            {
-                _pathFile = Utils.CopyFileToServer(file, directoryUser);
+            _pathFile = Utils.CopyFileToServer(file, directoryUser);
 
-                if (!String.IsNullOrEmpty(_pathFile))
+            if (!String.IsNullOrEmpty(_pathFile))
+            {
+                var config = new CsvConfiguration(CultureInfo.CurrentCulture)
                 {
-                    var config = new CsvConfiguration(CultureInfo.CurrentCulture)
-                    {
-                        HasHeaderRecord = true,
-                        TrimOptions = TrimOptions.Trim,
-                        PrepareHeaderForMatch = args => args.Header.ToLower(),
-                    };
+                    HasHeaderRecord = true,
+                    TrimOptions = TrimOptions.Trim,
+                    PrepareHeaderForMatch = args => args.Header.ToLower(),
+                };
 
-                    using (var reader = new StreamReader(_pathFile, Encoding.Latin1))
-                    using (var csv = new CsvReader(reader, config))
-                    {
-                        return csv.GetRecords<FileFundamentus>().ToList();
-                    }
+                using (var reader = new StreamReader(_pathFile, Encoding.Latin1))
+                using (var csv = new CsvReader(reader, config))
+                {
+                    return csv.GetRecords<FileFundamentus>().ToList();
                 }
-                else
-                    throw new FileUploadFundamentusException("Não foi possível definir um local para descarregar o arquivo no servidor.");
             }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            else
+                throw new FileUploadFundamentusException("Não foi possível definir um local para descarregar o arquivo no servidor.");
         }
 
         public async Task<bool> InsertListTickers(IEnumerable<FileFundamentus> lines, IEnumerable<DataTickerModel> listTickerWeb)
         {
-            try
-            {
-                var listSegment = await _segmentService.GetAllComplete();
+            var listSegment = await _segmentService.GetAllComplete();
 
-                foreach (var line in lines)
+            foreach (var line in lines)
+            {
+                var ticker = await _tickerService.GetByTicker(line.Ticker);
+
+                if (ticker == null)
                 {
-                    var ticker = await _tickerService.GetByTicker(line.Ticker);
+                    DataTickerModel? tickerWebData = listTickerWeb.Where(t => t.cd_acao.Contains(line.Ticker))
+                                                                    .FirstOrDefault();
 
-                    if (ticker == null)
+                    TickerDtoCreate tickerCreate = new TickerDtoCreate();
+
+                    tickerCreate.Ticker = line.Ticker;
+                    tickerCreate.BaseTicker = line.Ticker.Substring(0, 4);
+                    tickerCreate.Tipo = TypeTicker.ACAO;
+                    tickerCreate.RecuperacaoJudicial = false;
+
+                    if (tickerWebData != null)
                     {
-                        DataTickerModel? tickerWebData = listTickerWeb.Where(t => t.cd_acao.Contains(line.Ticker))
-                                                                      .FirstOrDefault();
+                        var segment = listSegment.Where(sg => sg.Nome.Equals(tickerWebData.segmento) &&
+                                                        sg.SubSetor.Nome.Equals(tickerWebData.subsetor) &&
+                                                        sg.SubSetor.Setor.Nome.Equals(tickerWebData.setor_economico))
+                                                    .FirstOrDefault();
 
-                        TickerDtoCreate tickerCreate = new TickerDtoCreate();
-
-                        tickerCreate.Ticker = line.Ticker;
-                        tickerCreate.BaseTicker = line.Ticker.Substring(0, 4);
-                        tickerCreate.Tipo = TypeTicker.ACAO;
-                        tickerCreate.RecuperacaoJudicial = false;
-
-                        if (tickerWebData != null)
-                        {
-                            var segment = listSegment.Where(sg => sg.Nome.Equals(tickerWebData.segmento) &&
-                                                            sg.SubSetor.Nome.Equals(tickerWebData.subsetor) &&
-                                                            sg.SubSetor.Setor.Nome.Equals(tickerWebData.setor_economico))
-                                                     .FirstOrDefault();
-
-                            tickerCreate.BaseTicker = tickerWebData.cd_acao_rdz;
-                            tickerCreate.Empresa = tickerWebData.nm_empresa;
-                            tickerCreate.CNPJ = tickerWebData.tx_cnpj;
-                            tickerCreate.SegmentoId = (segment != null ? segment.Id : null);
-                        }
-
-                        await _tickerService.Insert(tickerCreate);
+                        tickerCreate.BaseTicker = tickerWebData.cd_acao_rdz;
+                        tickerCreate.Empresa = tickerWebData.nm_empresa;
+                        tickerCreate.CNPJ = tickerWebData.tx_cnpj;
+                        tickerCreate.SegmentoId = (segment != null ? segment.Id : null);
                     }
-                }
 
-                return true;
+                    await _tickerService.Insert(tickerCreate);
+                }
             }
-            catch (Exception e)
-            {
-                throw e;
-            }
+
+            return true;
         }
 
         public async Task<bool> InsertHistoryTickers(IEnumerable<FileFundamentus> lines, int fileImportId)
         {
-            try
+            var tickers = await _tickerService.GetAllComplete();
+            var _priceRemove = lines.Where(obj => obj.Preco.Equals(0));
+
+            lines = lines.Except(_priceRemove)
+                            .ToList();
+
+            foreach (var line in lines)
             {
-                var tickers = await _tickerService.GetAllComplete();
+                bool success;
+                decimal value = 0;
+                HistoryTickerDtoCreate historyTicker = new HistoryTickerDtoCreate();
 
-                foreach (var line in lines)
-                {
-                    if (line.Preco.Equals(0))
-                    {
-                        continue;
-                    }
+                historyTicker.ArquivoImportacaoId = fileImportId;
+                historyTicker.TickerId = tickers.Where(t => t.Ticker.Equals(line.Ticker))
+                                                .Select(x => x.Id)
+                                                .FirstOrDefault();
+                historyTicker.PrecoUnitario = line.Preco;
 
-                    var historyTicker = new HistoryTickerDtoCreate();
+                historyTicker.PrecoLucro = Convert.ToDecimal(line.PrecoLucro);
+                historyTicker.EvEbit = Convert.ToDecimal(line.EvEbit);
+                historyTicker.PrecoValorPatrimonial = line.PrecoValorPatrimonial;
+                historyTicker.LiquidezMediaDiaria = line.LiquidezMediaDiaria;
+                historyTicker.ValorMercado = line.ValorMercado;
 
-                    bool success;
-                    decimal value = 0;
+                success = decimal.TryParse(line.Roic, out value);
+                historyTicker.Roic = (success ? value : 0);
 
-                    historyTicker.ArquivoImportacaoId = fileImportId;
-                    historyTicker.TickerId = tickers.Where(t => t.Ticker.Equals(line.Ticker))
-                                                    .FirstOrDefault().Id;
-                    historyTicker.PrecoUnitario = line.Preco;
+                success = decimal.TryParse(line.MargemEbit, out value);
+                historyTicker.MargemEbit = (success ? value : 0);
 
-                    historyTicker.PrecoLucro = (line.PrecoLucro == null ? 0 : (decimal)line.PrecoLucro);
+                success = decimal.TryParse(line.DividendYeild, out value);
+                historyTicker.DividendYield = (success ? value : 0);
 
-                    success = decimal.TryParse(line.Roic, out value);
-                    historyTicker.Roic = (success ? value : 0);
+                success = decimal.TryParse(line.Roe, out value);
+                historyTicker.Roe = (success ? value : 0);
 
-                    historyTicker.EvEbit = (line.EvEbit == null ? 0 : (decimal)line.EvEbit);
+                success = decimal.TryParse(line.CAGRLucro, out value);
+                historyTicker.CAGRLucro = (success ? (value == 0 ? null : value) : null);
 
-                    success = decimal.TryParse(line.MargemEbit, out value);
-                    historyTicker.MargemEbit = (success ? value : 0);
-
-                    success = decimal.TryParse(line.DividendYeild, out value);
-                    historyTicker.DividendYield = (success ? value : 0);
-
-                    success = decimal.TryParse(line.Roe, out value);
-                    historyTicker.Roe = (success ? value : 0);
-
-                    success = decimal.TryParse(line.CAGRLucro, out value);
-                    historyTicker.CAGRLucro = (success ? (value == 0 ? null : value) : null);
-
-                    historyTicker.PrecoValorPatrimonial = line.PrecoValorPatrimonial;
-                    historyTicker.LiquidezMediaDiaria = line.LiquidezMediaDiaria;
-                    historyTicker.ValorMercado = line.ValorMercado;
-
-                    await _historyTickerService.InsertHistoryTicker(historyTicker);
-                }
-
-                return true;
+                await _historyTickerService.InsertHistoryTicker(historyTicker);
             }
-            catch (Exception e)
-            {
-                throw e;
-            }
+
+            return true;
         }
 
         public async Task<bool> DeleteHistoryTickers(int fileImportId)

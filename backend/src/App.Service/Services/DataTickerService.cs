@@ -37,9 +37,14 @@ namespace App.Service
 
             if (_response.IsSuccessStatusCode)
             {
-                var respsota = await _response.Content.ReadAsStringAsync();
+                string response = await _response.Content.ReadAsStringAsync();
 
-                return JsonSerializer.Deserialize<IEnumerable<DataTickerModel>>(respsota);
+                var jsonDeserialize = JsonSerializer.Deserialize<IEnumerable<DataTickerModel>>(response);
+
+                if (jsonDeserialize != null)
+                    return jsonDeserialize;
+
+                throw new HttpRequestException("[{\"ErrorStatusCode\":\"" + (int)HttpStatusCode.InternalServerError + "\", {\"Message\": \"Não foi possível ler o arquivo informado.\" }]");
             }
             else
             {
@@ -49,67 +54,60 @@ namespace App.Service
 
         public async Task<bool> ImportSegmentsSubSectorsAndSectors(IEnumerable<DataTickerModel> tickres)
         {
-            try
+            var listSector = await _sectorService.GetAllSectors();
+            var listSubSector = await _subSectorService.GetAllComplete();
+            var listSegment = await _segmentService.GetAllComplete();
+
+            foreach (var ticker in tickres)
             {
-                var listSector = await _sectorService.GetAllSectors();
-                var listSubSector = await _subSectorService.GetAllComplete();
-                var listSegment = await _segmentService.GetAllComplete();
+                var resultSector = new SectorDtoCreateResult();
+                var resultSubSector = new SubSectorDtoCreateResult();
 
-                foreach (var ticker in tickres)
+                var sector = listSector.Where(s => s.Nome.Equals(ticker.setor_economico))
+                                        .FirstOrDefault();
+
+                if (sector == null)
                 {
-                    var resultSector = new SectorDtoCreateResult();
-                    var resultSubSector = new SubSectorDtoCreateResult();
+                    var sectorNew = new SectorDtoCreate();
+                    sectorNew.Nome = ticker.setor_economico;
 
-                    var sector = listSector.Where(s => s.Nome.Equals(ticker.setor_economico))
-                                           .FirstOrDefault();
-
-                    if (sector == null)
-                    {
-                        var sectorNew = new SectorDtoCreate();
-                        sectorNew.Nome = ticker.setor_economico;
-
-                        resultSector = await _sectorService.InsertSector(sectorNew);
-                        // update list sectors
-                        listSector = await _sectorService.GetAllSectors();
-                    }
-
-                    var subSector = listSubSector.Where(ss => ss.Nome.Equals(ticker.subsetor) && ss.Setor.Nome.Equals(ticker.setor_economico))
-                                                 .FirstOrDefault();
-
-                    if (subSector == null)
-                    {
-                        var subSectorNew = new SubSectorDtoCreate();
-                        subSectorNew.Nome = ticker.subsetor;
-                        subSectorNew.SetorId = (sector != null ? sector.Id : resultSector.Id);
-
-                        resultSubSector = await _subSectorService.Insert(subSectorNew);
-                        // update list subsectores
-                        listSubSector = await _subSectorService.GetAllComplete();
-                    }
-
-                    var segment = listSegment.Where(sg => sg.Nome.Equals(ticker.segmento) &&
-                                                        sg.SubSetor.Nome.Equals(ticker.subsetor) &&
-                                                        sg.SubSetor.Setor.Nome.Equals(ticker.setor_economico))
-                                             .FirstOrDefault();
-
-                    if (segment == null)
-                    {
-                        var segmentNew = new SegmentDtoCreate();
-                        segmentNew.Nome = ticker.segmento;
-                        segmentNew.SubSetorId = (subSector != null ? subSector.Id : resultSubSector.Id);
-
-                        await _segmentService.Insert(segmentNew);
-                        // update list segments
-                        listSegment = await _segmentService.GetAllComplete();
-                    }
+                    resultSector = await _sectorService.InsertSector(sectorNew);
+                    // update list sectors
+                    listSector = await _sectorService.GetAllSectors();
                 }
 
-                return true;
+                var subSector = listSubSector.Where(ss => ss.Nome.Equals(ticker.subsetor) && ss.Setor.Nome.Equals(ticker.setor_economico))
+                                                .FirstOrDefault();
+
+                if (subSector == null)
+                {
+                    var subSectorNew = new SubSectorDtoCreate();
+                    subSectorNew.Nome = ticker.subsetor;
+                    subSectorNew.SetorId = (sector != null ? sector.Id : resultSector.Id);
+
+                    resultSubSector = await _subSectorService.Insert(subSectorNew);
+                    // update list subsectores
+                    listSubSector = await _subSectorService.GetAllComplete();
+                }
+
+                var segment = listSegment.Where(sg => sg.Nome.Equals(ticker.segmento) &&
+                                                    sg.SubSetor.Nome.Equals(ticker.subsetor) &&
+                                                    sg.SubSetor.Setor.Nome.Equals(ticker.setor_economico))
+                                            .FirstOrDefault();
+
+                if (segment == null)
+                {
+                    var segmentNew = new SegmentDtoCreate();
+                    segmentNew.Nome = ticker.segmento;
+                    segmentNew.SubSetorId = (subSector != null ? subSector.Id : resultSubSector.Id);
+
+                    await _segmentService.Insert(segmentNew);
+                    // update list segments
+                    listSegment = await _segmentService.GetAllComplete();
+                }
             }
-            catch (Exception e)
-            {
-                throw e;
-            }
+
+            return true;
         }
     }
 }

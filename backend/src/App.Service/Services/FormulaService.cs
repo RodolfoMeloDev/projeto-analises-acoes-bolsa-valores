@@ -2,6 +2,7 @@ using App.Domain.Dtos.Formula;
 using App.Domain.Dtos.HistoryTicker;
 using App.Domain.Interfaces.Services.Formula;
 using App.Domain.Interfaces.Services.HistoryTicker;
+using App.Service.Services.Exceptions;
 
 namespace App.Service.Services
 {
@@ -12,6 +13,17 @@ namespace App.Service.Services
         public FormulaService(IHistoryTickerService historyTickerService)
         {
             _historyTickerService = historyTickerService;
+        }
+
+        private decimal ReturnDiscountPercentage(decimal price, decimal justPrice)
+        {
+
+            if (justPrice == 0)
+                throw new FormulaException("O preço justo não pode ser ZERO.");
+
+            var difPrice = justPrice - price;
+
+            return decimal.Round((difPrice / justPrice) * 100, 2);
         }
 
         private async Task<IEnumerable<HistoryTickerDtoComplete>> ReturnListWithParametersExecuted(OptionsFormula optionsFormula)
@@ -145,12 +157,12 @@ namespace App.Service.Services
                 ticker.BaseTicker = item.Ticker.BaseTicker;
                 ticker.Ticker = item.Ticker.Ticker;
                 ticker.Preco = item.PrecoUnitario;
-                ticker.DividendYield = (item.DividendYield == null ? 0 : (decimal)item.DividendYield);
+                ticker.DividendYield = Convert.ToDecimal(item.DividendYield);
                 ticker.PrecoLucro = item.PrecoLucro;
                 ticker.EvEbit = item.EvEbit;
                 ticker.Roic = item.Roic;
                 ticker.MargemEbit = item.MargemEbit;
-                ticker.LiquidezMediaDiaria = (item.LiquidezMediaDiaria == null ? 0 : (decimal)item.LiquidezMediaDiaria);
+                ticker.LiquidezMediaDiaria = Convert.ToDecimal(item.LiquidezMediaDiaria);
                 ticker.RecuperacaoJudicial = item.Ticker.RecuperacaoJudicial;
                 ticker.PontuacaoEvEbit = (listTickers.Count() - nPosicao);
 
@@ -187,12 +199,12 @@ namespace App.Service.Services
                 ticker.BaseTicker = item.Ticker.BaseTicker;
                 ticker.Ticker = item.Ticker.Ticker;
                 ticker.Preco = item.PrecoUnitario;
-                ticker.DividendYield = (item.DividendYield == null ? 0 : (decimal)item.DividendYield);
+                ticker.DividendYield = Convert.ToDecimal(item.DividendYield);
                 ticker.PrecoLucro = item.PrecoLucro;
                 ticker.EvEbit = item.EvEbit;
                 ticker.Roic = item.Roic;
                 ticker.MargemEbit = item.MargemEbit;
-                ticker.LiquidezMediaDiaria = (item.LiquidezMediaDiaria == null ? 0 : (decimal)item.LiquidezMediaDiaria);
+                ticker.LiquidezMediaDiaria = Convert.ToDecimal(item.LiquidezMediaDiaria);
                 ticker.RecuperacaoJudicial = item.Ticker.RecuperacaoJudicial;
                 ticker.PontuacaoFinal = (listTickers.Count() - nPosicao);
 
@@ -202,43 +214,41 @@ namespace App.Service.Services
             return listReturn.OrderByDescending(obj => obj.PontuacaoFinal);
         }
 
-        private IOrderedEnumerable<FormulaDto> ReturnListOrderedValuetionByBazin(IEnumerable<HistoryTickerDtoComplete> listTickers)
+        private IOrderedEnumerable<FormulaDto> ReturnListValuetionByBazin(IEnumerable<HistoryTickerDtoComplete> listTickers)
         {
+            var _dpaRemove = listTickers.Where(obj => obj.Dpa == 0 || obj.Dpa == null);
+
+            listTickers = listTickers.Except(_dpaRemove)
+                                     .ToList();
+
             List<FormulaDto> listReturn = new List<FormulaDto>();
-            int nPosicao = 0;
 
             foreach (var item in listTickers)
             {
-                if (item.Dpa == 0 || item.Dpa == null)
-                {
-                    continue;
-                }
-
-                nPosicao++;
                 var ticker = new FormulaDto();
 
                 ticker.BaseTicker = item.Ticker.BaseTicker;
                 ticker.Ticker = item.Ticker.Ticker;
                 ticker.Preco = item.PrecoUnitario;
-                ticker.DividendYield = (item.DividendYield == null ? 0 : (decimal)item.DividendYield);
+                ticker.DividendYield = Convert.ToDecimal(item.DividendYield);
                 ticker.PrecoLucro = item.PrecoLucro;
                 ticker.EvEbit = item.EvEbit;
                 ticker.Roic = item.Roic;
                 ticker.MargemEbit = item.MargemEbit;
-                ticker.LiquidezMediaDiaria = (item.LiquidezMediaDiaria == null ? 0 : (decimal)item.LiquidezMediaDiaria);
+                ticker.LiquidezMediaDiaria = Convert.ToDecimal(item.LiquidezMediaDiaria);
                 ticker.RecuperacaoJudicial = item.Ticker.RecuperacaoJudicial;
 
-                decimal _precoJusto = (decimal)item.Dpa / (decimal)0.06;
+                decimal _justPrice = Convert.ToDecimal(item.Dpa) / Convert.ToDecimal(0.06);
 
-                ticker.Desconto = decimal.Round(((_precoJusto - item.PrecoUnitario) / _precoJusto) * 100, 2);
+                ticker.Desconto = ReturnDiscountPercentage(item.PrecoUnitario, _justPrice);
 
                 listReturn.Add(ticker);
             }
 
-            return listReturn.OrderByDescending(obj => obj.Desconto);
+            return listReturn.OrderBy(obj => obj.Ticker);
         }
 
-        private IOrderedEnumerable<FormulaDto> ReturnListOrderedValuetionByGraham(IEnumerable<HistoryTickerDtoComplete> listTickers)
+        private IOrderedEnumerable<FormulaDto> ReturnListValuetionByGraham(IEnumerable<HistoryTickerDtoComplete> listTickers)
         {
             var _vpaRemove = listTickers.Where(obj => obj.Vpa <= 0);
             var _lpaRemove = listTickers.Where(obj => obj.Lpa <= 0);
@@ -248,218 +258,107 @@ namespace App.Service.Services
                                      .ToList();
 
             List<FormulaDto> listReturn = new List<FormulaDto>();
-            int nPosicao = 0;
 
             foreach (var item in listTickers)
             {
-                nPosicao++;
                 var ticker = new FormulaDto();
 
                 ticker.BaseTicker = item.Ticker.BaseTicker;
                 ticker.Ticker = item.Ticker.Ticker;
                 ticker.Preco = item.PrecoUnitario;
-                ticker.DividendYield = (item.DividendYield == null ? 0 : (decimal)item.DividendYield);
+                ticker.DividendYield = Convert.ToDecimal(item.DividendYield);
                 ticker.PrecoLucro = item.PrecoLucro;
                 ticker.EvEbit = item.EvEbit;
                 ticker.Roic = item.Roic;
                 ticker.MargemEbit = item.MargemEbit;
-                ticker.LiquidezMediaDiaria = (item.LiquidezMediaDiaria == null ? 0 : (decimal)item.LiquidezMediaDiaria);
+                ticker.LiquidezMediaDiaria = Convert.ToDecimal(item.LiquidezMediaDiaria);
                 ticker.RecuperacaoJudicial = item.Ticker.RecuperacaoJudicial;
 
-                var valor = (decimal?)22.5 * item.Lpa * item.Vpa;
-
+                var valor = Convert.ToDecimal(22.5) * item.Lpa * item.Vpa;
                 var isNegativo = (valor < 0 ? true : false);
 
                 valor = (isNegativo ? valor * -1 : valor * 1);
 
-                decimal _precoJusto = (decimal)Math.Sqrt((double)valor);
+                decimal _justPrice = Convert.ToDecimal(Math.Sqrt(Convert.ToDouble(valor)));
+                _justPrice = (isNegativo ? _justPrice * -1 : _justPrice * 1);
 
-                _precoJusto = (isNegativo ? _precoJusto * -1 : _precoJusto * 1);
-
-                ticker.Desconto = decimal.Round(((_precoJusto - item.PrecoUnitario) / _precoJusto) * 100, 2);
+                ticker.Desconto = ReturnDiscountPercentage(item.PrecoUnitario, _justPrice);
 
                 listReturn.Add(ticker);
             }
 
-            return listReturn.OrderByDescending(obj => obj.Desconto);
+            return listReturn.OrderBy(obj => obj.Ticker);
         }
 
-        private IOrderedEnumerable<FormulaDto> ReturnListOrderedValuetionByGordon(IEnumerable<HistoryTickerDtoComplete> listTickers, decimal riscoBolsa)
+        private IOrderedEnumerable<FormulaDto> ReturnListValuetionByGordon(IEnumerable<HistoryTickerDtoComplete> listTickers, decimal marketRisk)
         {
             var _dyRemove = listTickers.Where(obj => obj.DividendYield <= 0 || obj.DividendYield == null);
             var _dpaRemove = listTickers.Where(obj => obj.Dpa == null);
-            var _cagrLucroRemove = listTickers.Where(obj => obj.CAGRLucro < 0);
+            var _cagrProfitRemove = listTickers.Where(obj => obj.CAGRLucro < 0);
 
             listTickers = listTickers.Except(_dyRemove)
                                      .Except(_dpaRemove)
-                                     .Except(_cagrLucroRemove)
+                                     .Except(_cagrProfitRemove)
                                      .ToList();
 
             List<FormulaDto> listReturn = new List<FormulaDto>();
-            int nPosicao = 0;
 
             foreach (var item in listTickers)
             {
-                nPosicao++;
                 var ticker = new FormulaDto();
 
-                item.CAGRLucro = (item.CAGRLucro == null ? 0 : item.CAGRLucro);
+                // update to value for Zero, case necessary
+                item.CAGRLucro = Convert.ToDecimal(item.CAGRLucro);
 
                 ticker.BaseTicker = item.Ticker.BaseTicker;
                 ticker.Ticker = item.Ticker.Ticker;
                 ticker.Preco = item.PrecoUnitario;
-                ticker.DividendYield = (item.DividendYield == null ? 0 : (decimal)item.DividendYield);
+                ticker.DividendYield = Convert.ToDecimal(item.DividendYield);
                 ticker.PrecoLucro = item.PrecoLucro;
                 ticker.EvEbit = item.EvEbit;
                 ticker.Roic = item.Roic;
                 ticker.MargemEbit = item.MargemEbit;
-                ticker.LiquidezMediaDiaria = (item.LiquidezMediaDiaria == null ? 0 : (decimal)item.LiquidezMediaDiaria);
+                ticker.LiquidezMediaDiaria = Convert.ToDecimal(item.LiquidezMediaDiaria);
                 ticker.RecuperacaoJudicial = item.Ticker.RecuperacaoJudicial;
 
-                decimal? _valorDyFuturo = (item.CAGRLucro != 0 ? item.Dpa * (1 + (item.CAGRLucro / 100)) : item.Dpa);
+                // 1 - reference a 1 year in future
+                decimal _valueFutureDy = Convert.ToDecimal(item.CAGRLucro != 0 ? item.Dpa * (1 + (item.CAGRLucro / 100)) : item.Dpa);
+                decimal _justPrice = Convert.ToDecimal(_valueFutureDy / ((marketRisk - item.CAGRLucro) / 100));
 
-                decimal? _precoJusto = _valorDyFuturo / ((riscoBolsa - item.CAGRLucro) / 100);
-
-                ticker.Desconto = decimal.Round((((decimal)_precoJusto - item.PrecoUnitario) / (decimal)_precoJusto) * 100, 2);
+                ticker.Desconto = ReturnDiscountPercentage(item.PrecoUnitario, _justPrice);
 
                 listReturn.Add(ticker);
             }
 
-            return listReturn.OrderByDescending(obj => obj.Desconto);
+            return listReturn.OrderBy(obj => obj.Ticker);
         }
+
         public async Task<IEnumerable<FormulaDto>> Greenblatt(OptionsFormula optionsFormula)
         {
-            try
-            {
-                return ReturnListOrderedGreenBlatt(
-                    await ReturnListWithParametersExecuted(optionsFormula));
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
-
-        public async Task<IEnumerable<FormulaDto>> Greenblatt(int fileImportId)
-        {
-            try
-            {
-                var historyTicker = await _historyTickerService.GetAllByFileImportComplete(fileImportId);
-
-                return ReturnListOrderedGreenBlatt(historyTicker);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
-
-        public async Task<IEnumerable<FormulaDto>> PriceAndProfit(int fileImportId)
-        {
-            try
-            {
-                var historyTicker = await _historyTickerService.GetAllByFileImportComplete(fileImportId);
-
-                return ReturnListOrderedPriceAndProfit(historyTicker);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            return ReturnListOrderedGreenBlatt(await ReturnListWithParametersExecuted(optionsFormula));
         }
 
         public async Task<IEnumerable<FormulaDto>> PriceAndProfit(OptionsFormula optionsFormula)
         {
-            try
-            {
-                return ReturnListOrderedPriceAndProfit(
-                    await ReturnListWithParametersExecuted(optionsFormula));
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
-
-        public async Task<IEnumerable<FormulaDto>> ValuetionByBazin(int fileImportId)
-        {
-            try
-            {
-                var historyTicker = await _historyTickerService.GetAllByFileImportComplete(fileImportId);
-
-                return ReturnListOrderedValuetionByBazin(historyTicker);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            return ReturnListOrderedPriceAndProfit(await ReturnListWithParametersExecuted(optionsFormula));
         }
 
         public async Task<IEnumerable<FormulaDto>> ValuetionByBazin(OptionsFormula optionsFormula)
         {
-            try
-            {
-                return ReturnListOrderedValuetionByBazin(
-                    await ReturnListWithParametersExecuted(optionsFormula));
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
-
-        public async Task<IEnumerable<FormulaDto>> ValuetionByGraham(int fileImportId)
-        {
-            try
-            {
-                var historyTicker = await _historyTickerService.GetAllByFileImportComplete(fileImportId);
-
-                return ReturnListOrderedValuetionByGraham(historyTicker);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            return ReturnListValuetionByBazin(await ReturnListWithParametersExecuted(optionsFormula));
         }
 
         public async Task<IEnumerable<FormulaDto>> ValuetionByGraham(OptionsFormula optionsFormula)
         {
-            try
-            {
-                return ReturnListOrderedValuetionByGraham(
-                    await ReturnListWithParametersExecuted(optionsFormula));
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        }
-
-        public async Task<IEnumerable<FormulaDto>> ValuetionByGordon(int fileImportId, decimal riscoBolsa)
-        {
-            try
-            {
-                var historyTicker = await _historyTickerService.GetAllByFileImportComplete(fileImportId);
-
-                return ReturnListOrderedValuetionByGordon(historyTicker, riscoBolsa);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            return ReturnListValuetionByGraham(await ReturnListWithParametersExecuted(optionsFormula));
         }
 
         public async Task<IEnumerable<FormulaDto>> ValuetionByGordon(OptionsFormula optionsFormula)
         {
-            try
-            {
-                return ReturnListOrderedValuetionByGordon(
-                    await ReturnListWithParametersExecuted(optionsFormula), (decimal)optionsFormula.RiscoBolsa);
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            if (optionsFormula.RiscoBolsa == null || optionsFormula.RiscoBolsa <= 0)
+                throw new FormulaException("Deve ser informado um valor válido, acima de ZERO, para o parametro Risco de Mercado");
+
+            return ReturnListValuetionByGordon(await ReturnListWithParametersExecuted(optionsFormula), Convert.ToDecimal(optionsFormula.RiscoBolsa));
         }
     }
 }
