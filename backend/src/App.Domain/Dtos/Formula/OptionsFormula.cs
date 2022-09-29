@@ -14,6 +14,7 @@ namespace App.Domain.Dtos.Formula
         public decimal? PLMaxima { get; set; }
         public decimal? MargemEbitMinima { get; set; }
         public decimal? MargemEbitMaxima { get; set; }
+        public decimal? RiscoBolsa { get; set; }
 
     }
 }

@@ -155,5 +155,39 @@ namespace App.Api.Controllers
                 return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
             }
         }
+
+        [HttpGet]
+        [Route("ValuetionByGordon/{fileImportId}/{riscoBolsa}")]
+        public async Task<IActionResult> ReturnDataValuetionByGordon(int fileImportId, decimal riscoBolsa)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest();
+
+                return Ok(await _service.ValuetionByGordon(fileImportId, riscoBolsa));
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("ValuetionByGordon/Parameters")]
+        public async Task<IActionResult> ReturnDataValuetionByGordonOptions([FromBody] OptionsFormula optionsFormula)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest();
+
+                return Ok(await _service.ValuetionByGordon(optionsFormula));
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
     }
 }
