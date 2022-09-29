@@ -133,6 +133,7 @@ namespace App.Service.Services
                     historyTicker.EvEbit = (line.EvEbit == null ? 0 : (decimal)line.EvEbit);
                     historyTicker.MargemEbit = (line.MargemEbit == null ? 0 : (decimal)line.MargemEbit);
                     historyTicker.Lpa = (line.Lpa == null ? 0 : (decimal)line.Lpa);
+                    historyTicker.Vpa = (line.Vpa == null ? 0 : (decimal)line.Vpa);
                     historyTicker.Roe = (line.Roe == null ? 0 : (decimal)line.Roe);
                     historyTicker.CAGRLucro = line.CAGRLucro;
                     historyTicker.DividendYield = line.DividendYeild;

@@ -86,6 +86,13 @@ namespace App.Domain.Models
             set { _lpa = value; }
         }
 
+        private decimal _vpa;
+        public decimal Vpa
+        {
+            get { return _vpa; }
+            set { _vpa = value; }
+        }
+
         private decimal _roe;
         public decimal Roe
         {

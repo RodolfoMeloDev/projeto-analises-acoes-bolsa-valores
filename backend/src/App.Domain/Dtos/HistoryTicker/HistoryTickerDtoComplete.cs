@@ -15,6 +15,7 @@ namespace App.Domain.Dtos.HistoryTicker
         public decimal EvEbit { get; set; }
         public decimal MargemEbit { get; set; }
         public decimal Lpa { get; set; }
+        public decimal Vpa { get; set; }
         public decimal Roe { get; set; }
         public decimal CrescimentoEsperado { get; set; }
         public decimal MediaCrescimento { get; set; }

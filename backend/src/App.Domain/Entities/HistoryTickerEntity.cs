@@ -35,6 +35,9 @@ namespace App.Domain.Entities
         public decimal Lpa { get; set; }
 
         [Required]
+        public decimal Vpa { get; set; }
+
+        [Required]
         public decimal Roe { get; set; }
 
         [Required]

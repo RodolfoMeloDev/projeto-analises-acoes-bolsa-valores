@@ -48,5 +48,8 @@ namespace App.Domain.Models.FilesImport
 
         [Name("cagr lucros 5 anos")]
         public decimal? CAGRLucro { get; set; }
+
+        [Name("vpa")]
+        public decimal? Vpa { get; set; }
     }
 }

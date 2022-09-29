@@ -29,6 +29,9 @@ namespace App.Domain.Dtos.HistoryTicker
         public decimal Lpa { get; set; }
 
         [Required(ErrorMessage = "O campo é obrigatório")]
+        public decimal Vpa { get; set; }
+
+        [Required(ErrorMessage = "O campo é obrigatório")]
         public decimal Roe { get; set; }
 
         [Required(ErrorMessage = "O campo é obrigatório")]

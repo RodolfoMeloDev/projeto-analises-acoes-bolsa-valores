@@ -240,14 +240,11 @@ namespace App.Service.Services
 
         private IOrderedEnumerable<FormulaDto> ReturnListOrderedValuetionByGraham(IEnumerable<HistoryTickerDtoComplete> listTickers)
         {
-            var _precoLucroRemove = listTickers.Where(obj => obj.PrecoLucro > 15);
-            var _vpaRemove = listTickers.Where(obj => obj.PrecoValorPatrimonial > (decimal)1.5 ||
-                                                      obj.PrecoValorPatrimonial <= 0 ||
-                                                      obj.PrecoValorPatrimonial == null);
+            // var _precoLucroRemove = listTickers.Where(obj => obj.PrecoLucro > 15);
+            var _vpaRemove = listTickers.Where(obj => obj.Vpa <= 0);
             var _lpaRemove = listTickers.Where(obj => obj.Lpa <= 0);
 
-            listTickers = listTickers.Except(_precoLucroRemove)
-                                     .Except(_vpaRemove)
+            listTickers = listTickers.Except(_vpaRemove)
                                      .Except(_lpaRemove)
                                      .ToList();
 
@@ -270,12 +267,12 @@ namespace App.Service.Services
                 ticker.LiquidezMediaDiaria = (item.LiquidezMediaDiaria == null ? 0 : (decimal)item.LiquidezMediaDiaria);
                 ticker.RecuperacaoJudicial = item.Ticker.RecuperacaoJudicial;
 
-                var valor = (decimal?)22.5 * item.Lpa * item.PrecoValorPatrimonial;
+                var valor = (decimal?)22.5 * item.Lpa * item.Vpa;
 
                 var isNegativo = (valor < 0 ? true : false);
 
                 valor = (isNegativo ? valor * -1 : valor * 1);
-                
+
                 decimal _precoJusto = (decimal)Math.Sqrt((double)valor);
 
                 _precoJusto = (isNegativo ? _precoJusto * -1 : _precoJusto * 1);
