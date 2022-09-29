@@ -12,5 +12,7 @@ namespace App.Domain.Interfaces.Services.Formula
         Task<IEnumerable<FormulaDto>> PriceAndProfit(OptionsFormula optionsFormula);
         Task<IEnumerable<FormulaDto>> ValuetionByBazin(int fileImportId);
         Task<IEnumerable<FormulaDto>> ValuetionByBazin(OptionsFormula optionsFormula);
+        Task<IEnumerable<FormulaDto>> ValuetionByGraham(int fileImportId);
+        Task<IEnumerable<FormulaDto>> ValuetionByGraham(OptionsFormula optionsFormula);
     }
 }

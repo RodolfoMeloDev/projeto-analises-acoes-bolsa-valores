@@ -104,5 +104,56 @@ namespace App.Api.Controllers
                 return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
             }
         }
+
+        [HttpGet]
+        [Route("ValuetionByBazin/Parameters")]
+        public async Task<IActionResult> ReturnDataValuetionByBazinOptions([FromBody] OptionsFormula optionsFormula)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest();
+
+                return Ok(await _service.ValuetionByBazin(optionsFormula));
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("ValuetionByGraham/{fileImportId}")]
+        public async Task<IActionResult> ReturnDataValuetionByGraham(int fileImportId)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest();
+
+                return Ok(await _service.ValuetionByGraham(fileImportId));
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("ValuetionByGraham/Parameters")]
+        public async Task<IActionResult> ReturnDataValuetionByGrahamOptions([FromBody] OptionsFormula optionsFormula)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest();
+
+                return Ok(await _service.ValuetionByGraham(optionsFormula));
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
     }
 }

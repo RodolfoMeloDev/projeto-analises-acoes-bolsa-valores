@@ -238,6 +238,56 @@ namespace App.Service.Services
             return listReturn.OrderByDescending(obj => obj.Desconto);
         }
 
+        private IOrderedEnumerable<FormulaDto> ReturnListOrderedValuetionByGraham(IEnumerable<HistoryTickerDtoComplete> listTickers)
+        {
+            var _precoLucroRemove = listTickers.Where(obj => obj.PrecoLucro > 15);
+            var _vpaRemove = listTickers.Where(obj => obj.PrecoValorPatrimonial > (decimal)1.5 ||
+                                                      obj.PrecoValorPatrimonial <= 0 ||
+                                                      obj.PrecoValorPatrimonial == null);
+            var _lpaRemove = listTickers.Where(obj => obj.Lpa <= 0);
+
+            listTickers = listTickers.Except(_precoLucroRemove)
+                                     .Except(_vpaRemove)
+                                     .Except(_lpaRemove)
+                                     .ToList();
+
+            List<FormulaDto> listReturn = new List<FormulaDto>();
+            int nPosicao = 0;
+
+            foreach (var item in listTickers)
+            {
+                nPosicao++;
+                var ticker = new FormulaDto();
+
+                ticker.BaseTicker = item.Ticker.BaseTicker;
+                ticker.Ticker = item.Ticker.Ticker;
+                ticker.Preco = item.PrecoUnitario;
+                ticker.DividendYield = (item.DividendYield == null ? 0 : (decimal)item.DividendYield);
+                ticker.PrecoLucro = item.PrecoLucro;
+                ticker.EvEbit = item.EvEbit;
+                ticker.Roic = item.Roic;
+                ticker.MargemEbit = item.MargemEbit;
+                ticker.LiquidezMediaDiaria = (item.LiquidezMediaDiaria == null ? 0 : (decimal)item.LiquidezMediaDiaria);
+                ticker.RecuperacaoJudicial = item.Ticker.RecuperacaoJudicial;
+
+                var valor = (decimal?)22.5 * item.Lpa * item.PrecoValorPatrimonial;
+
+                var isNegativo = (valor < 0 ? true : false);
+
+                valor = (isNegativo ? valor * -1 : valor * 1);
+                
+                decimal _precoJusto = (decimal)Math.Sqrt((double)valor);
+
+                _precoJusto = (isNegativo ? _precoJusto * -1 : _precoJusto * 1);
+
+                ticker.Desconto = decimal.Round(((_precoJusto - item.PrecoUnitario) / _precoJusto) * 100, 2);
+
+                listReturn.Add(ticker);
+            }
+
+            return listReturn.OrderByDescending(obj => obj.Desconto);
+        }
+
         public async Task<IEnumerable<FormulaDto>> Greenblatt(OptionsFormula optionsFormula)
         {
             try
@@ -311,6 +361,33 @@ namespace App.Service.Services
             try
             {
                 return ReturnListOrderedValuetionByBazin(
+                    await ReturnListWithParametersExecuted(optionsFormula));
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task<IEnumerable<FormulaDto>> ValuetionByGraham(int fileImportId)
+        {
+            try
+            {
+                var historyTicker = await _historyTickerService.GetAllByFileImportComplete(fileImportId);
+
+                return ReturnListOrderedValuetionByGraham(historyTicker);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task<IEnumerable<FormulaDto>> ValuetionByGraham(OptionsFormula optionsFormula)
+        {
+            try
+            {
+                return ReturnListOrderedValuetionByGraham(
                     await ReturnListWithParametersExecuted(optionsFormula));
             }
             catch (Exception e)

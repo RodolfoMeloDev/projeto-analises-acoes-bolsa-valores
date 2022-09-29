@@ -116,6 +116,118 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "GetByValuetionByBazin",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7206/api/Formulas/ValuetionByBazin/8",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7206",
+					"path": [
+						"api",
+						"Formulas",
+						"ValuetionByBazin",
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetByValuetionByBazinParameters",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"fileImportId\": 8,\r\n  \"incluirItensRecuperacaoJudicial\": false,\r\n  \"removerMenorLiquidez\": true,\r\n  \"removerItensComValorZerado\": true,\r\n  \"removerItensComValorNegativo\": true,\r\n  \"liquidezMinima\": 300000,\r\n  \"evEbitMinima\": null,\r\n  \"evEbitMaxima\": null,\r\n  \"plMinima\": null,\r\n  \"plMaxima\": null,\r\n  \"margemEbitMinima\": null,\r\n  \"margemEbitMaxima\": null\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7206/api/Formulas/ValuetionByBazin/Parameters",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7206",
+					"path": [
+						"api",
+						"Formulas",
+						"ValuetionByBazin",
+						"Parameters"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetByValuetionByGraham",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7206/api/Formulas/ValuetionByGraham/8",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7206",
+					"path": [
+						"api",
+						"Formulas",
+						"ValuetionByGraham",
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetByValuetionByGrahamParameters",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"fileImportId\": 8,\r\n  \"incluirItensRecuperacaoJudicial\": false,\r\n  \"removerMenorLiquidez\": true,\r\n  \"removerItensComValorZerado\": true,\r\n  \"removerItensComValorNegativo\": true,\r\n  \"liquidezMinima\": 300000,\r\n  \"evEbitMinima\": null,\r\n  \"evEbitMaxima\": null,\r\n  \"plMinima\": null,\r\n  \"plMaxima\": null,\r\n  \"margemEbitMinima\": null,\r\n  \"margemEbitMaxima\": null\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7206/api/Formulas/ValuetionByGraham/Parameters",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7206",
+					"path": [
+						"api",
+						"Formulas",
+						"ValuetionByGraham",
+						"Parameters"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
