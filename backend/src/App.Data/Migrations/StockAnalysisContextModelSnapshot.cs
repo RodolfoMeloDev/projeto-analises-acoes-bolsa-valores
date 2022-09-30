@@ -117,6 +117,9 @@ namespace App.Data.Migrations
                     b.Property<decimal?>("Payout")
                         .HasColumnType("numeric");
 
+                    b.Property<decimal>("PriceByProfit")
+                        .HasColumnType("numeric");
+
                     b.Property<decimal?>("ProfitCAGR")
                         .HasColumnType("numeric");
 

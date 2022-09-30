@@ -16,32 +16,6 @@ namespace App.Api.Controllers
             _service = service;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> InserHistoryTicker([FromBody] HistoryTickerDtoCreate historyTicker)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest();
-
-                var result = await _service.InsertHistoryTicker(historyTicker);
-
-                if (result == null)
-                    return BadRequest();
-
-                var _url = Url.Link("GetHistoryTickerAllFileImport", new { });
-                
-                if (string.IsNullOrEmpty(_url))
-                    return StatusCode((int)HttpStatusCode.InternalServerError, "Não foi possível gerar a URL para retorno dos dados inseridos.");                    
-
-                return Created(new Uri(_url), result);
-            }
-            catch (ArgumentException e)
-            {
-                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
-            }
-        }
-
         [HttpGet]
         [Route("FileImport/{fileImportId}", Name = "GetHistoryTickerAllFileImport")]
         public async Task<IActionResult> GetAllHistoryTickerByFileImport(int fileImportId)
@@ -69,23 +43,6 @@ namespace App.Api.Controllers
                     return BadRequest();
 
                 return Ok(await _service.GetAllByTicker(ticker));
-            }
-            catch (ArgumentException e)
-            {
-                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
-            }
-        }
-
-        [HttpDelete]
-        [Route("FileImport/{fileImportId}")]
-        public async Task<IActionResult> DeleteHistotyTickerByFileImport(int fileImportId)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest();
-
-                return Ok(await _service.DeleteHistoryTickerByFileImport(fileImportId));
             }
             catch (ArgumentException e)
             {

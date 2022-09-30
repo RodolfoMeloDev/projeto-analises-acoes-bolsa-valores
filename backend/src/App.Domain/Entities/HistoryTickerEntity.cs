@@ -19,6 +19,10 @@ namespace App.Domain.Entities
         public decimal UnitPrice { get; set; }
 
         [Required]
+        [DataType(DataType.Currency)]
+        public decimal PriceByProfit { get; set; }
+
+        [Required]
         public decimal Roic { get; set; }
 
         [Required]
