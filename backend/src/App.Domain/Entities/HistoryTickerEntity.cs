@@ -16,10 +16,6 @@ namespace App.Domain.Entities
 
         [Required]
         [DataType(DataType.Currency)]
-        public decimal PrecoUnitario { get; set; }
-
-        [Required]
-        [DataType(DataType.Currency)]
         public decimal UnitPrice { get; set; }
 
         [Required]

@@ -22,7 +22,7 @@ namespace App.Domain.Dtos
 
         public DateTime? DateUpdated 
         {
-            get { return _dateUpdated != null ? TimeZoneInfo.ConvertTimeFromUtc(_dateCreated, _curTimeZone) : null ; }
+            get { return _dateUpdated != null ? TimeZoneInfo.ConvertTimeFromUtc(Convert.ToDateTime(_dateUpdated), _curTimeZone) : null ; }
             set { _dateUpdated = value; }
         }
     }
