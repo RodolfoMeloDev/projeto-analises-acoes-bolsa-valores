@@ -29,7 +29,12 @@ namespace App.Api.Controllers
                 if (result == null)
                     return BadRequest();
 
-                return Created(new Uri(Url.Link("GetSegmentWithId", new { id = result.Id })), result);
+                var _url = Url.Link("GetSegmentWithId", new { id = result.Id });
+                
+                if (string.IsNullOrEmpty(_url))
+                    return StatusCode((int)HttpStatusCode.InternalServerError, "Não foi possível gerar a URL para retorno dos dados inseridos.");
+
+                return Created(new Uri(_url), result);
             }
             catch (ArgumentException e)
             {

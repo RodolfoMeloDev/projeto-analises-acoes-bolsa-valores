@@ -22,8 +22,13 @@ namespace App.CrossCutting.DependencyInjection
             serviceCollection.AddScoped<IFileImportRepository, FileImportImplementation>();
             serviceCollection.AddScoped<IHistoryTickerRepository, HistoryTickerImplementation>();
 
+            var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION");
+
+            if (string.IsNullOrEmpty(connectionString))
+                throw new Exception("Não foi localizado a connectionString do sistema.");
+
             serviceCollection.AddDbContext<AnaliseDeAcoesContext>(
-                    options => options.UseNpgsql(Environment.GetEnvironmentVariable("DB_CONNECTION"))
+                    options => options.UseNpgsql(connectionString)
                 );
         }
     }
