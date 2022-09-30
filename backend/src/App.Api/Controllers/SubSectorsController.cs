@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 using App.Domain.Dtos.SubSector;
 using App.Domain.Interfaces.Services.SubSector;
 using Microsoft.AspNetCore.Mvc;
@@ -90,15 +86,15 @@ namespace App.Api.Controllers
         }
 
         [HttpGet]
-        [Route("Setor/{setorId}")]
-        public async Task<IActionResult> GetBySetorId(int setorId)
+        [Route("Setor/{sectorId}")]
+        public async Task<IActionResult> GetBySetorId(int sectorId)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                return Ok(await _service.GetBySectorId(setorId));
+                return Ok(await _service.GetBySectorId(sectorId));
             }
             catch (ArgumentException e)
             {

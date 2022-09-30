@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 using App.Domain.Dtos.Ticker;
 using App.Domain.Interfaces.Services.Ticker;
 using Microsoft.AspNetCore.Mvc;
