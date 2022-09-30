@@ -11,10 +11,10 @@ namespace App.Data.Repository
 {
     public class BaseRepository<T> : IRepository<T> where T : BaseEntity
     {
-        protected readonly AnaliseDeAcoesContext _context;
+        protected readonly StockAnalysisContext _context;
         private DbSet<T> _dataSet;
 
-        public BaseRepository(AnaliseDeAcoesContext context)
+        public BaseRepository(StockAnalysisContext context)
         {
             _context = context;
             _dataSet = context.Set<T>();

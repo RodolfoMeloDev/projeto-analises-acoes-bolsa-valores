@@ -14,7 +14,7 @@ namespace App.Data.Implementations
     {
         private DbSet<SegmentEntity> _dataSet;
 
-        public SegmentImplementation(AnaliseDeAcoesContext context) : base(context)
+        public SegmentImplementation(StockAnalysisContext context) : base(context)
         {
             _dataSet = context.Set<SegmentEntity>();
         }

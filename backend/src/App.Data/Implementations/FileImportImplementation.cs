@@ -14,7 +14,7 @@ namespace App.Data.Implementations
     {
         private DbSet<FileImportEntity> _dataSet;
 
-        public FileImportImplementation(AnaliseDeAcoesContext context) : base(context)
+        public FileImportImplementation(StockAnalysisContext context) : base(context)
         {
             _dataSet = context.Set<FileImportEntity>();
         }

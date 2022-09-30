@@ -13,7 +13,7 @@ namespace App.Data.Implementations
     {
         private DbSet<TickerEntity> _dataSet;
 
-        public TickerImplementation(AnaliseDeAcoesContext context) : base(context)
+        public TickerImplementation(StockAnalysisContext context) : base(context)
         {
             _dataSet = context.Set<TickerEntity>();
         }

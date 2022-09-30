@@ -14,7 +14,7 @@ namespace App.Data.Implementations
     {
         private DbSet<HistoryTickerEntity> _dataSet;
 
-        public HistoryTickerImplementation(AnaliseDeAcoesContext context) : base(context)
+        public HistoryTickerImplementation(StockAnalysisContext context) : base(context)
         {
             _dataSet = context.Set<HistoryTickerEntity>();
         }

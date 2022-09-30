@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace App.Data.Migrations
 {
-    [DbContext(typeof(AnaliseDeAcoesContext))]
+    [DbContext(typeof(StockAnalysisContext))]
     [Migration("20220909205442_RemoveCascadeForeignKey")]
     partial class RemoveCascadeForeignKey
     {

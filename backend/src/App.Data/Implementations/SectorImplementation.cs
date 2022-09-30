@@ -11,7 +11,7 @@ namespace App.Data.Implementations
     {
         private DbSet<SectorEntity> _dataSet;
 
-        public SectorImplementation(AnaliseDeAcoesContext context) : base(context)
+        public SectorImplementation(StockAnalysisContext context) : base(context)
         {
             _dataSet = context.Set<SectorEntity>();
         }

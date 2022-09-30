@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace App.Data.Migrations
 {
-    [DbContext(typeof(AnaliseDeAcoesContext))]
+    [DbContext(typeof(StockAnalysisContext))]
     [Migration("20220929144642_NewColumnVpaTableHistoryTicker")]
     partial class NewColumnVpaTableHistoryTicker
     {
