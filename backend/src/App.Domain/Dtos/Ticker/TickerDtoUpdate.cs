@@ -16,18 +16,18 @@ namespace App.Domain.Dtos.Ticker
         public string Ticker { get; set; }
 
         [StringLength(100, ErrorMessage = "O campo deve ter no máximo {1} caracteres.")]
-        public string Empresa { get; set; }
+        public string Company { get; set; }
 
         [StringLength(18, ErrorMessage = "O campo deve ter no máximo {1} caracteres.")]
         public string CNPJ { get; set; }
 
         [Required(ErrorMessage = "O campo é obrigatório")]
-        public TypeTicker Tipo { get; set; }
+        public TypeTicker TypeTicker { get; set; }
 
         [Required(ErrorMessage = "O campo é obrigatório")]
-        public bool RecuperacaoJudicial { get; set; }
+        public bool JudicialRecovery { get; set; }
 
-        public int? SegmentoId { get; set; }
-        public bool Ativo { get; set; }
+        public int? SegmentId { get; set; }
+        public bool Active { get; set; }
     }
 }

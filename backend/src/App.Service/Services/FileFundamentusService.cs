@@ -72,20 +72,20 @@ namespace App.Service.Services
 
                     tickerCreate.Ticker = line.Ticker;
                     tickerCreate.BaseTicker = line.Ticker.Substring(0, 4);
-                    tickerCreate.Tipo = TypeTicker.ACAO;
-                    tickerCreate.RecuperacaoJudicial = false;
+                    tickerCreate.TypeTicker = TypeTicker.ACAO;
+                    tickerCreate.JudicialRecovery = false;
 
                     if (tickerWebData != null)
                     {
-                        var segment = listSegment.Where(sg => sg.Nome.Equals(tickerWebData.segmento) &&
-                                                        sg.SubSetor.Nome.Equals(tickerWebData.subsetor) &&
-                                                        sg.SubSetor.Setor.Nome.Equals(tickerWebData.setor_economico))
-                                                    .FirstOrDefault();
+                        var segment = listSegment.Where(sg => sg.Name.Equals(tickerWebData.segmento) &&
+                                                              sg.SubSector.Name.Equals(tickerWebData.subsetor) &&
+                                                              sg.SubSector.Sector.Name.Equals(tickerWebData.setor_economico))
+                                                 .FirstOrDefault();
 
                         tickerCreate.BaseTicker = tickerWebData.cd_acao_rdz;
-                        tickerCreate.Empresa = tickerWebData.nm_empresa;
+                        tickerCreate.Company = tickerWebData.nm_empresa;
                         tickerCreate.CNPJ = tickerWebData.tx_cnpj;
-                        tickerCreate.SegmentoId = (segment != null ? segment.Id : null);
+                        tickerCreate.SegmentId = (segment != null ? segment.Id : null);
                     }
 
                     await _tickerService.Insert(tickerCreate);
@@ -109,23 +109,23 @@ namespace App.Service.Services
                 decimal value = 0;
                 HistoryTickerDtoCreate historyTicker = new HistoryTickerDtoCreate();
 
-                historyTicker.ArquivoImportacaoId = fileImportId;
+                historyTicker.FileImportId = fileImportId;
                 historyTicker.TickerId = tickers.Where(t => t.Ticker.Equals(line.Ticker))
                                                 .Select(x => x.Id)
                                                 .FirstOrDefault();
-                historyTicker.PrecoUnitario = line.Preco;
+                historyTicker.UnitPrice = line.Preco;
 
-                historyTicker.PrecoLucro = Convert.ToDecimal(line.PrecoLucro);
+                historyTicker.PriceByProfit = Convert.ToDecimal(line.PrecoLucro);
                 historyTicker.EvEbit = Convert.ToDecimal(line.EvEbit);
-                historyTicker.PrecoValorPatrimonial = line.PrecoValorPatrimonial;
-                historyTicker.LiquidezMediaDiaria = line.LiquidezMediaDiaria;
-                historyTicker.ValorMercado = line.ValorMercado;
+                historyTicker.Pvp = line.PrecoValorPatrimonial;
+                historyTicker.AverageDailyLiquidity = line.LiquidezMediaDiaria;
+                historyTicker.MarketValue = line.ValorMercado;
 
                 success = decimal.TryParse(line.Roic, out value);
                 historyTicker.Roic = (success ? value : 0);
 
                 success = decimal.TryParse(line.MargemEbit, out value);
-                historyTicker.MargemEbit = (success ? value : 0);
+                historyTicker.EbitMargin = (success ? value : 0);
 
                 success = decimal.TryParse(line.DividendYeild, out value);
                 historyTicker.DividendYield = (success ? value : 0);
@@ -134,7 +134,7 @@ namespace App.Service.Services
                 historyTicker.Roe = (success ? value : 0);
 
                 success = decimal.TryParse(line.CAGRLucro, out value);
-                historyTicker.CAGRLucro = (success ? (value == 0 ? null : value) : null);
+                historyTicker.ProfitCAGR = (success ? (value == 0 ? null : value) : null);
 
                 await _historyTickerService.InsertHistoryTicker(historyTicker);
             }

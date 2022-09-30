@@ -2,18 +2,18 @@ namespace App.Domain.Models
 {
     public class SubSectorModel : BaseModel
     {
-        private string _nome;
-        public string Nome
+        private string _name;
+        public string Name
         {
-            get { return _nome; }
-            set { _nome = (string.IsNullOrEmpty(value) ? null : value.ToUpper()); }
+            get { return _name; }
+            set { _name = (string.IsNullOrEmpty(value) ? null : value.ToUpper()); }
         }
 
-        private int _setorId;
-        public int SetorId
+        private int _sectorId;
+        public int SectorId
         {
-            get { return _setorId; }
-            set { _setorId = value; }
+            get { return _sectorId; }
+            set { _sectorId = value; }
         }
     }
 }

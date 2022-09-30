@@ -66,26 +66,26 @@ namespace App.Service.Services
                 if (ticker == null)
                 {
                     DataTickerModel? tickerWebData = listTickerWeb.Where(t => t.cd_acao.Contains(line.Ticker))
-                                                                    .FirstOrDefault();
+                                                                  .FirstOrDefault();
 
                     TickerDtoCreate tickerCreate = new TickerDtoCreate();
 
                     tickerCreate.Ticker = line.Ticker;
                     tickerCreate.BaseTicker = line.Ticker.Substring(0, 4);
-                    tickerCreate.Tipo = TypeTicker.ACAO;
-                    tickerCreate.RecuperacaoJudicial = false;
+                    tickerCreate.TypeTicker = TypeTicker.ACAO;
+                    tickerCreate.JudicialRecovery = false;
 
                     if (tickerWebData != null)
                     {
-                        var segment = listSegment.Where(sg => sg.Nome.Equals(tickerWebData.segmento) &&
-                                                        sg.SubSetor.Nome.Equals(tickerWebData.subsetor) &&
-                                                        sg.SubSetor.Setor.Nome.Equals(tickerWebData.setor_economico))
-                                                .FirstOrDefault();
+                        var segment = listSegment.Where(sg => sg.Name.Equals(tickerWebData.segmento) &&
+                                                              sg.SubSector.Name.Equals(tickerWebData.subsetor) &&
+                                                              sg.SubSector.Sector.Name.Equals(tickerWebData.setor_economico))
+                                                 .FirstOrDefault();
 
                         tickerCreate.BaseTicker = tickerWebData.cd_acao_rdz;
-                        tickerCreate.Empresa = tickerWebData.nm_empresa;
+                        tickerCreate.Company = tickerWebData.nm_empresa;
                         tickerCreate.CNPJ = tickerWebData.tx_cnpj;
-                        tickerCreate.SegmentoId = (segment != null ? segment.Id : null);
+                        tickerCreate.SegmentId = (segment != null ? segment.Id : null);
                     }
 
                     await _tickerService.Insert(tickerCreate);
@@ -102,8 +102,8 @@ namespace App.Service.Services
             var _averageDailyLiquidityRemove = lines.Where(obj => obj.LiquidezMediaDiaria == null);
 
             lines = lines.Except(_priceRemove)
-                            .Except(_averageDailyLiquidityRemove)
-                            .ToList();
+                         .Except(_averageDailyLiquidityRemove)
+                         .ToList();
 
             foreach (var line in lines)
             {
@@ -112,20 +112,20 @@ namespace App.Service.Services
                 historyTicker.TickerId = tickers.Where(t => t.Ticker.Equals(line.Ticker))
                                                 .Select(t => t.Id)
                                                 .FirstOrDefault();
-                historyTicker.ArquivoImportacaoId = fileImportId;
-                historyTicker.PrecoUnitario = line.Preco;
-                historyTicker.PrecoLucro = Convert.ToDecimal(line.PrecoLucro);
+                historyTicker.FileImportId = fileImportId;
+                historyTicker.UnitPrice = line.Preco;
+                historyTicker.PriceByProfit = Convert.ToDecimal(line.PrecoLucro);
                 historyTicker.Roic = Convert.ToDecimal(line.Roic);
                 historyTicker.EvEbit = Convert.ToDecimal(line.EvEbit);
-                historyTicker.MargemEbit = Convert.ToDecimal(line.MargemEbit);
+                historyTicker.EbitMargin = Convert.ToDecimal(line.MargemEbit);
                 historyTicker.Lpa = Convert.ToDecimal(line.Lpa);
                 historyTicker.Vpa = Convert.ToDecimal(line.Vpa);
                 historyTicker.Roe = Convert.ToDecimal(line.Roe);
-                historyTicker.CAGRLucro = line.CAGRLucro;
+                historyTicker.ProfitCAGR = line.CAGRLucro;
                 historyTicker.DividendYield = line.DividendYeild;
-                historyTicker.PrecoValorPatrimonial = line.PrecoValorPatrimonial;
-                historyTicker.LiquidezMediaDiaria = line.LiquidezMediaDiaria;
-                historyTicker.ValorMercado = line.ValorMercado;
+                historyTicker.Pvp = line.PrecoValorPatrimonial;
+                historyTicker.AverageDailyLiquidity = line.LiquidezMediaDiaria;
+                historyTicker.MarketValue = line.ValorMercado;
 
                 await _historyTickerService.InsertHistoryTicker(historyTicker);
             }

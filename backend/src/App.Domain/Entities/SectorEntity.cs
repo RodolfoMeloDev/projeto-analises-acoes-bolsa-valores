@@ -7,8 +7,8 @@ namespace App.Domain.Entities
     {
         [Required]
         [MaxLength(100)]
-        public string Nome { get; set; }
+        public string Name { get; set; }
 
-        public IEnumerable<SubSectorEntity> SubSetores { get; set; }
+        public IEnumerable<SubSectorEntity> SubSectors { get; set; }
     }
 }

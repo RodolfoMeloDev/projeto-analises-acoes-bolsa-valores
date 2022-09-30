@@ -14,7 +14,7 @@ namespace App.Data.Implementations
     {
         private DbSet<HistoryTickerEntity> _dataSet;
 
-        public HistoryTickerImplementation(AnaliseDeAcoesContext context) : base(context)
+        public HistoryTickerImplementation(StockAnalysisContext context) : base(context)
         {
             _dataSet = context.Set<HistoryTickerEntity>();
         }
@@ -23,7 +23,7 @@ namespace App.Data.Implementations
         {
             try
             {
-                var listResult = await _dataSet.Where(obj => obj.ArquivoImportacaoId.Equals(fileImportId))
+                var listResult = await _dataSet.Where(obj => obj.FileImportId.Equals(fileImportId))
                     .ToListAsync();
 
                 if (listResult == null)
@@ -41,21 +41,21 @@ namespace App.Data.Implementations
 
         public async Task<IEnumerable<HistoryTickerEntity>> GetAllByFileImport(int fileImportId)
         {
-            return await _dataSet.Where(obj => obj.ArquivoImportacaoId.Equals(fileImportId))
+            return await _dataSet.Where(obj => obj.FileImportId.Equals(fileImportId))
                                  .ToListAsync();
         }
 
         public async Task<IEnumerable<HistoryTickerEntity>> GetAllByFileImportComplete(int fileImportId)
         {
-            return await _dataSet.Include(obj => obj.ArquivoImportacao)
+            return await _dataSet.Include(obj => obj.FileImport)
                                  .Include(obj => obj.Ticker)
-                                 .Where(obj => obj.ArquivoImportacaoId.Equals(fileImportId))
+                                 .Where(obj => obj.FileImportId.Equals(fileImportId))
                                  .ToListAsync();
         }
 
         public async Task<IEnumerable<HistoryTickerEntity>> GetAllByTicker(string ticker)
         {
-            return await _dataSet.Include(obj => obj.ArquivoImportacao)
+            return await _dataSet.Include(obj => obj.FileImport)
                                  .Include(obj => obj.Ticker)
                                  .Where(obj => obj.Ticker.Ticker.Equals(ticker.ToUpper()))
                                  .ToListAsync();

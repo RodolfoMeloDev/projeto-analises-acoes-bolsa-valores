@@ -7,28 +7,6 @@
 	"item": [
 		{
 			"name": "GetByGreenBlatt",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "https://localhost:7206/api/Formulas/Greenblatt/3",
-					"protocol": "https",
-					"host": [
-						"localhost"
-					],
-					"port": "7206",
-					"path": [
-						"api",
-						"Formulas",
-						"Greenblatt",
-						"3"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GetByGreenBlattWithParameters",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -37,7 +15,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"fileImportId\": 7,\r\n  \"incluirItensRecuperacaoJudicial\": false,\r\n  \"removerMenorLiquidez\": true,\r\n  \"removerItensComValorZerado\": true,\r\n  \"removerItensComValorNegativo\": true,\r\n  \"liquidezMinima\": 300000,\r\n  \"evEbitMinima\": null,\r\n  \"evEbitMaxima\": null,\r\n  \"plMinima\": null,\r\n  \"plMaxima\": null,\r\n  \"margemEbitMinima\": null,\r\n  \"margemEbitMaxima\": null\r\n}",
+					"raw": "{\r\n  \"fileImportId\": 4,\r\n  \"removeItemsJudicialRecovery\": true,\r\n  \"removeLowerLiquidity\": true,\r\n  \"removeItemsWithZeroValue\": true,\r\n  \"removeItemsWithNegativeValue\": true,\r\n  \"minimumLiquidity\": null,\r\n  \"minimunEvEbit\": null,\r\n  \"maximumEvEbit\": null,\r\n  \"minimumPriceByProfit\": null,\r\n  \"maximumPriceByProfit\": null,\r\n  \"minimumEbitMargem\": null,\r\n  \"maximumEbitMargem\": null,\r\n  \"marketRisk\": null\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -45,7 +23,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://localhost:7206/api/Formulas/Greenblatt/Parameters",
+					"raw": "https://localhost:7206/api/Formulas/Greenblatt",
 					"protocol": "https",
 					"host": [
 						"localhost"
@@ -54,8 +32,7 @@
 					"path": [
 						"api",
 						"Formulas",
-						"Greenblatt",
-						"Parameters"
+						"Greenblatt"
 					]
 				}
 			},
@@ -63,28 +40,6 @@
 		},
 		{
 			"name": "GetByPriceAndProfit",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "https://localhost:7206/api/Formulas/PriceAndProfit/6",
-					"protocol": "https",
-					"host": [
-						"localhost"
-					],
-					"port": "7206",
-					"path": [
-						"api",
-						"Formulas",
-						"PriceAndProfit",
-						"6"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GetByPriceAndProfitWithParameters",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -93,7 +48,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"fileImportId\": 7,\r\n  \"incluirItensRecuperacaoJudicial\": false,\r\n  \"removerMenorLiquidez\": true,\r\n  \"removerItensComValorZerado\": true,\r\n  \"removerItensComValorNegativo\": true,\r\n  \"liquidezMinima\": 300000,\r\n  \"evEbitMinima\": null,\r\n  \"evEbitMaxima\": null,\r\n  \"plMinima\": null,\r\n  \"plMaxima\": null,\r\n  \"margemEbitMinima\": null,\r\n  \"margemEbitMaxima\": null\r\n}",
+					"raw": "{\r\n  \"fileImportId\": 4,\r\n  \"removeItemsJudicialRecovery\": true,\r\n  \"removeLowerLiquidity\": true,\r\n  \"removeItemsWithZeroValue\": true,\r\n  \"removeItemsWithNegativeValue\": true,\r\n  \"minimumLiquidity\": null,\r\n  \"minimunEvEbit\": null,\r\n  \"maximumEvEbit\": null,\r\n  \"minimumPriceByProfit\": null,\r\n  \"maximumPriceByProfit\": null,\r\n  \"minimumEbitMargem\": null,\r\n  \"maximumEbitMargem\": null,\r\n  \"marketRisk\": null\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -101,7 +56,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://localhost:7206/api/Formulas/PriceAndProfit/Parameters",
+					"raw": "https://localhost:7206/api/Formulas/PriceAndProfit",
 					"protocol": "https",
 					"host": [
 						"localhost"
@@ -110,8 +65,7 @@
 					"path": [
 						"api",
 						"Formulas",
-						"PriceAndProfit",
-						"Parameters"
+						"PriceAndProfit"
 					]
 				}
 			},
@@ -119,28 +73,6 @@
 		},
 		{
 			"name": "GetByValuetionByBazin",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "https://localhost:7206/api/Formulas/ValuetionByBazin/8",
-					"protocol": "https",
-					"host": [
-						"localhost"
-					],
-					"port": "7206",
-					"path": [
-						"api",
-						"Formulas",
-						"ValuetionByBazin",
-						"8"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GetByValuetionByBazinParameters",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -149,7 +81,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"fileImportId\": 8,\r\n  \"incluirItensRecuperacaoJudicial\": false,\r\n  \"removerMenorLiquidez\": true,\r\n  \"removerItensComValorZerado\": true,\r\n  \"removerItensComValorNegativo\": true,\r\n  \"liquidezMinima\": 300000,\r\n  \"evEbitMinima\": null,\r\n  \"evEbitMaxima\": null,\r\n  \"plMinima\": null,\r\n  \"plMaxima\": null,\r\n  \"margemEbitMinima\": null,\r\n  \"margemEbitMaxima\": null\r\n}",
+					"raw": "{\r\n  \"fileImportId\": 4,\r\n  \"removeItemsJudicialRecovery\": true,\r\n  \"removeLowerLiquidity\": true,\r\n  \"removeItemsWithZeroValue\": true,\r\n  \"removeItemsWithNegativeValue\": true,\r\n  \"minimumLiquidity\": null,\r\n  \"minimunEvEbit\": null,\r\n  \"maximumEvEbit\": null,\r\n  \"minimumPriceByProfit\": null,\r\n  \"maximumPriceByProfit\": null,\r\n  \"minimumEbitMargem\": null,\r\n  \"maximumEbitMargem\": null,\r\n  \"marketRisk\": null\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -157,7 +89,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://localhost:7206/api/Formulas/ValuetionByBazin/Parameters",
+					"raw": "https://localhost:7206/api/Formulas/ValuetionByBazin",
 					"protocol": "https",
 					"host": [
 						"localhost"
@@ -166,8 +98,7 @@
 					"path": [
 						"api",
 						"Formulas",
-						"ValuetionByBazin",
-						"Parameters"
+						"ValuetionByBazin"
 					]
 				}
 			},
@@ -175,28 +106,6 @@
 		},
 		{
 			"name": "GetByValuetionByGraham",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "https://localhost:7206/api/Formulas/ValuetionByGraham/8",
-					"protocol": "https",
-					"host": [
-						"localhost"
-					],
-					"port": "7206",
-					"path": [
-						"api",
-						"Formulas",
-						"ValuetionByGraham",
-						"8"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GetByValuetionByGrahamParameters",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -205,7 +114,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"fileImportId\": 8,\r\n  \"incluirItensRecuperacaoJudicial\": false,\r\n  \"removerMenorLiquidez\": true,\r\n  \"removerItensComValorZerado\": true,\r\n  \"removerItensComValorNegativo\": true,\r\n  \"liquidezMinima\": 300000,\r\n  \"evEbitMinima\": null,\r\n  \"evEbitMaxima\": null,\r\n  \"plMinima\": null,\r\n  \"plMaxima\": null,\r\n  \"margemEbitMinima\": null,\r\n  \"margemEbitMaxima\": null\r\n}",
+					"raw": "{\r\n  \"fileImportId\": 4,\r\n  \"removeItemsJudicialRecovery\": true,\r\n  \"removeLowerLiquidity\": true,\r\n  \"removeItemsWithZeroValue\": true,\r\n  \"removeItemsWithNegativeValue\": true,\r\n  \"minimumLiquidity\": null,\r\n  \"minimunEvEbit\": null,\r\n  \"maximumEvEbit\": null,\r\n  \"minimumPriceByProfit\": null,\r\n  \"maximumPriceByProfit\": null,\r\n  \"minimumEbitMargem\": null,\r\n  \"maximumEbitMargem\": null,\r\n  \"marketRisk\": null\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -213,7 +122,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://localhost:7206/api/Formulas/ValuetionByGraham/Parameters",
+					"raw": "https://localhost:7206/api/Formulas/ValuetionByGraham",
 					"protocol": "https",
 					"host": [
 						"localhost"
@@ -222,8 +131,40 @@
 					"path": [
 						"api",
 						"Formulas",
-						"ValuetionByGraham",
-						"Parameters"
+						"ValuetionByGraham"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetByValuetionByGordon",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"fileImportId\": 4,\r\n  \"removeItemsJudicialRecovery\": true,\r\n  \"removeLowerLiquidity\": true,\r\n  \"removeItemsWithZeroValue\": true,\r\n  \"removeItemsWithNegativeValue\": true,\r\n  \"minimumLiquidity\": null,\r\n  \"minimunEvEbit\": null,\r\n  \"maximumEvEbit\": null,\r\n  \"minimumPriceByProfit\": null,\r\n  \"maximumPriceByProfit\": null,\r\n  \"minimumEbitMargem\": null,\r\n  \"maximumEbitMargem\": null,\r\n  \"marketRisk\": 13.31\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7206/api/Formulas/ValuetionByGordon",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7206",
+					"path": [
+						"api",
+						"Formulas",
+						"ValuetionByGordon"
 					]
 				}
 			},

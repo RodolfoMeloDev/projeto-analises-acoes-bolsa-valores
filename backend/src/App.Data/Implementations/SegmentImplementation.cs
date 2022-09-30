@@ -14,44 +14,44 @@ namespace App.Data.Implementations
     {
         private DbSet<SegmentEntity> _dataSet;
 
-        public SegmentImplementation(AnaliseDeAcoesContext context) : base(context)
+        public SegmentImplementation(StockAnalysisContext context) : base(context)
         {
             _dataSet = context.Set<SegmentEntity>();
         }
 
         public async Task<SegmentEntity> ExistSegment(string name, int subSectorId)
         {
-            return await _dataSet.FirstOrDefaultAsync(obj => obj.Nome.Equals(name.ToUpper()) &&
-                                                       obj.SubSetorId.Equals(subSectorId));
+            return await _dataSet.FirstOrDefaultAsync(obj => obj.Name.Equals(name.ToUpper()) &&
+                                                             obj.SubSectorId.Equals(subSectorId));
         }
 
         public async Task<IEnumerable<SegmentEntity>> GetAllComplete()
         {
-            return await _dataSet.Include(ss => ss.SubSetor)
-                .ThenInclude(s => s.Setor)
+            return await _dataSet.Include(ss => ss.SubSector)
+                .ThenInclude(s => s.Sector)
                 .ToListAsync();
         }
 
         public async Task<SegmentEntity> GetByIdComplete(int id)
         {
-            return await _dataSet.Include(ss => ss.SubSetor)
-                .ThenInclude(s => s.Setor)
+            return await _dataSet.Include(ss => ss.SubSector)
+                .ThenInclude(s => s.Sector)
                 .FirstOrDefaultAsync(o => o.Id.Equals(id));
         }
 
         public async Task<IEnumerable<SegmentEntity>> GetBySectorId(int sectorId)
         {
-            return await _dataSet.Include(ss => ss.SubSetor)
-                .ThenInclude(s => s.Setor)
-                .Where(o => o.SubSetor.SetorId.Equals(sectorId))
+            return await _dataSet.Include(ss => ss.SubSector)
+                .ThenInclude(s => s.Sector)
+                .Where(o => o.SubSector.SectorId.Equals(sectorId))
                 .ToListAsync();
         }
 
         public async Task<IEnumerable<SegmentEntity>> GetBySubSectorId(int subSectorId)
         {
-            return await _dataSet.Include(ss => ss.SubSetor)
-                .ThenInclude(s => s.Setor)
-                .Where(o => o.SubSetorId.Equals(subSectorId))
+            return await _dataSet.Include(ss => ss.SubSector)
+                .ThenInclude(s => s.Sector)
+                .Where(o => o.SubSectorId.Equals(subSectorId))
                 .ToListAsync();
         }
     }

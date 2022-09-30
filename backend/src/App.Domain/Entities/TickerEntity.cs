@@ -13,18 +13,18 @@ namespace App.Domain.Entities
         public string Ticker { get; set; }
 
         [MaxLength(100)]
-        public string Empresa { get; set; }
+        public string Company { get; set; }
 
         [MaxLength(18)]
         public string CNPJ { get; set; }
 
         [Required]
-        public TypeTicker Tipo { get; set; }
+        public TypeTicker TypeTicker { get; set; }
 
-        public bool RecuperacaoJudicial { get; set; }
+        public bool JudicialRecovery { get; set; }
 
-        public int? SegmentoId { get; set; }
+        public int? SegmentId { get; set; }
 
-        public SegmentEntity Segmento { get; set; }
+        public SegmentEntity Segment { get; set; }
     }
 }

@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 using App.Domain.Dtos.HistoryTicker;
 using App.Domain.Interfaces.Services.HistoryTicker;
 using Microsoft.AspNetCore.Mvc;
@@ -18,32 +14,6 @@ namespace App.Api.Controllers
         public HistoryTickersController(IHistoryTickerService service)
         {
             _service = service;
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> InserHistoryTicker([FromBody] HistoryTickerDtoCreate historyTicker)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest();
-
-                var result = await _service.InsertHistoryTicker(historyTicker);
-
-                if (result == null)
-                    return BadRequest();
-
-                var _url = Url.Link("GetHistoryTickerAllFileImport", new { });
-                
-                if (string.IsNullOrEmpty(_url))
-                    return StatusCode((int)HttpStatusCode.InternalServerError, "Não foi possível gerar a URL para retorno dos dados inseridos.");                    
-
-                return Created(new Uri(_url), result);
-            }
-            catch (ArgumentException e)
-            {
-                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
-            }
         }
 
         [HttpGet]
@@ -73,23 +43,6 @@ namespace App.Api.Controllers
                     return BadRequest();
 
                 return Ok(await _service.GetAllByTicker(ticker));
-            }
-            catch (ArgumentException e)
-            {
-                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
-            }
-        }
-
-        [HttpDelete]
-        [Route("FileImport/{fileImportId}")]
-        public async Task<IActionResult> DeleteHistotyTickerByFileImport(int fileImportId)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest();
-
-                return Ok(await _service.DeleteHistoryTickerByFileImport(fileImportId));
             }
             catch (ArgumentException e)
             {

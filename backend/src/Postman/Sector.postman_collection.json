@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "8dd2ef7c-8543-440c-b447-832bf45a2f01",
+		"_postman_id": "4dfa4341-c453-4775-b1d6-465518ee7bd1",
 		"name": "Sector",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"nome\": \"string\"\r\n}",
+					"raw": "{\r\n  \"name\": \"string\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -71,7 +71,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "https://localhost:7206/api/Sectors/14",
+					"raw": "https://localhost:7206/api/Sectors/13",
 					"protocol": "https",
 					"host": [
 						"localhost"
@@ -80,7 +80,7 @@
 					"path": [
 						"api",
 						"Sectors",
-						"14"
+						"13"
 					]
 				}
 			},

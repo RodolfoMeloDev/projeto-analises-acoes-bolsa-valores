@@ -10,13 +10,13 @@ namespace App.Domain.Entities
     {
         [Required]
         [MaxLength(100)]
-        public string Nome { get; set; }
+        public string Name { get; set; }
 
         [Required]
-        public int SetorId { get; set; }
+        public int SectorId { get; set; }
 
-        public SectorEntity Setor { get; set; }
+        public SectorEntity Sector { get; set; }
 
-        public IEnumerable<SegmentEntity> Segmentos { get; set; }
+        public IEnumerable<SegmentEntity> Segments { get; set; }
     }
 }

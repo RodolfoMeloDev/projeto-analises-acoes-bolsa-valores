@@ -5,39 +5,39 @@ namespace App.Domain.Models
 {
     public class FileImportModel : BaseModel
     {
-        private int _usuarioId;
-        public int UsuarioId
+        private int _userId;
+        public int UserId
         {
-            get { return _usuarioId; }
-            set { _usuarioId = value; }
+            get { return _userId; }
+            set { _userId = value; }
         }
 
-        private string _nomeArquivo;
-        public string NomeArquivo
+        private string _fileName;
+        public string FileName
         {
-            get { return _nomeArquivo; }
-            set { _nomeArquivo = (string.IsNullOrEmpty(value) ? null : value.ToUpper()); }
+            get { return _fileName; }
+            set { _fileName = (string.IsNullOrEmpty(value) ? null : value.ToUpper()); }
         }
 
-        private string _descricao;
-        public string Descricao
+        private string _description;
+        public string Description
         {
-            get { return _descricao; }
-            set { _descricao = (string.IsNullOrEmpty(value) ? null : value.ToUpper()); }
+            get { return _description; }
+            set { _description = (string.IsNullOrEmpty(value) ? null : value.ToUpper()); }
         }
 
-        private DateTime _dataArquivo;
-        public DateTime DataArquivo
+        private DateTime _dateFile;
+        public DateTime DateFile
         {
-            get { return _dataArquivo; }
-            set { _dataArquivo = value; }
+            get { return _dateFile; }
+            set { _dateFile = value; }
         }
 
-        private TypeFileImport _tipoArquivo;
-        public TypeFileImport TipoArquivo
+        private TypeFileImport _typeFile;
+        public TypeFileImport TypeFile
         {
-            get { return _tipoArquivo; }
-            set { _tipoArquivo = value; }
+            get { return _typeFile; }
+            set { _typeFile = value; }
         }
 
 

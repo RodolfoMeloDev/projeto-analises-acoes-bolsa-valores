@@ -11,9 +11,9 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace App.Data.Migrations
 {
-    [DbContext(typeof(AnaliseDeAcoesContext))]
-    [Migration("20220927190604_AddColumnTipoArquivoTableArquivosImportacao")]
-    partial class AddColumnTipoArquivoTableArquivosImportacao
+    [DbContext(typeof(StockAnalysisContext))]
+    [Migration("20220930044723_RecreatedDataBaseInitial")]
+    partial class RecreatedDataBaseInitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,40 +32,40 @@ namespace App.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("Ativo")
+                    b.Property<bool>("Active")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTime?>("DataAlteracao")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("DataArquivo")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("DataCadastro")
+                    b.Property<DateTime?>("DateCreated")
                         .IsRequired()
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Descricao")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                    b.Property<DateTime>("DateFile")
+                        .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("NomeArquivo")
+                    b.Property<DateTime?>("DateUpdated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<int>("TipoArquivo")
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<int>("TypeFile")
                         .HasColumnType("integer");
 
-                    b.Property<int>("UsuarioId")
+                    b.Property<int>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UsuarioId");
+                    b.HasIndex("UserId");
 
-                    b.ToTable("ArquivosImportacao");
+                    b.ToTable("FileImports");
                 });
 
             modelBuilder.Entity("App.Domain.Entities.HistoryTickerEntity", b =>
@@ -76,38 +76,59 @@ namespace App.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ArquivoImportacaoId")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("Ativo")
+                    b.Property<bool>("Active")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTime?>("DataAlteracao")
+                    b.Property<decimal?>("AverageDailyLiquidity")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("AverageGrowth")
+                        .HasColumnType("numeric");
+
+                    b.Property<DateTime?>("DateCreated")
+                        .IsRequired()
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime?>("DataCadastro")
-                        .IsRequired()
+                    b.Property<DateTime?>("DateUpdated")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<decimal?>("DividendYield")
                         .HasColumnType("numeric");
 
+                    b.Property<decimal?>("Dpa")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("EbitMargin")
+                        .HasColumnType("numeric");
+
                     b.Property<decimal>("EvEbit")
                         .HasColumnType("numeric");
 
-                    b.Property<decimal?>("LiquidezMediaDiaria")
+                    b.Property<decimal>("ExpectedGrowth")
                         .HasColumnType("numeric");
 
-                    b.Property<decimal>("MargemEbit")
+                    b.Property<int>("FileImportId")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("Lpa")
                         .HasColumnType("numeric");
 
-                    b.Property<decimal>("PrecoLucro")
+                    b.Property<decimal?>("MarketValue")
                         .HasColumnType("numeric");
 
-                    b.Property<decimal>("PrecoUnitario")
+                    b.Property<decimal?>("Payout")
                         .HasColumnType("numeric");
 
-                    b.Property<decimal?>("PrecoValorPatrimonial")
+                    b.Property<decimal>("PriceByProfit")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal?>("ProfitCAGR")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal?>("Pvp")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("Roe")
                         .HasColumnType("numeric");
 
                     b.Property<decimal>("Roic")
@@ -116,16 +137,19 @@ namespace App.Data.Migrations
                     b.Property<int>("TickerId")
                         .HasColumnType("integer");
 
-                    b.Property<decimal?>("ValorMercado")
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("Vpa")
                         .HasColumnType("numeric");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ArquivoImportacaoId");
+                    b.HasIndex("FileImportId");
 
                     b.HasIndex("TickerId");
 
-                    b.ToTable("HistoricoTickers");
+                    b.ToTable("HistoryTickers");
                 });
 
             modelBuilder.Entity("App.Domain.Entities.SectorEntity", b =>
@@ -136,24 +160,24 @@ namespace App.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("Ativo")
+                    b.Property<bool>("Active")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTime?>("DataAlteracao")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("DataCadastro")
+                    b.Property<DateTime?>("DateCreated")
                         .IsRequired()
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Nome")
+                    b.Property<DateTime?>("DateUpdated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Setores");
+                    b.ToTable("Sectors");
                 });
 
             modelBuilder.Entity("App.Domain.Entities.SegmentEntity", b =>
@@ -164,29 +188,29 @@ namespace App.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("Ativo")
+                    b.Property<bool>("Active")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTime?>("DataAlteracao")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("DataCadastro")
+                    b.Property<DateTime?>("DateCreated")
                         .IsRequired()
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Nome")
+                    b.Property<DateTime?>("DateUpdated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<int>("SubSetorId")
+                    b.Property<int>("SubSectorId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SubSetorId");
+                    b.HasIndex("SubSectorId");
 
-                    b.ToTable("Segmentos");
+                    b.ToTable("Segments");
                 });
 
             modelBuilder.Entity("App.Domain.Entities.SubSectorEntity", b =>
@@ -197,29 +221,29 @@ namespace App.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("Ativo")
+                    b.Property<bool>("Active")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTime?>("DataAlteracao")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("DataCadastro")
+                    b.Property<DateTime?>("DateCreated")
                         .IsRequired()
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Nome")
+                    b.Property<DateTime?>("DateUpdated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<int>("SetorId")
+                    b.Property<int>("SectorId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SetorId");
+                    b.HasIndex("SectorId");
 
-                    b.ToTable("SubSetores");
+                    b.ToTable("SubSectors");
                 });
 
             modelBuilder.Entity("App.Domain.Entities.TickerEntity", b =>
@@ -230,7 +254,7 @@ namespace App.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("Ativo")
+                    b.Property<bool>("Active")
                         .HasColumnType("boolean");
 
                     b.Property<string>("BaseTicker")
@@ -241,21 +265,21 @@ namespace App.Data.Migrations
                         .HasMaxLength(18)
                         .HasColumnType("character varying(18)");
 
-                    b.Property<DateTime?>("DataAlteracao")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("DataCadastro")
-                        .IsRequired()
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Empresa")
+                    b.Property<string>("Company")
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<bool>("RecuperacaoJudicial")
+                    b.Property<DateTime?>("DateCreated")
+                        .IsRequired()
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime?>("DateUpdated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("JudicialRecovery")
                         .HasColumnType("boolean");
 
-                    b.Property<int?>("SegmentoId")
+                    b.Property<int?>("SegmentId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Ticker")
@@ -263,12 +287,12 @@ namespace App.Data.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("character varying(10)");
 
-                    b.Property<int>("Tipo")
+                    b.Property<int>("TypeTicker")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SegmentoId");
+                    b.HasIndex("SegmentId");
 
                     b.ToTable("Tickers");
                 });
@@ -281,14 +305,14 @@ namespace App.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("Ativo")
+                    b.Property<bool>("Active")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTime?>("DataAlteracao")
+                    b.Property<DateTime?>("DateCreated")
+                        .IsRequired()
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime?>("DataCadastro")
-                        .IsRequired()
+                    b.Property<DateTime?>("DateUpdated")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Login")
@@ -296,37 +320,37 @@ namespace App.Data.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
-                    b.Property<string>("Nome")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<string>("Senha")
+                    b.Property<string>("Password")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Usuarios");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("App.Domain.Entities.FileImportEntity", b =>
                 {
-                    b.HasOne("App.Domain.Entities.UserEntity", "Usuario")
+                    b.HasOne("App.Domain.Entities.UserEntity", "User")
                         .WithMany()
-                        .HasForeignKey("UsuarioId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("Usuario");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("App.Domain.Entities.HistoryTickerEntity", b =>
                 {
-                    b.HasOne("App.Domain.Entities.FileImportEntity", "ArquivoImportacao")
+                    b.HasOne("App.Domain.Entities.FileImportEntity", "FileImport")
                         .WithMany()
-                        .HasForeignKey("ArquivoImportacaoId")
+                        .HasForeignKey("FileImportId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -336,50 +360,50 @@ namespace App.Data.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("ArquivoImportacao");
+                    b.Navigation("FileImport");
 
                     b.Navigation("Ticker");
                 });
 
             modelBuilder.Entity("App.Domain.Entities.SegmentEntity", b =>
                 {
-                    b.HasOne("App.Domain.Entities.SubSectorEntity", "SubSetor")
-                        .WithMany("Segmentos")
-                        .HasForeignKey("SubSetorId")
+                    b.HasOne("App.Domain.Entities.SubSectorEntity", "SubSector")
+                        .WithMany("Segments")
+                        .HasForeignKey("SubSectorId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("SubSetor");
+                    b.Navigation("SubSector");
                 });
 
             modelBuilder.Entity("App.Domain.Entities.SubSectorEntity", b =>
                 {
-                    b.HasOne("App.Domain.Entities.SectorEntity", "Setor")
-                        .WithMany("SubSetores")
-                        .HasForeignKey("SetorId")
+                    b.HasOne("App.Domain.Entities.SectorEntity", "Sector")
+                        .WithMany("SubSectors")
+                        .HasForeignKey("SectorId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("Setor");
+                    b.Navigation("Sector");
                 });
 
             modelBuilder.Entity("App.Domain.Entities.TickerEntity", b =>
                 {
-                    b.HasOne("App.Domain.Entities.SegmentEntity", "Segmento")
+                    b.HasOne("App.Domain.Entities.SegmentEntity", "Segment")
                         .WithMany()
-                        .HasForeignKey("SegmentoId");
+                        .HasForeignKey("SegmentId");
 
-                    b.Navigation("Segmento");
+                    b.Navigation("Segment");
                 });
 
             modelBuilder.Entity("App.Domain.Entities.SectorEntity", b =>
                 {
-                    b.Navigation("SubSetores");
+                    b.Navigation("SubSectors");
                 });
 
             modelBuilder.Entity("App.Domain.Entities.SubSectorEntity", b =>
                 {
-                    b.Navigation("Segmentos");
+                    b.Navigation("Segments");
                 });
 #pragma warning restore 612, 618
         }

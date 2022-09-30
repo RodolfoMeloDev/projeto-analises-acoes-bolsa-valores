@@ -8,19 +8,19 @@ namespace App.Domain.Dtos.Ticker
         public string BaseTicker { get; set; }
         public string Ticker { get; set; }
 
-        private TypeTicker _tipo;
-        public TypeTicker Tipo
+        private TypeTicker _typeTicker;
+        public TypeTicker TypeTicker
         {
-            get { return _tipo; }
-            set { _tipo = value; }
+            get { return _typeTicker; }
+            set { _typeTicker = value; }
         }
 
-        public string NomeTipo
+        public string NameType
         {
-            get { return Enum.GetName(typeof(TypeTicker), _tipo); }
+            get { return Enum.GetName(typeof(TypeTicker), _typeTicker); }
         }
 
-        public bool RecuperacaoJudicial { get; set; }
-        public int SegmentoId { get; set; }
+        public bool JudicialRecovery { get; set; }
+        public int SegmentId { get; set; }
     }
 }

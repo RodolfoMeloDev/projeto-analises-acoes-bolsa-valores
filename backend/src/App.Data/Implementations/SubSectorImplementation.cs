@@ -15,30 +15,30 @@ namespace App.Data.Implementations
     {
         private DbSet<SubSectorEntity> _dataSet;
 
-        public SubSectorImplementation(AnaliseDeAcoesContext context) : base(context)
+        public SubSectorImplementation(StockAnalysisContext context) : base(context)
         {
             _dataSet = context.Set<SubSectorEntity>();
         }
 
         public async Task<SubSectorEntity> ExistSubSector(string name, int sectorId)
         {
-            return await _dataSet.FirstOrDefaultAsync(obj => obj.Nome.Equals(name.ToUpper()) &&
-                                                             obj.SetorId.Equals(sectorId));
+            return await _dataSet.FirstOrDefaultAsync(obj => obj.Name.Equals(name.ToUpper()) &&
+                                                             obj.SectorId.Equals(sectorId));
         }
 
         public async Task<IEnumerable<SubSectorEntity>> GetBySectorId(int sectorId)
         {
-            return await _dataSet.Include(s => s.Setor)
-                .Where(s => s.SetorId.Equals(sectorId))
-                .ToListAsync();
+            return await _dataSet.Include(s => s.Sector)
+                                 .Where(s => s.SectorId.Equals(sectorId))
+                                 .ToListAsync();
         }
 
         public async Task<SubSectorEntity> GetByIdComplete(int id)
         {
             try
             {
-                var result = await _dataSet.Include(s => s.Setor)
-                    .FirstOrDefaultAsync(obj => obj.Id.Equals(id));
+                var result = await _dataSet.Include(s => s.Sector)
+                                           .FirstOrDefaultAsync(obj => obj.Id.Equals(id));
 
                 if (result == null)
                     throw new IntegrityException("ID não encontrado");
@@ -55,8 +55,8 @@ namespace App.Data.Implementations
         {
             try
             {
-                return await _dataSet.Include(s => s.Setor)
-                    .ToListAsync();
+                return await _dataSet.Include(s => s.Sector)
+                                     .ToListAsync();
             }
             catch (Exception ex)
             {

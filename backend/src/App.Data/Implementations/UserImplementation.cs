@@ -11,7 +11,7 @@ namespace App.Data.Implementations
     {
         private DbSet<UserEntity> _dataSet;
 
-        public UserImplementation(AnaliseDeAcoesContext context) : base(context)
+        public UserImplementation(StockAnalysisContext context) : base(context)
         {
             _dataSet = _context.Set<UserEntity>();
         }

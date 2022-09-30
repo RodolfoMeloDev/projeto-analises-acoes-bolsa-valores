@@ -6,28 +6,28 @@ namespace App.Domain.Entities
 {
     public class FileImportEntity : BaseEntity
     {
-        private DateTime _dataArquivo;
+        private DateTime _dateFile;
         [Required]
-        public int UsuarioId { get; set; }
+        public int UserId { get; set; }
 
-        public UserEntity Usuario { get; set; }
-
-        [Required]
-        [MaxLength(100)]
-        public string NomeArquivo { get; set; }
+        public UserEntity User { get; set; }
 
         [Required]
         [MaxLength(100)]
-        public string Descricao { get; set; }
+        public string FileName { get; set; }
 
         [Required]
-        public DateTime DataArquivo
+        [MaxLength(100)]
+        public string Description { get; set; }
+
+        [Required]
+        public DateTime DateFile
         {
-            get { return _dataArquivo; }
-            set { _dataArquivo = (value == DateTime.MinValue ? DateTime.UtcNow : value); }
+            get { return _dateFile; }
+            set { _dateFile = (value == DateTime.MinValue ? DateTime.UtcNow : value); }
         }
 
         [Required]
-        public TypeFileImport TipoArquivo { get; set; }
+        public TypeFileImport TypeFile { get; set; }
     }
 }

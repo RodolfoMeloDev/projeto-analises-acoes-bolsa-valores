@@ -5,8 +5,8 @@ namespace App.Domain.Dtos.SubSector
 {
     public class SubSectorDtoComplete : BaseDto
     {
-        public string Nome { get; set; }
-        public int SetorId { get; set; }
-        public SectorDto Setor { get; set; }        
+        public string Name { get; set; }
+        public int SectorId { get; set; }
+        public SectorDto Sector { get; set; }        
     }
 }

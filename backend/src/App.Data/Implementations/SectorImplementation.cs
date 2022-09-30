@@ -11,14 +11,14 @@ namespace App.Data.Implementations
     {
         private DbSet<SectorEntity> _dataSet;
 
-        public SectorImplementation(AnaliseDeAcoesContext context) : base(context)
+        public SectorImplementation(StockAnalysisContext context) : base(context)
         {
             _dataSet = context.Set<SectorEntity>();
         }
 
         public async Task<SectorEntity> GetByName(string name)
         {
-            return await _dataSet.FirstOrDefaultAsync(obj => obj.Nome.Equals(name.ToUpper()));
+            return await _dataSet.FirstOrDefaultAsync(obj => obj.Name.Equals(name.ToUpper()));
         }
     }
 }

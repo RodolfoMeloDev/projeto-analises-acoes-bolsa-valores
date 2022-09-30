@@ -27,7 +27,7 @@ namespace App.CrossCutting.DependencyInjection
             if (string.IsNullOrEmpty(connectionString))
                 throw new Exception("Não foi localizado a connectionString do sistema.");
 
-            serviceCollection.AddDbContext<AnaliseDeAcoesContext>(
+            serviceCollection.AddDbContext<StockAnalysisContext>(
                     options => options.UseNpgsql(connectionString)
                 );
         }

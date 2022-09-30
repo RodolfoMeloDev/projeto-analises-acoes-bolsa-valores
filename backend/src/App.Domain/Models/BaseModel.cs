@@ -11,25 +11,25 @@ namespace App.Domain.Models
             set { _id = value; }
         }
 
-        private bool _ativo;
-        public bool Ativo
+        private bool _active;
+        public bool Active
         {
-            get { return _ativo; }
-            set { _ativo = value; }
+            get { return _active; }
+            set { _active = value; }
         }
         
-        private DateTime _dataCriacao;
-        public DateTime DataCriacao
+        private DateTime _dateCreated;
+        public DateTime DateCreated
         {
-            get { return _dataCriacao; }
-            set { _dataCriacao = value == null ? DateTime.UtcNow : value; }
+            get { return _dateCreated; }
+            set { _dateCreated = value == null ? DateTime.UtcNow : value; }
         }
 
-        private DateTime _dataAlteracao;
-        public DateTime DataAlteracao
+        private DateTime _dateUpdated;
+        public DateTime DateUpdated
         {
-            get { return _dataAlteracao; }
-            set { _dataAlteracao = value; }
+            get { return _dateUpdated; }
+            set { _dateUpdated = value; }
         }                
     }
 }

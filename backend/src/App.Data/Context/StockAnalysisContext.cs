@@ -4,19 +4,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace App.Data.Context
 {
-    public class AnaliseDeAcoesContext : DbContext
+    public class StockAnalysisContext : DbContext
     {
-        public AnaliseDeAcoesContext(DbContextOptions options) : base(options)
+        public StockAnalysisContext(DbContextOptions options) : base(options)
         {
         }
 
-        public DbSet<UserEntity> Usuarios { get; set; }
-        public DbSet<SectorEntity> Setores { get; set; }
-        public DbSet<SubSectorEntity> SubSetores { get; set; }
-        public DbSet<SegmentEntity> Segmentos { get; set; }
+        public DbSet<UserEntity> Users { get; set; }
+        public DbSet<SectorEntity> Sectors { get; set; }
+        public DbSet<SubSectorEntity> SubSectors { get; set; }
+        public DbSet<SegmentEntity> Segments { get; set; }
         public DbSet<TickerEntity> Tickers { get; set; }
-        public DbSet<FileImportEntity> ArquivosImportacao { get; set; }
-        public DbSet<HistoryTickerEntity> HistoricoTickers { get; set; }
+        public DbSet<FileImportEntity> FileImports { get; set; }
+        public DbSet<HistoryTickerEntity> HistoryTickers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 using App.Domain.Dtos.Formula;
 using App.Domain.Interfaces.Services.Formula;
 using Microsoft.AspNetCore.Mvc;
@@ -22,14 +18,14 @@ namespace App.Api.Controllers
 
         [HttpGet]
         [Route("Greenblatt")]
-        public async Task<IActionResult> ReturnDataGreenblattOptions([FromBody] OptionsFormula optionsFormula)
+        public async Task<IActionResult> ReturnDataGreenblattOptions([FromBody] ParametersFilter parametersFilter)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest();
 
-                return Ok(await _service.Greenblatt(optionsFormula));
+                return Ok(await _service.Greenblatt(parametersFilter));
             }
             catch (ArgumentException e)
             {
@@ -39,14 +35,14 @@ namespace App.Api.Controllers
 
         [HttpGet]
         [Route("PriceAndProfit")]
-        public async Task<IActionResult> ReturnDataPriceAndProfitOptions([FromBody] OptionsFormula optionsFormula)
+        public async Task<IActionResult> ReturnDataPriceAndProfitOptions([FromBody] ParametersFilter parametersFilter)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest();
 
-                return Ok(await _service.PriceAndProfit(optionsFormula));
+                return Ok(await _service.PriceAndProfit(parametersFilter));
             }
             catch (ArgumentException e)
             {
@@ -56,14 +52,14 @@ namespace App.Api.Controllers
 
         [HttpGet]
         [Route("ValuetionByBazin")]
-        public async Task<IActionResult> ReturnDataValuetionByBazinOptions([FromBody] OptionsFormula optionsFormula)
+        public async Task<IActionResult> ReturnDataValuetionByBazinOptions([FromBody] ParametersFilter parametersFilter)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest();
 
-                return Ok(await _service.ValuetionByBazin(optionsFormula));
+                return Ok(await _service.ValuetionByBazin(parametersFilter));
             }
             catch (ArgumentException e)
             {
@@ -73,14 +69,14 @@ namespace App.Api.Controllers
 
         [HttpGet]
         [Route("ValuetionByGraham")]
-        public async Task<IActionResult> ReturnDataValuetionByGrahamOptions([FromBody] OptionsFormula optionsFormula)
+        public async Task<IActionResult> ReturnDataValuetionByGrahamOptions([FromBody] ParametersFilter parametersFilter)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest();
 
-                return Ok(await _service.ValuetionByGraham(optionsFormula));
+                return Ok(await _service.ValuetionByGraham(parametersFilter));
             }
             catch (ArgumentException e)
             {
@@ -90,14 +86,14 @@ namespace App.Api.Controllers
 
         [HttpGet]
         [Route("ValuetionByGordon")]
-        public async Task<IActionResult> ReturnDataValuetionByGordonOptions([FromBody] OptionsFormula optionsFormula)
+        public async Task<IActionResult> ReturnDataValuetionByGordonOptions([FromBody] ParametersFilter parametersFilter)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest();
 
-                return Ok(await _service.ValuetionByGordon(optionsFormula));
+                return Ok(await _service.ValuetionByGordon(parametersFilter));
             }
             catch (ArgumentException e)
             {

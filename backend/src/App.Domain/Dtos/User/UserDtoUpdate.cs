@@ -13,12 +13,12 @@ namespace App.Domain.Dtos.User
         
         [Required(ErrorMessage = "O campo é obrigatório")]
         [StringLength(100, ErrorMessage = "O campo deve ter no máximo {1} caracteres.")]
-        public string Nome { get; set; }        
+        public string Name { get; set; }        
 
         [Required(ErrorMessage = "O campo é obrigatório")]
         [StringLength(20, ErrorMessage = "O campo deve ter no máximo {1} caracteres.")]
-        public string Senha { get; set; }
+        public string Password { get; set; }
 
-        public bool Ativo { get; set; }
+        public bool Active { get; set; }
     }
 }
