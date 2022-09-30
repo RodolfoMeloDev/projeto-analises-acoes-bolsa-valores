@@ -85,7 +85,12 @@ namespace App.Api.Controllers
                     if (result == null)
                         return BadRequest();
 
-                    return Created(new Uri(Url.Link("GetFileImportWithId", new { id = result.Id })), result);
+                    var _url = Url.Link("GetFileImportWithId", new { id = result.Id });
+                    
+                    if (string.IsNullOrEmpty(_url))
+                        return StatusCode((int)HttpStatusCode.InternalServerError, "Não foi possível gerar a URL para retorno dos dados inseridos.");                        
+
+                    return Created(new Uri(_url), result);
                 }
                 else
                     return StatusCode((int)HttpStatusCode.InternalServerError, "Houve um problema ao carregar o arquivo.");
