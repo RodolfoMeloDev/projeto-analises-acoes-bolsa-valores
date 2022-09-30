@@ -44,11 +44,11 @@ namespace App.Service.Services
             return await _repository.DeleteAsync(id);
         }
 
-        public async Task<IEnumerable<HistoryTickerDtoComplete>> GetAllByTicker(string ticker)
+        public async Task<IEnumerable<HistoryTickerDto>> GetAllByTicker(string ticker)
         {
             var listEntity = await _repository.GetAllByTicker(ticker);
 
-            return _mapper.Map<IEnumerable<HistoryTickerDtoComplete>>(listEntity);
+            return _mapper.Map<IEnumerable<HistoryTickerDto>>(listEntity);
         }
 
         public async Task<IEnumerable<HistoryTickerDtoComplete>> GetAllByFileImportComplete(int fileImportId)
