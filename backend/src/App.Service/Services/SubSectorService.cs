@@ -56,7 +56,7 @@ namespace App.Service.Services
 
         public async Task<SubSectorDtoCreateResult> Insert(SubSectorDtoCreate subSector)
         {
-            var existSubSector = await _repository.ExistSubSector(subSector.Nome, subSector.SetorId);
+            var existSubSector = await _repository.ExistSubSector(subSector.Name, subSector.SectorId);
 
             if (existSubSector != null)
                 throw new IntegrityException("O SubSetor já cadastrado.");
@@ -69,10 +69,10 @@ namespace App.Service.Services
 
         public async Task<SubSectorDtoUpdateResult> Update(SubSectorDtoUpdate subSector)
         {
-            var existSubSector = await _repository.ExistSubSector(subSector.Nome, subSector.SetorId);
+            var existSubSector = await _repository.ExistSubSector(subSector.Name, subSector.SectorId);
 
             if (existSubSector != null &&
-                existSubSector.Nome.Equals(subSector.Nome) &&
+                existSubSector.Name.Equals(subSector.Name) &&
                 !existSubSector.Id.Equals(subSector.Id))
             {
                 throw new IntegrityException("O SubSetor já cadastrado.");

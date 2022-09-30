@@ -6,6 +6,6 @@ namespace App.Domain.Dtos.Sector
     {
         [Required(ErrorMessage = "O campo é obrigatório")]
         [StringLength(100, ErrorMessage = "O campo deve ter no máximo {1} caracteres.")]
-        public string Nome { get; set; }
+        public string Name { get; set; }
     }
 }

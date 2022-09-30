@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using App.Data.Context;
 using App.Data.Repository.Exceptions;
@@ -56,8 +55,8 @@ namespace App.Data.Repository
         {
             try
             {
-                item.DataCadastro = DateTime.UtcNow;
-                item.Ativo = true;
+                item.DateCreated = DateTime.UtcNow;
+                item.Active = true;
 
                 _dataSet.Add(item);
                 await _context.SaveChangesAsync();
@@ -79,8 +78,8 @@ namespace App.Data.Repository
                 if (result == null)
                     throw new IntegrityException("A chave de identificação do objeto não foi encontrada, não foi possível atualizar as informações.");
 
-                item.DataCadastro = result.DataCadastro;
-                item.DataAlteracao = DateTime.UtcNow;
+                item.DateCreated = result.DateCreated;
+                item.DateUpdated = DateTime.UtcNow;
 
                 _context.Entry(result).CurrentValues.SetValues(item);
 

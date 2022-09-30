@@ -6,11 +6,11 @@ namespace App.Domain.Entities
     {
         [Required]
         [MaxLength(100)]
-        public string Nome { get; set; }
+        public string Name { get; set; }
 
         [Required]
-        public int SubSetorId { get; set; }
+        public int SubSectorId { get; set; }
 
-        public SubSectorEntity SubSetor { get; set; }
+        public SubSectorEntity SubSector { get; set; }
     }
 }

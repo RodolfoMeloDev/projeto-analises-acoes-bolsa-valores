@@ -18,7 +18,7 @@ namespace App.Data.Implementations
 
         public async Task<SectorEntity> GetByName(string name)
         {
-            return await _dataSet.FirstOrDefaultAsync(obj => obj.Nome.Equals(name.ToUpper()));
+            return await _dataSet.FirstOrDefaultAsync(obj => obj.Name.Equals(name.ToUpper()));
         }
     }
 }

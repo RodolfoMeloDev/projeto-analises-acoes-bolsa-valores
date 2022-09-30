@@ -42,7 +42,7 @@ namespace App.Service.Services
 
         public async Task<SectorDtoCreateResult> InsertSector(SectorDtoCreate sector)
         {
-            var existSector = await _repository.GetByName(sector.Nome);
+            var existSector = await _repository.GetByName(sector.Name);
 
             if (existSector == null)
             {

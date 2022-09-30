@@ -5,25 +5,25 @@ namespace App.Domain.Entities
 {
     public abstract class BaseEntity
     {
-        private DateTime? _dataCadastro;
-        private DateTime? _dataAlteracao;
+        private DateTime? _dateCreated;
+        private DateTime? _dateUpdated;
 
         [Key]
         public int Id { get; set; }
 
-        public bool Ativo { get; set; }
+        public bool Active { get; set; }
 
         [Required]
-        public DateTime? DataCadastro
+        public DateTime? DateCreated
         {
-            get { return _dataCadastro; }
-            set { _dataCadastro = (value == null ? DateTime.UtcNow : value); }
+            get { return _dateCreated; }
+            set { _dateCreated = (value == null ? DateTime.UtcNow : value); }
         }
 
-        public DateTime? DataAlteracao
+        public DateTime? DateUpdated
         {
-            get { return _dataAlteracao; }
-            set { _dataAlteracao = (value == DateTime.MinValue ? null : value); }
+            get { return _dateUpdated; }
+            set { _dateUpdated = (value == DateTime.MinValue ? null : value); }
         }
     }
 }

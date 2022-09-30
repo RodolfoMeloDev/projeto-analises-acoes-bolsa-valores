@@ -7,28 +7,28 @@ namespace App.Domain.Dtos.FileImport
     public class FileImportDto : BaseDto
     {
         private TimeZoneInfo _curTimeZone = TimeZoneInfo.Local;
-        private DateTime _dataArquivo;
-        private TypeFileImport _tipoArquivo;
+        private DateTime _dateFile;
+        private TypeFileImport _typeFile;
 
-        public int UsuarioId { get; set; }
-        public string NomeArquivo { get; set; }
-        public string Descricao { get; set; }
+        public int UserId { get; set; }
+        public string FileName { get; set; }
+        public string Description { get; set; }
 
-        public DateTime DataArquivo
+        public DateTime DateFile
         {
-            get { return TimeZoneInfo.ConvertTimeFromUtc(_dataArquivo, _curTimeZone); }
-            set { _dataArquivo = value; }
+            get { return TimeZoneInfo.ConvertTimeFromUtc(_dateFile, _curTimeZone); }
+            set { _dateFile = value; }
         }
 
-        public TypeFileImport TipoArquivo
+        public TypeFileImport TypeFile
         {
-            get { return _tipoArquivo; }
-            set { _tipoArquivo = value; }
+            get { return _typeFile; }
+            set { _typeFile = value; }
         }
 
-        public string NomeTipoArquivo
+        public string NameTypeFile
         {
-            get { return Enum.GetName(typeof(TypeFileImport), _tipoArquivo); }
+            get { return Enum.GetName(typeof(TypeFileImport), _typeFile); }
         }
     }
 }

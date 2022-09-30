@@ -8,22 +8,22 @@ namespace App.Domain.Dtos
     public class BaseDto
     {
         private TimeZoneInfo _curTimeZone = TimeZoneInfo.Local;
-        private DateTime _dataCadastro;
-        private DateTime? _dataAlteracao;
+        private DateTime _dateCreated;
+        private DateTime? _dateUpdated;
 
         public int Id { get; set; }
-        public bool Ativo { get; set; }
+        public bool Active { get; set; }
 
-        public DateTime DataCadastro 
+        public DateTime DateCreated 
         { 
-            get { return TimeZoneInfo.ConvertTimeFromUtc(_dataCadastro, _curTimeZone); }
-            set { _dataCadastro = value ; } 
+            get { return TimeZoneInfo.ConvertTimeFromUtc(_dateCreated, _curTimeZone); }
+            set { _dateCreated = value ; } 
         }
 
-        public DateTime? DataAlteracao 
+        public DateTime? DateUpdated 
         {
-            get { return _dataAlteracao != null ? TimeZoneInfo.ConvertTimeFromUtc(_dataCadastro, _curTimeZone) : null ; }
-            set { _dataAlteracao = value; }
+            get { return _dateUpdated != null ? TimeZoneInfo.ConvertTimeFromUtc(_dateCreated, _curTimeZone) : null ; }
+            set { _dateUpdated = value; }
         }
     }
 }

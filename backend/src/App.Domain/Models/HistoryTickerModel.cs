@@ -2,11 +2,11 @@ namespace App.Domain.Models
 {
     public class HistoryTickerModel : BaseModel
     {
-        private int _arquivoImportacaoId;
-        public int ArquivoImportacaoId
+        private int _fileImportId;
+        public int FileImportId
         {
-            get { return _arquivoImportacaoId; }
-            set { _arquivoImportacaoId = value; }
+            get { return _fileImportId; }
+            set { _fileImportId = value; }
         }
 
         private int _tickerId;
@@ -16,18 +16,18 @@ namespace App.Domain.Models
             set { _tickerId = value; }
         }
 
-        private decimal _precoUnitario;
-        public decimal PrecoUnitario
+        private decimal _unitPrice;
+        public decimal UnitPrice
         {
-            get { return _precoUnitario; }
-            set { _precoUnitario = value; }
+            get { return _unitPrice; }
+            set { _unitPrice = value; }
         }
 
-        private decimal _precoLucro;
-        public decimal PrecoLucro
+        private decimal _priceByProfit;
+        public decimal PriceByProfit
         {
-            get { return _precoLucro; }
-            set { _precoLucro = value; }
+            get { return _priceByProfit; }
+            set { _priceByProfit = value; }
         }
 
         private decimal _roic;
@@ -44,11 +44,11 @@ namespace App.Domain.Models
             set { _evEbit = value; }
         }
 
-        private decimal _margemEbit;
-        public decimal MargemEbit
+        private decimal _ebitMargin;
+        public decimal EbitMargin
         {
-            get { return _margemEbit; }
-            set { _margemEbit = value; }
+            get { return _ebitMargin; }
+            set { _ebitMargin = value; }
         }
 
         private decimal? _dividendYield;
@@ -58,25 +58,25 @@ namespace App.Domain.Models
             set { _dividendYield = (value == 0 ? null : value); }
         }
 
-        private decimal? _precoValorPatrimonial;
-        public decimal? PrecoValorPatrimonial
+        private decimal? _pvp;
+        public decimal? Pvp
         {
-            get { return _precoValorPatrimonial; }
-            set { _precoValorPatrimonial = (value == 0 ? null : value); }
+            get { return _pvp; }
+            set { _pvp = (value == 0 ? null : value); }
         }
 
-        private decimal? _liquidezMediaDiaria;
-        public decimal? LiquidezMediaDiaria
+        private decimal? _averageDailyLiquidity;
+        public decimal? AverageDailyLiquidity
         {
-            get { return _liquidezMediaDiaria; }
-            set { _liquidezMediaDiaria = (value == 0 ? null : value); }
+            get { return _averageDailyLiquidity; }
+            set { _averageDailyLiquidity = (value == 0 ? null : value); }
         }
 
-        private decimal? _valorMercado;
-        public decimal? ValorMercado
+        private decimal? _marketValue;
+        public decimal? MarketValue
         {
-            get { return _valorMercado; }
-            set { _valorMercado = (value == 0 ? null : value); }
+            get { return _marketValue; }
+            set { _marketValue = (value == 0 ? null : value); }
         }
 
         private decimal _lpa;
@@ -104,7 +104,7 @@ namespace App.Domain.Models
         public decimal? Dpa
         {
             get { return _dpa; }
-            set { _dpa = (_dividendYield != null ? (decimal)_precoUnitario * ((decimal)_dividendYield / 100) : null); }
+            set { _dpa = (_dividendYield != null ? (decimal)_unitPrice * ((decimal)_dividendYield / 100) : null); }
         }
 
         private decimal? _payout;
@@ -114,25 +114,25 @@ namespace App.Domain.Models
             set { _payout = (_lpa == 0 ? 0 : (_dpa != null ? ((decimal)_dpa / _lpa) * 100 : null)); }
         }
 
-        private decimal? _cagrLucro;
-        public decimal? CAGRLucro
+        private decimal? _profitCAGR;
+        public decimal? ProfitCAGR
         {
-            get { return _cagrLucro; }
-            set { _cagrLucro = value; }
+            get { return _profitCAGR; }
+            set { _profitCAGR = value; }
         }
 
-        private decimal _crescimentoEsperado;
-        public decimal CrescimentoEsperado
+        private decimal _expectedGrowth;
+        public decimal ExpectedGrowth
         {
-            get { return _crescimentoEsperado; }
-            set { _crescimentoEsperado = (_payout != null ? ((100 - (decimal)_payout) * _roe) / 100 : _roe); }
+            get { return _expectedGrowth; }
+            set { _expectedGrowth = (_payout != null ? ((100 - (decimal)_payout) * _roe) / 100 : _roe); }
         }
 
-        private decimal _mediaCrescimento;
-        public decimal MediaCrescimento
+        private decimal _averageGrowth;
+        public decimal AverageGrowth
         {
-            get { return _mediaCrescimento; }
-            set { _mediaCrescimento = (_cagrLucro == null ? _crescimentoEsperado : ((decimal)_cagrLucro + _crescimentoEsperado) / 2); }
+            get { return _averageGrowth; }
+            set { _averageGrowth = (_profitCAGR == null ? _expectedGrowth : ((decimal)_profitCAGR + _expectedGrowth) / 2); }
         }
     }
 }

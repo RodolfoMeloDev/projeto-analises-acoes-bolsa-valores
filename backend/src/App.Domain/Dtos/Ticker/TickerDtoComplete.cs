@@ -8,11 +8,11 @@ namespace App.Domain.Dtos.Ticker
     {
         public string BaseTicker { get; set; }
         public string Ticker { get; set; }
-        public string Empresa { get; set; }
+        public string Company { get; set; }
         public string CNPJ { get; set; }
-        public TypeTicker Tipo { get; set; }
-        public bool RecuperacaoJudicial { get; set; }
-        public int SegmentoId { get; set; }
-        public SegmentDtoComplete Segmento { get; set; }
+        public TypeTicker TypeTicker { get; set; }
+        public bool JudicialRecovery { get; set; }
+        public int SegmentId { get; set; }
+        public SegmentDtoComplete Segment { get; set; }
     }
 }

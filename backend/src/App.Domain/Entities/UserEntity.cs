@@ -10,10 +10,10 @@ namespace App.Domain.Entities
 
         [Required]
         [MaxLength(20)]
-        public string Senha { get; set; }
+        public string Password { get; set; }
 
         [Required]
         [MaxLength(100)]
-        public string Nome { get; set; }        
+        public string Name { get; set; }        
     }
 }

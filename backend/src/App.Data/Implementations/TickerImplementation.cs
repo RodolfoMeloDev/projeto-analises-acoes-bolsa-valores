@@ -25,53 +25,53 @@ namespace App.Data.Implementations
 
         public async Task<IEnumerable<TickerEntity>> GetAllComplete()
         {
-            return await _dataSet.Include(sg => sg.Segmento)
-                .ThenInclude(ss => ss.SubSetor)
-                .ThenInclude(s => s.Setor)
-                .ToListAsync();
+            return await _dataSet.Include(sg => sg.Segment)
+                                 .ThenInclude(ss => ss.SubSector)
+                                 .ThenInclude(s => s.Sector)
+                                 .ToListAsync();
         }
 
         public async Task<TickerEntity> GetByIdComplete(int id)
         {
-            return await _dataSet.Include(sg => sg.Segmento)
-                .ThenInclude(ss => ss.SubSetor)
-                .ThenInclude(s => s.Setor)
-                .FirstOrDefaultAsync(obj => obj.Id.Equals(id));
+            return await _dataSet.Include(sg => sg.Segment)
+                                 .ThenInclude(ss => ss.SubSector)
+                                 .ThenInclude(s => s.Sector)
+                                 .FirstOrDefaultAsync(obj => obj.Id.Equals(id));
         }
 
         public async Task<IEnumerable<TickerEntity>> GetBySectorId(int sectorId)
         {
-            return await _dataSet.Include(sg => sg.Segmento)
-                .ThenInclude(ss => ss.SubSetor)
-                .ThenInclude(s => s.Setor)
-                .Where(obj => obj.Segmento.SubSetor.SetorId.Equals(sectorId))
-                .ToListAsync();
+            return await _dataSet.Include(sg => sg.Segment)
+                                 .ThenInclude(ss => ss.SubSector)
+                                 .ThenInclude(s => s.Sector)
+                                 .Where(obj => obj.Segment.SubSector.SectorId.Equals(sectorId))
+                                 .ToListAsync();
         }
 
         public async Task<IEnumerable<TickerEntity>> GetBySegmentoId(int segmentId)
         {
-            return await _dataSet.Include(sg => sg.Segmento)
-                .ThenInclude(ss => ss.SubSetor)
-                .ThenInclude(s => s.Setor)
-                .Where(obj => obj.SegmentoId.Equals(segmentId))
-                .ToListAsync();
+            return await _dataSet.Include(sg => sg.Segment)
+                                 .ThenInclude(ss => ss.SubSector)
+                                 .ThenInclude(s => s.Sector)
+                                 .Where(obj => obj.SegmentId.Equals(segmentId))
+                                 .ToListAsync();
         }
 
         public async Task<IEnumerable<TickerEntity>> GetBySubSectorId(int subSectorId)
         {
-            return await _dataSet.Include(sg => sg.Segmento)
-                .ThenInclude(ss => ss.SubSetor)
-                .ThenInclude(s => s.Setor)
-                .Where(obj => obj.Segmento.SubSetorId.Equals(subSectorId))
-                .ToListAsync();
+            return await _dataSet.Include(sg => sg.Segment)
+                                 .ThenInclude(ss => ss.SubSector)
+                                 .ThenInclude(s => s.Sector)
+                                 .Where(obj => obj.Segment.SubSectorId.Equals(subSectorId))
+                                 .ToListAsync();
         }
 
         public async Task<TickerEntity> GetByTickerComplete(string ticker)
         {
-            return await _dataSet.Include(sg => sg.Segmento)
-                .ThenInclude(ss => ss.SubSetor)
-                .ThenInclude(s => s.Setor)
-                .FirstOrDefaultAsync(obj => obj.Ticker.Equals(ticker.ToUpper()));
+            return await _dataSet.Include(sg => sg.Segment)
+                                 .ThenInclude(ss => ss.SubSector)
+                                 .ThenInclude(s => s.Sector)
+                                 .FirstOrDefaultAsync(obj => obj.Ticker.Equals(ticker.ToUpper()));
         }
     }
 }

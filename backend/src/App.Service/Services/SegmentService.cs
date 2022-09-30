@@ -63,7 +63,7 @@ namespace App.Service.Services
 
         public async Task<SegmentDtoCreateResult> Insert(SegmentDtoCreate segment)
         {
-            var existSegment = await _repository.ExistSegment(segment.Nome, segment.SubSetorId);
+            var existSegment = await _repository.ExistSegment(segment.Name, segment.SubSectorId);
 
             if (existSegment != null)
                 throw new IntegrityException("O Segmento já está cadastrado.");
@@ -77,10 +77,10 @@ namespace App.Service.Services
 
         public async Task<SegmentDtoUpdateResult> Update(SegmentDtoUpdate segment)
         {
-            var existSegment = await _repository.ExistSegment(segment.Nome, segment.SubSetorId);
+            var existSegment = await _repository.ExistSegment(segment.Name, segment.SubSectorId);
 
             if (existSegment != null &&
-                existSegment.Nome.Equals(segment.Nome) &&
+                existSegment.Name.Equals(segment.Name) &&
                 !existSegment.Id.Equals(segment.Id))
             {
                 throw new IntegrityException("O Segmento já está cadastrado.");

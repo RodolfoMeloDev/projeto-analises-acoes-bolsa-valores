@@ -8,15 +8,15 @@ namespace App.Domain.Dtos
     public class BaseUpdateDtoResult
     {
         private TimeZoneInfo _curTimeZone = TimeZoneInfo.Local;
-        private DateTime _dataAlteracao;
+        private DateTime _dateUpdated;
 
         public int Id { get; set; }        
-        public bool Ativo { get; set; }
+        public bool Active { get; set; }
         
-        public DateTime? DataAlteracao 
+        public DateTime? DateUpdated 
         {
-            get { return TimeZoneInfo.ConvertTimeFromUtc(_dataAlteracao, _curTimeZone); }
-            set { _dataAlteracao = (DateTime)value; }
+            get { return TimeZoneInfo.ConvertTimeFromUtc(_dateUpdated, _curTimeZone); }
+            set { _dateUpdated = (DateTime)value; }
         }
     }
 }

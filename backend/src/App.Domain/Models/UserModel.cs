@@ -2,11 +2,11 @@ namespace App.Domain.Models
 {
     public class UserModel : BaseModel
     {
-        private string _nome;
-        public string Nome
+        private string _name;
+        public string Name
         {
-            get { return _nome; }
-            set { _nome = (string.IsNullOrEmpty(value) ? null : value.ToUpper()); }
+            get { return _name; }
+            set { _name = (string.IsNullOrEmpty(value) ? null : value.ToUpper()); }
         }
 
         private string _login;
@@ -16,11 +16,11 @@ namespace App.Domain.Models
             set { _login = (string.IsNullOrEmpty(value) ? null : value.ToUpper()); }
         }
 
-        private string _senha;
-        public string Senha
+        private string _password;
+        public string Password
         {
-            get { return _senha; }
-            set { _senha = (string.IsNullOrEmpty(value) ? null : value.ToUpper()); }
+            get { return _password; }
+            set { _password = (string.IsNullOrEmpty(value) ? null : value.ToUpper()); }
         }
 
     }

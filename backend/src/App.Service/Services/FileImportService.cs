@@ -31,9 +31,9 @@ namespace App.Service.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<FileImportDto>> GetAllFileImport(int UsuarioId)
+        public async Task<IEnumerable<FileImportDto>> GetAllFileImport(int UserId)
         {
-            var listEntity = await _repository.GetAllFileImport(UsuarioId);
+            var listEntity = await _repository.GetAllFileImport(UserId);
 
             return _mapper.Map<IEnumerable<FileImportDto>>(listEntity);
         }
@@ -45,22 +45,22 @@ namespace App.Service.Services
             return _mapper.Map<FileImportDto>(entity);
         }
 
-        public async Task<FileImportDto> GetFileImportByDate(int UsuarioId, DateTime date)
+        public async Task<FileImportDto> GetFileImportByDate(int UserId, DateTime date)
         {
             if (date.Kind != DateTimeKind.Utc)
                 date = TimeZoneInfo.ConvertTimeToUtc(date);
 
-            var entity = await _repository.GetByDate(UsuarioId, date);
+            var entity = await _repository.GetByDate(UserId, date);
 
             return _mapper.Map<FileImportDto>(entity);
         }
 
         public async Task<FileImportDtoCreateResult> InsertFileImport(FileImportDtoCreate fileImport)
         {
-            if (fileImport.DataArquivo.Kind != DateTimeKind.Utc)
-                fileImport.DataArquivo = TimeZoneInfo.ConvertTimeToUtc(fileImport.DataArquivo);
+            if (fileImport.DateFile.Kind != DateTimeKind.Utc)
+                fileImport.DateFile = TimeZoneInfo.ConvertTimeToUtc(fileImport.DateFile);
 
-            var existFileImport = await _repository.GetByDate(fileImport.UsuarioId, fileImport.DataArquivo);
+            var existFileImport = await _repository.GetByDate(fileImport.UserId, fileImport.DateFile);
 
             if (existFileImport == null)
             {
@@ -73,7 +73,7 @@ namespace App.Service.Services
                                                        ))
                 {
                     var model = _mapper.Map<FileImportModel>(fileImport);
-                    model.NomeArquivo = fileImport.File.FileName;
+                    model.FileName = fileImport.File.FileName;
 
                     var entity = _mapper.Map<FileImportEntity>(model);
                     var result = await _repository.InsertAsync(entity);
@@ -85,9 +85,9 @@ namespace App.Service.Services
                         // relation ticker with sector/subsector and segments
                         await _dataTickerService.ImportSegmentsSubSectorsAndSectors(listTickerWebData);
 
-                        if (fileImport.TipoArquivo == TypeFileImport.STATUS_INVEST)
+                        if (fileImport.TypeFile == TypeFileImport.STATUS_INVEST)
                         {
-                            var linesFiles = _statusInvestService.GetLinesFile(fileImport.File, fileImport.UsuarioId.ToString());
+                            var linesFiles = _statusInvestService.GetLinesFile(fileImport.File, fileImport.UserId.ToString());
 
                             if (await _statusInvestService.InsertListTickers(linesFiles, listTickerWebData))
                             {
@@ -96,7 +96,7 @@ namespace App.Service.Services
                         }
                         else
                         {
-                            var linesFiles = _fundamentusService.GetLinesFile(fileImport.File, fileImport.UsuarioId.ToString());
+                            var linesFiles = _fundamentusService.GetLinesFile(fileImport.File, fileImport.UserId.ToString());
 
                             if (await _fundamentusService.InsertListTickers(linesFiles, listTickerWebData))
                             {
@@ -129,7 +129,7 @@ namespace App.Service.Services
 
                 if (fileImport != null)
                 {
-                    if (fileImport.TipoArquivo == TypeFileImport.STATUS_INVEST)
+                    if (fileImport.TypeFile == TypeFileImport.STATUS_INVEST)
                         itensRemoved = await _statusInvestService.DeleteHistoryTickers(id);
                     else
                         itensRemoved = await _fundamentusService.DeleteHistoryTickers(id);
