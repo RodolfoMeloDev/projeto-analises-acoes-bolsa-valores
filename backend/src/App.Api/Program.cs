@@ -1,5 +1,7 @@
 using App.CrossCutting.DependencyInjection;
 using App.CrossCutting.Mappings;
+using App.Data.Context;
+using App.Data.Seed;
 using AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -38,5 +40,17 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+if (Environment.GetEnvironmentVariable("INSERT_SEED") == "true")
+{
+    using (var service = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
+    using (var context = service.ServiceProvider.GetService<StockAnalysisContext>())
+    {
+        if (context != null)
+        {
+            DatasInitial.InsertDatasInitial(context);
+        }        
+    }
+}
 
 app.Run();

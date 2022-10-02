@@ -25,7 +25,7 @@
 						},
 						{
 							"key": "DateFile",
-							"value": "2022-09-30",
+							"value": "2022-10-01",
 							"type": "default"
 						},
 						{
@@ -36,7 +36,7 @@
 						{
 							"key": "File",
 							"type": "file",
-							"src": "/C:/Users/r_fio/Downloads/statusinvest-busca-avancada (6).csv"
+							"src": "/C:/Users/r_fio/Downloads/statusinvest-busca-avancada.csv"
 						}
 					]
 				},
@@ -126,7 +126,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://localhost:7206/api/FileImports/FilesByDate?userId=1&dateFile=2022-09-29",
+					"raw": "https://localhost:7206/api/FileImports/FilesByDate?userId=1&dateFile=2022-10-02",
 					"protocol": "https",
 					"host": [
 						"localhost"
@@ -144,7 +144,7 @@
 						},
 						{
 							"key": "dateFile",
-							"value": "2022-09-29"
+							"value": "2022-10-02"
 						}
 					]
 				}

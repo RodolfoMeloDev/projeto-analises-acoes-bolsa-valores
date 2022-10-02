@@ -2,7 +2,6 @@ using System.Transactions;
 using App.Domain.Dtos.FileImport;
 using App.Domain.Entities;
 using App.Domain.Enums;
-using App.Domain.Interfaces.Services.DataTicker;
 using App.Domain.Interfaces.Services.FileImport;
 using App.Domain.Models;
 using App.Domain.Models.FilesImport;
@@ -15,17 +14,16 @@ namespace App.Service.Services
     public class FileImportService : IFileImportService
     {
         private IFileImportRepository _repository;
-        private IDataTickerService _dataTickerService;
         private IFilesService<FileStatusInvest> _statusInvestService;
         private IFilesService<FileFundamentus> _fundamentusService;
         private readonly IMapper _mapper;
 
-        public FileImportService(IFileImportRepository repository, IDataTickerService dataTickerService,
-            IFilesService<FileStatusInvest> fileStatusInvestService, IFilesService<FileFundamentus> fileFundamentusService,
-            IMapper mapper)
+        public FileImportService(IFileImportRepository repository,
+               IFilesService<FileStatusInvest> fileStatusInvestService, 
+               IFilesService<FileFundamentus> fileFundamentusService,
+               IMapper mapper)
         {
             _repository = repository;
-            _dataTickerService = dataTickerService;
             _statusInvestService = fileStatusInvestService;
             _fundamentusService = fileFundamentusService;
             _mapper = mapper;
@@ -80,16 +78,11 @@ namespace App.Service.Services
 
                     if (result != null)
                     {
-                        // get date api
-                        var listTickerWebData = await _dataTickerService.GetDataAllTicker();
-                        // relation ticker with sector/subsector and segments
-                        await _dataTickerService.ImportSegmentsSubSectorsAndSectors(listTickerWebData);
-
                         if (fileImport.TypeFile == TypeFileImport.STATUS_INVEST)
                         {
                             var linesFiles = _statusInvestService.GetLinesFile(fileImport.File, fileImport.UserId.ToString());
 
-                            if (await _statusInvestService.InsertListTickers(linesFiles, listTickerWebData))
+                            if (await _statusInvestService.InsertListTickers(linesFiles))
                             {
                                 await _statusInvestService.InsertHistoryTickers(linesFiles, result.Id);
                             }
@@ -98,7 +91,7 @@ namespace App.Service.Services
                         {
                             var linesFiles = _fundamentusService.GetLinesFile(fileImport.File, fileImport.UserId.ToString());
 
-                            if (await _fundamentusService.InsertListTickers(linesFiles, listTickerWebData))
+                            if (await _fundamentusService.InsertListTickers(linesFiles))
                             {
                                 await _fundamentusService.InsertHistoryTickers(linesFiles, result.Id);
                             }

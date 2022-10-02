@@ -49,6 +49,10 @@ namespace App.Data.Implementations
         {
             return await _dataSet.Include(obj => obj.FileImport)
                                  .Include(obj => obj.Ticker)
+                                 .ThenInclude(obj => obj.BaseTicker)
+                                 .ThenInclude(obj => obj.Segment)
+                                 .ThenInclude(obj => obj.SubSector)
+                                 .ThenInclude(obj => obj.Sector)
                                  .Where(obj => obj.FileImportId.Equals(fileImportId))
                                  .ToListAsync();
         }

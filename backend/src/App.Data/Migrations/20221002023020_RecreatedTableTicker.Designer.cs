@@ -3,6 +3,7 @@ using System;
 using App.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace App.Data.Migrations
 {
     [DbContext(typeof(StockAnalysisContext))]
-    partial class StockAnalysisContextModelSnapshot : ModelSnapshot
+    [Migration("20221002023020_RecreatedTableTicker")]
+    partial class RecreatedTableTicker
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,7 +58,7 @@ namespace App.Data.Migrations
 
                     b.HasIndex("SegmentId");
 
-                    b.ToTable("BaseTickers", (string)null);
+                    b.ToTable("BaseTickers");
                 });
 
             modelBuilder.Entity("App.Domain.Entities.FileImportEntity", b =>
@@ -100,7 +102,7 @@ namespace App.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("FileImports", (string)null);
+                    b.ToTable("FileImports");
                 });
 
             modelBuilder.Entity("App.Domain.Entities.HistoryTickerEntity", b =>
@@ -184,7 +186,7 @@ namespace App.Data.Migrations
 
                     b.HasIndex("TickerId");
 
-                    b.ToTable("HistoryTickers", (string)null);
+                    b.ToTable("HistoryTickers");
                 });
 
             modelBuilder.Entity("App.Domain.Entities.SectorEntity", b =>
@@ -212,7 +214,7 @@ namespace App.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Sectors", (string)null);
+                    b.ToTable("Sectors");
                 });
 
             modelBuilder.Entity("App.Domain.Entities.SegmentEntity", b =>
@@ -245,7 +247,7 @@ namespace App.Data.Migrations
 
                     b.HasIndex("SubSectorId");
 
-                    b.ToTable("Segments", (string)null);
+                    b.ToTable("Segments");
                 });
 
             modelBuilder.Entity("App.Domain.Entities.SubSectorEntity", b =>
@@ -278,7 +280,7 @@ namespace App.Data.Migrations
 
                     b.HasIndex("SectorId");
 
-                    b.ToTable("SubSectors", (string)null);
+                    b.ToTable("SubSectors");
                 });
 
             modelBuilder.Entity("App.Domain.Entities.TickerEntity", b =>
@@ -317,7 +319,7 @@ namespace App.Data.Migrations
 
                     b.HasIndex("BaseTickerId");
 
-                    b.ToTable("Tickers", (string)null);
+                    b.ToTable("Tickers");
                 });
 
             modelBuilder.Entity("App.Domain.Entities.UserEntity", b =>
@@ -355,7 +357,7 @@ namespace App.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("App.Domain.Entities.BaseTickerEntity", b =>

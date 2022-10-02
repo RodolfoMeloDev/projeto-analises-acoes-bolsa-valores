@@ -2,7 +2,7 @@ namespace App.Domain.Dtos.Formula
 {
     public class FormulaDto
     {
-        public string BaseTicker { get; set; }
+        public string NameSeguiment { get; set; }
         public string Ticker { get; set; }
         public decimal Price { get; set; }
         public decimal DividendYield { get; set; }
