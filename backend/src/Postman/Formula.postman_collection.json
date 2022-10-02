@@ -15,7 +15,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"fileImportId\": 4,\r\n  \"removeItemsJudicialRecovery\": true,\r\n  \"removeLowerLiquidity\": true,\r\n  \"removeItemsWithZeroValue\": true,\r\n  \"removeItemsWithNegativeValue\": true,\r\n  \"minimumLiquidity\": null,\r\n  \"minimunEvEbit\": null,\r\n  \"maximumEvEbit\": null,\r\n  \"minimumPriceByProfit\": null,\r\n  \"maximumPriceByProfit\": null,\r\n  \"minimumEbitMargem\": null,\r\n  \"maximumEbitMargem\": null,\r\n  \"marketRisk\": null\r\n}",
+					"raw": "{\r\n  \"fileImportId\": 2,\r\n  \"removeItemsJudicialRecovery\": true,\r\n  \"removeLowerLiquidity\": true,\r\n  \"removeItemsWithZeroValue\": true,\r\n  \"removeItemsWithNegativeValue\": true,\r\n  \"minimumLiquidity\": null,\r\n  \"minimunEvEbit\": null,\r\n  \"maximumEvEbit\": null,\r\n  \"minimumPriceByProfit\": null,\r\n  \"maximumPriceByProfit\": null,\r\n  \"minimumEbitMargem\": null,\r\n  \"maximumEbitMargem\": null,\r\n  \"marketRisk\": null\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -48,7 +48,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"fileImportId\": 4,\r\n  \"removeItemsJudicialRecovery\": true,\r\n  \"removeLowerLiquidity\": true,\r\n  \"removeItemsWithZeroValue\": true,\r\n  \"removeItemsWithNegativeValue\": true,\r\n  \"minimumLiquidity\": null,\r\n  \"minimunEvEbit\": null,\r\n  \"maximumEvEbit\": null,\r\n  \"minimumPriceByProfit\": null,\r\n  \"maximumPriceByProfit\": null,\r\n  \"minimumEbitMargem\": null,\r\n  \"maximumEbitMargem\": null,\r\n  \"marketRisk\": null\r\n}",
+					"raw": "{\r\n  \"fileImportId\": 2,\r\n  \"removeItemsJudicialRecovery\": true,\r\n  \"removeLowerLiquidity\": true,\r\n  \"removeItemsWithZeroValue\": true,\r\n  \"removeItemsWithNegativeValue\": true,\r\n  \"minimumLiquidity\": null,\r\n  \"minimunEvEbit\": null,\r\n  \"maximumEvEbit\": null,\r\n  \"minimumPriceByProfit\": null,\r\n  \"maximumPriceByProfit\": null,\r\n  \"minimumEbitMargem\": null,\r\n  \"maximumEbitMargem\": null,\r\n  \"marketRisk\": null\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -81,7 +81,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"fileImportId\": 4,\r\n  \"removeItemsJudicialRecovery\": true,\r\n  \"removeLowerLiquidity\": true,\r\n  \"removeItemsWithZeroValue\": true,\r\n  \"removeItemsWithNegativeValue\": true,\r\n  \"minimumLiquidity\": null,\r\n  \"minimunEvEbit\": null,\r\n  \"maximumEvEbit\": null,\r\n  \"minimumPriceByProfit\": null,\r\n  \"maximumPriceByProfit\": null,\r\n  \"minimumEbitMargem\": null,\r\n  \"maximumEbitMargem\": null,\r\n  \"marketRisk\": null\r\n}",
+					"raw": "{\r\n  \"fileImportId\": 2,\r\n  \"removeItemsJudicialRecovery\": true,\r\n  \"removeLowerLiquidity\": true,\r\n  \"removeItemsWithZeroValue\": true,\r\n  \"removeItemsWithNegativeValue\": true,\r\n  \"minimumLiquidity\": null,\r\n  \"minimunEvEbit\": null,\r\n  \"maximumEvEbit\": null,\r\n  \"minimumPriceByProfit\": null,\r\n  \"maximumPriceByProfit\": null,\r\n  \"minimumEbitMargem\": null,\r\n  \"maximumEbitMargem\": null,\r\n  \"marketRisk\": null\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -114,7 +114,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"fileImportId\": 4,\r\n  \"removeItemsJudicialRecovery\": true,\r\n  \"removeLowerLiquidity\": true,\r\n  \"removeItemsWithZeroValue\": true,\r\n  \"removeItemsWithNegativeValue\": true,\r\n  \"minimumLiquidity\": null,\r\n  \"minimunEvEbit\": null,\r\n  \"maximumEvEbit\": null,\r\n  \"minimumPriceByProfit\": null,\r\n  \"maximumPriceByProfit\": null,\r\n  \"minimumEbitMargem\": null,\r\n  \"maximumEbitMargem\": null,\r\n  \"marketRisk\": null\r\n}",
+					"raw": "{\r\n  \"fileImportId\": 2,\r\n  \"removeItemsJudicialRecovery\": true,\r\n  \"removeLowerLiquidity\": true,\r\n  \"removeItemsWithZeroValue\": true,\r\n  \"removeItemsWithNegativeValue\": true,\r\n  \"minimumLiquidity\": null,\r\n  \"minimunEvEbit\": null,\r\n  \"maximumEvEbit\": null,\r\n  \"minimumPriceByProfit\": null,\r\n  \"maximumPriceByProfit\": null,\r\n  \"minimumEbitMargem\": null,\r\n  \"maximumEbitMargem\": null,\r\n  \"marketRisk\": null\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -147,7 +147,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"fileImportId\": 4,\r\n  \"removeItemsJudicialRecovery\": true,\r\n  \"removeLowerLiquidity\": true,\r\n  \"removeItemsWithZeroValue\": true,\r\n  \"removeItemsWithNegativeValue\": true,\r\n  \"minimumLiquidity\": null,\r\n  \"minimunEvEbit\": null,\r\n  \"maximumEvEbit\": null,\r\n  \"minimumPriceByProfit\": null,\r\n  \"maximumPriceByProfit\": null,\r\n  \"minimumEbitMargem\": null,\r\n  \"maximumEbitMargem\": null,\r\n  \"marketRisk\": 13.31\r\n}",
+					"raw": "{\r\n  \"fileImportId\": 2,\r\n  \"removeItemsJudicialRecovery\": true,\r\n  \"removeLowerLiquidity\": true,\r\n  \"removeItemsWithZeroValue\": true,\r\n  \"removeItemsWithNegativeValue\": true,\r\n  \"minimumLiquidity\": null,\r\n  \"minimunEvEbit\": null,\r\n  \"maximumEvEbit\": null,\r\n  \"minimumPriceByProfit\": null,\r\n  \"maximumPriceByProfit\": null,\r\n  \"minimumEbitMargem\": null,\r\n  \"maximumEbitMargem\": null,\r\n  \"marketRisk\": 13.31\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
