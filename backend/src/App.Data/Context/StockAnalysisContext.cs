@@ -17,6 +17,7 @@ namespace App.Data.Context
         public DbSet<TickerEntity> Tickers { get; set; }
         public DbSet<FileImportEntity> FileImports { get; set; }
         public DbSet<HistoryTickerEntity> HistoryTickers { get; set; }
+        public DbSet<BaseTickerEntity> BaseTickers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
