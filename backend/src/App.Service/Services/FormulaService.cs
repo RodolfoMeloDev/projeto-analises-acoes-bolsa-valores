@@ -118,7 +118,7 @@ namespace App.Service.Services
                                              .ToList();
             }
 
-            var _historyTickerOrdered = _historyTicker.OrderBy(obj => obj.Ticker.BaseTicker).ThenByDescending(obj => obj.AverageDailyLiquidity);
+            var _historyTickerOrdered = _historyTicker.OrderBy(obj => obj.Ticker.BaseTicker.BaseTicker).ThenByDescending(obj => obj.AverageDailyLiquidity);
 
             if (parametersFilter.RemoveLowerLiquidity)
             {
@@ -127,16 +127,16 @@ namespace App.Service.Services
 
                 foreach (var item in _historyTickerOrdered)
                 {
-                    if (item.Ticker.BaseTicker.Equals(_lastBaseTicker))
+                    if (item.Ticker.BaseTicker.BaseTicker.Equals(_lastBaseTicker))
                     {
                         _itemsRemove.Add(item);
                     }
 
-                    _lastBaseTicker = item.Ticker.BaseTicker;
+                    _lastBaseTicker = item.Ticker.BaseTicker.BaseTicker;
                 }
 
                 _historyTicker = _historyTicker.Except(_itemsRemove)
-                                             .ToList();
+                                               .ToList();
             }
 
             return _historyTicker;
@@ -154,7 +154,7 @@ namespace App.Service.Services
                 _Position++;
                 var _ticker = new FormulaDtoGreenBlatt();
 
-                _ticker.BaseTicker = item.Ticker.BaseTicker;
+                _ticker.NameSeguiment = item.Ticker.BaseTicker.Segment.Name;
                 _ticker.Ticker = item.Ticker.Ticker;
                 _ticker.Price = item.UnitPrice;
                 _ticker.DividendYield = Convert.ToDecimal(item.DividendYield);
@@ -204,7 +204,7 @@ namespace App.Service.Services
                 _Position++;
                 var _ticker = new FormulaDto();
 
-                _ticker.BaseTicker = item.Ticker.BaseTicker;
+                _ticker.NameSeguiment = item.Ticker.BaseTicker.Segment.Name;
                 _ticker.Ticker = item.Ticker.Ticker;
                 _ticker.Price = item.UnitPrice;
                 _ticker.DividendYield = Convert.ToDecimal(item.DividendYield);
@@ -242,7 +242,7 @@ namespace App.Service.Services
             {
                 var _ticker = new FormulaDtoBazin();
 
-                _ticker.BaseTicker = item.Ticker.BaseTicker;
+                _ticker.NameSeguiment = item.Ticker.BaseTicker.Segment.Name;
                 _ticker.Ticker = item.Ticker.Ticker;
                 _ticker.Price = item.UnitPrice;
                 _ticker.DividendYield = Convert.ToDecimal(item.DividendYield);
@@ -287,7 +287,7 @@ namespace App.Service.Services
             {
                 var _ticker = new FormulaDtoGraham();
 
-                _ticker.BaseTicker = item.Ticker.BaseTicker;
+                _ticker.NameSeguiment = item.Ticker.BaseTicker.Segment.Name;
                 _ticker.Ticker = item.Ticker.Ticker;
                 _ticker.Price = item.UnitPrice;
                 _ticker.DividendYield = Convert.ToDecimal(item.DividendYield);
@@ -343,7 +343,7 @@ namespace App.Service.Services
                 // update to value for Zero, case necessary
                 item.ProfitCAGR = Convert.ToDecimal(item.ProfitCAGR);
 
-                _ticker.BaseTicker = item.Ticker.BaseTicker;
+                _ticker.NameSeguiment = item.Ticker.BaseTicker.Segment.Name;
                 _ticker.Ticker = item.Ticker.Ticker;
                 _ticker.Price = item.UnitPrice;
                 _ticker.DividendYield = Convert.ToDecimal(item.DividendYield);

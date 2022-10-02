@@ -101,7 +101,7 @@ namespace App.Service.Services
             var existTicker = await _repository.ExistTicker(ticker.Ticker);
 
             if (existTicker != null &&
-                ticker.Company.Equals(existTicker.Company) &&
+                ticker.BaseTickerId.Equals(existTicker.BaseTickerId) &&
                 !ticker.Id.Equals(existTicker.Id))
             {
                 throw new IntegrityException("O Ticker já está cadastrado.");

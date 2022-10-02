@@ -5,26 +5,18 @@ namespace App.Domain.Entities
 {
     public class TickerEntity : BaseEntity
     {
-        [MaxLength(10)]
-        public string BaseTicker { get; set; }
-
         [Required]
         [MaxLength(10)]
         public string Ticker { get; set; }
 
-        [MaxLength(100)]
-        public string Company { get; set; }
+        [Required]
+        public int BaseTickerId { get; set; }
 
-        [MaxLength(18)]
-        public string CNPJ { get; set; }
+        public BaseTickerEntity BaseTicker { get; set; }    
 
         [Required]
         public TypeTicker TypeTicker { get; set; }
 
         public bool JudicialRecovery { get; set; }
-
-        public int? SegmentId { get; set; }
-
-        public SegmentEntity Segment { get; set; }
     }
 }

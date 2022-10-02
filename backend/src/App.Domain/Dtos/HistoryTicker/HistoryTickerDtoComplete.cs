@@ -8,7 +8,7 @@ namespace App.Domain.Dtos.HistoryTicker
         public int FileImportId { get; set; }
         public FileImportDto FileImport { get; set; }
         public int TickerId { get; set; }
-        public TickerDto Ticker { get; set; }
+        public TickerDtoComplete Ticker { get; set; }
         public decimal UnitPrice { get; set; }
         public decimal PriceByProfit { get; set; }
         public decimal Roic { get; set; }

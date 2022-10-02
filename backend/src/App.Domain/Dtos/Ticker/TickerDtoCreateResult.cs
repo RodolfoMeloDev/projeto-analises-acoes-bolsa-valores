@@ -5,11 +5,9 @@ namespace App.Domain.Dtos.Ticker
 {
     public class TickerDtoCreateResult : BaseCreateDtoResult
     {
-        public string BaseTicker { get; set; }
         public string Ticker { get; set; }
-        public string Company { get; set; }
-        public string CNPJ { get; set; }
-
+        public int BaseTickerId { get; set; }
+        
         private TypeTicker _typeTicker;
         public TypeTicker TypeTicker
         {
@@ -23,6 +21,5 @@ namespace App.Domain.Dtos.Ticker
         }
 
         public bool JudicialRecovery { get; set; }
-        public int SegmentId { get; set; }
     }
 }

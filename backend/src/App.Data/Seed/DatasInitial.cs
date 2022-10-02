@@ -89,17 +89,23 @@ namespace App.Data.Seed
 
         private static void IncludeBaseTicker(StockAnalysisContext context, FileInitial line, int segmentsId)
         {
-            context.BaseTickers.Add(
-                new BaseTickerEntity{
-                    BaseTicker = line.BaseTicker.ToUpper(),
-                    Company = line.Company.ToUpper(),
-                    SegmentId = segmentsId,
-                    Active = true,
-                    DateCreated = DateTime.UtcNow
-                }
-            );
+            var _baseTicker = context.BaseTickers.Where(obj => obj.BaseTicker.Equals(line.BaseTicker.ToUpper()))
+                                                 .FirstOrDefault();
 
-            context.SaveChanges();
+            if (_baseTicker == null)
+            {
+                context.BaseTickers.Add(
+                    new BaseTickerEntity{
+                        BaseTicker = line.BaseTicker.ToUpper(),
+                        Company = line.Company.ToUpper(),
+                        SegmentId = segmentsId,
+                        Active = true,
+                        DateCreated = DateTime.UtcNow
+                    }
+                );
+
+                context.SaveChanges();
+            }
         }
 
         public static void InsertDatasInitial(StockAnalysisContext context)

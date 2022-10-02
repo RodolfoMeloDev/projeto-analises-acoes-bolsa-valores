@@ -21,6 +21,7 @@ namespace App.CrossCutting.DependencyInjection
             serviceCollection.AddScoped<ITickerRepository, TickerImplementation>();
             serviceCollection.AddScoped<IFileImportRepository, FileImportImplementation>();
             serviceCollection.AddScoped<IHistoryTickerRepository, HistoryTickerImplementation>();
+            serviceCollection.AddScoped<IBaseTickerRepository, BaseTickerImplementation>();
 
             var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION");
 
