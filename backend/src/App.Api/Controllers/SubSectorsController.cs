@@ -1,6 +1,7 @@
 using System.Net;
 using App.Domain.Dtos.SubSector;
 using App.Domain.Interfaces.Services.SubSector;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace App.Api.Controllers
@@ -16,6 +17,7 @@ namespace App.Api.Controllers
             _service = service;
         }
 
+        [Authorize("Bearer")]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -33,6 +35,7 @@ namespace App.Api.Controllers
             }
         }
 
+        [Authorize("Bearer")]
         [HttpGet]
         [Route("Complete")]
         public async Task<IActionResult> GetAllComplete()
@@ -51,6 +54,7 @@ namespace App.Api.Controllers
             }
         }
 
+        [Authorize("Bearer")]
         [HttpGet]
         [Route("{id}", Name = "GetSubSectorWithId")]
         public async Task<IActionResult> GetById(int id)
@@ -68,6 +72,7 @@ namespace App.Api.Controllers
             }
         }
 
+        [Authorize("Bearer")]
         [HttpGet]
         [Route("Complete/{id}")]
         public async Task<IActionResult> GetByIdComplete(int id)
@@ -85,6 +90,7 @@ namespace App.Api.Controllers
             }
         }
 
+        [Authorize("Bearer")]
         [HttpGet]
         [Route("Setor/{sectorId}")]
         public async Task<IActionResult> GetBySetorId(int sectorId)

@@ -1,6 +1,7 @@
 using System.Net;
 using App.Domain.Dtos.User;
 using App.Domain.Interfaces.Services.User;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace App.Api.Controllers
@@ -16,25 +17,7 @@ namespace App.Api.Controllers
             _service = service;
         }
 
-        [HttpGet]
-        [Route("Login")]
-        public async Task<IActionResult> GetByLogin([FromQuery] string login)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
-
-                return Ok(await _service.GetUserByLogin(login));
-            }
-            catch (ArgumentException e)
-            {
-                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
-            }
-        }
-
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Insert([FromBody] UserDtoCreate user)
         {
@@ -65,6 +48,7 @@ namespace App.Api.Controllers
             }
         }
 
+        [Authorize("Bearer")]
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] UserDtoUpdate user)
         {
@@ -90,6 +74,7 @@ namespace App.Api.Controllers
             }
         }
 
+        [Authorize("Bearer")]
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> Delete(int id)

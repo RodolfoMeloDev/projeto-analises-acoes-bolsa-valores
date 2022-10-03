@@ -1,6 +1,7 @@
 using System.Net;
 using App.Domain.Dtos.HistoryTicker;
 using App.Domain.Interfaces.Services.HistoryTicker;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace App.Api.Controllers
@@ -16,6 +17,7 @@ namespace App.Api.Controllers
             _service = service;
         }
 
+        [Authorize("Bearer")]
         [HttpGet]
         [Route("FileImport/{fileImportId}", Name = "GetHistoryTickerAllFileImport")]
         public async Task<IActionResult> GetAllHistoryTickerByFileImport(int fileImportId)
@@ -33,6 +35,7 @@ namespace App.Api.Controllers
             }
         }
 
+        [Authorize("Bearer")]
         [HttpGet]
         [Route("Ticker/{ticker}")]
         public async Task<IActionResult> GetAllHistoryTickerByTicker(string ticker)

@@ -1,6 +1,7 @@
 using System.Net;
 using App.Domain.Dtos.Formula;
 using App.Domain.Interfaces.Services.Formula;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace App.Api.Controllers
@@ -16,6 +17,7 @@ namespace App.Api.Controllers
             _service = service;
         }
 
+        [Authorize("Bearer")]
         [HttpGet]
         [Route("Greenblatt")]
         public async Task<IActionResult> ReturnDataGreenblatt([FromBody] ParametersFilter parametersFilter)
@@ -33,6 +35,7 @@ namespace App.Api.Controllers
             }
         }
 
+        [Authorize("Bearer")]
         [HttpGet]
         [Route("PriceAndProfit")]
         public async Task<IActionResult> ReturnDataPriceAndProfit([FromBody] ParametersFilter parametersFilter)
@@ -50,6 +53,7 @@ namespace App.Api.Controllers
             }
         }
 
+        [Authorize("Bearer")]
         [HttpGet]
         [Route("EvEbit")]
         public async Task<IActionResult> ReturnDataEvEbit([FromBody] ParametersFilter parametersFilter)
@@ -67,6 +71,7 @@ namespace App.Api.Controllers
             }
         }
 
+        [Authorize("Bearer")]
         [HttpGet]
         [Route("ValuetionByBazin")]
         public async Task<IActionResult> ReturnDataValuetionByBazin([FromBody] ParametersFilter parametersFilter)
@@ -84,6 +89,7 @@ namespace App.Api.Controllers
             }
         }
 
+        [Authorize("Bearer")]
         [HttpGet]
         [Route("ValuetionByGraham")]
         public async Task<IActionResult> ReturnDataValuetionByGraham([FromBody] ParametersFilter parametersFilter)
@@ -101,6 +107,7 @@ namespace App.Api.Controllers
             }
         }
 
+        [Authorize("Bearer")]
         [HttpGet]
         [Route("ValuetionByGordon")]
         public async Task<IActionResult> ReturnDataValuetionByGordon([FromBody] ParametersFilter parametersFilter)

@@ -2,6 +2,7 @@ using App.Domain.Interfaces.Services.BaseTicker;
 using App.Domain.Interfaces.Services.FileImport;
 using App.Domain.Interfaces.Services.Formula;
 using App.Domain.Interfaces.Services.HistoryTicker;
+using App.Domain.Interfaces.Services.Login;
 using App.Domain.Interfaces.Services.Sector;
 using App.Domain.Interfaces.Services.Segment;
 using App.Domain.Interfaces.Services.SubSector;
@@ -28,6 +29,7 @@ namespace App.CrossCutting.DependencyInjection
             serviceCollection.AddTransient<IFilesService<FileFundamentus>, FileFundamentusService>();
             serviceCollection.AddTransient<IFormulaService, FormulaService>();
             serviceCollection.AddTransient<IBaseTickerService, BaseTickerService>();
+            serviceCollection.AddTransient<ILoginService, LoginService>();
         }
     }
 }

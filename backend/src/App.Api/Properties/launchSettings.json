@@ -18,7 +18,10 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "DB_CONNECTION": "Server=localhost;Port=5432;Database=StockAnalysis;User Id=postgres;Password=admin;Timeout=15;",
-        "INSERT_SEED": "true"
+        "INSERT_SEED": "false",
+        "Audience": "www.avaliandoacoes.com.br/User",
+        "Issuer": "www.avaliandoacoes.com.br",
+        "Seconds": "14400"        
       }
     },
     "IIS Express": {
