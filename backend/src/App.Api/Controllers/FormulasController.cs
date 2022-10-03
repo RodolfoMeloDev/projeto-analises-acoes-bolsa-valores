@@ -51,6 +51,23 @@ namespace App.Api.Controllers
         }
 
         [HttpGet]
+        [Route("EvEbit")]
+        public async Task<IActionResult> ReturnDataEvEbitOptions([FromBody] ParametersFilter parametersFilter)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest();
+
+                return Ok(await _service.EvEbit(parametersFilter));
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+
+        [HttpGet]
         [Route("ValuetionByBazin")]
         public async Task<IActionResult> ReturnDataValuetionByBazinOptions([FromBody] ParametersFilter parametersFilter)
         {
