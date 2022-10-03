@@ -25,7 +25,7 @@ namespace App.Api.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest();
 
-                return Ok(await _service.GetFileImportById(id));
+                return Ok(await _service.GetById(id));
             }
             catch (ArgumentException e)
             {
@@ -36,14 +36,14 @@ namespace App.Api.Controllers
 
         [HttpGet]
         [Route("User/{userId}")]
-        public async Task<IActionResult> GetAllFileImport(int userId)
+        public async Task<IActionResult> GetAll(int userId)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest();
 
-                return Ok(await _service.GetAllFileImport(userId));
+                return Ok(await _service.GetAll(userId));
             }
             catch (ArgumentException e)
             {
@@ -54,14 +54,14 @@ namespace App.Api.Controllers
 
         [HttpGet]
         [Route("FilesByDate")]
-        public async Task<IActionResult> GetAllFileImport([FromQuery] int userId, DateTime dateFile)
+        public async Task<IActionResult> GetByDate([FromQuery] int userId, DateTime dateFile)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest();
 
-                return Ok(await _service.GetFileImportByDate(userId, dateFile));
+                return Ok(await _service.GetByDate(userId, dateFile));
             }
             catch (ArgumentException e)
             {
@@ -71,7 +71,7 @@ namespace App.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> InsertFileImport([FromForm] FileImportDtoCreate fileImport)
+        public async Task<IActionResult> Insert([FromForm] FileImportDtoCreate fileImport)
         {
             try
             {
@@ -80,15 +80,15 @@ namespace App.Api.Controllers
 
                 if (fileImport.File.Length > 0)
                 {
-                    var result = await _service.InsertFileImport(fileImport);
+                    var result = await _service.Insert(fileImport);
 
                     if (result == null)
                         return BadRequest();
 
                     var _url = Url.Link("GetFileImportWithId", new { id = result.Id });
-                    
+
                     if (string.IsNullOrEmpty(_url))
-                        return StatusCode((int)HttpStatusCode.InternalServerError, "Não foi possível gerar a URL para retorno dos dados inseridos.");                        
+                        return StatusCode((int)HttpStatusCode.InternalServerError, "Não foi possível gerar a URL para retorno dos dados inseridos.");
 
                     return Created(new Uri(_url), result);
                 }
@@ -103,14 +103,14 @@ namespace App.Api.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        public async Task<IActionResult> DeleteFileImport(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest();
 
-                return Ok(await _service.DeleteFileImport(id));
+                return Ok(await _service.Delete(id));
             }
             catch (ArgumentException e)
             {

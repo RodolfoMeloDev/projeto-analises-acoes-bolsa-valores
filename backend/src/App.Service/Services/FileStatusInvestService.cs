@@ -33,7 +33,7 @@ namespace App.Service.Services
             _baseTickerService = baseTickerService;
         }
 
-        public IEnumerable<FileStatusInvest> GetLinesFile(IFormFile file, string directoryUser)
+        public IEnumerable<FileStatusInvest> GetLines(IFormFile file, string directoryUser)
         {
             _pathFile = Utils.CopyFileToServer(file, directoryUser);
 
@@ -51,9 +51,9 @@ namespace App.Service.Services
                 {
                     var lines = csv.GetRecords<FileStatusInvest>().ToList();
 
-                    var _priceRemove = lines.Where(obj => obj.Preco.Equals(0));            
+                    var _priceRemove = lines.Where(obj => obj.Preco.Equals(0));
                     var _averageDailyLiquidityRemove = lines.Where(obj => obj.LiquidezMediaDiaria == null);
-                    
+
                     lines = lines.Except(_priceRemove)
                                  .Except(_averageDailyLiquidityRemove)
                                  .ToList();
@@ -67,11 +67,11 @@ namespace App.Service.Services
 
         public async Task<bool> InsertListTickers(IEnumerable<FileStatusInvest> lines)
         {
-            var _listBaseTickers = await _baseTickerService.GetAllBaseTickers();
+            var _listBaseTickers = await _baseTickerService.GetAll();
 
             foreach (var line in lines)
             {
-                var ticker = await _tickerService.GetByTicker(line.Ticker);                
+                var ticker = await _tickerService.GetByTicker(line.Ticker);
 
                 if (ticker == null)
                 {
@@ -109,7 +109,7 @@ namespace App.Service.Services
 
                 if (historyTicker.TickerId == 0)
                     continue;
-                    
+
                 historyTicker.FileImportId = fileImportId;
                 historyTicker.UnitPrice = line.Preco;
                 historyTicker.PriceByProfit = Convert.ToDecimal(line.PrecoLucro);
@@ -125,7 +125,7 @@ namespace App.Service.Services
                 historyTicker.AverageDailyLiquidity = line.LiquidezMediaDiaria;
                 historyTicker.MarketValue = line.ValorMercado;
 
-                await _historyTickerService.InsertHistoryTicker(historyTicker);
+                await _historyTickerService.Insert(historyTicker);
             }
 
             return true;
@@ -133,7 +133,7 @@ namespace App.Service.Services
 
         public async Task<bool> DeleteHistoryTickers(int fileImportId)
         {
-            return await _historyTickerService.DeleteHistoryTickerByFileImport(fileImportId);
+            return await _historyTickerService.DeleteByFileImport(fileImportId);
         }
     }
 }

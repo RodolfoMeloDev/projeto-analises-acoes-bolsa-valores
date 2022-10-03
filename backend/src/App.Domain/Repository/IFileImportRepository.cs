@@ -9,6 +9,6 @@ namespace App.Domain.Repository
     public interface IFileImportRepository : IRepository<FileImportEntity>
     {
         Task<FileImportEntity> GetByDate(int userId, DateTime date);
-        Task<IEnumerable<FileImportEntity>> GetAllFileImport(int userId);
+        Task<IEnumerable<FileImportEntity>> GetAll(int userId);
     }
 }

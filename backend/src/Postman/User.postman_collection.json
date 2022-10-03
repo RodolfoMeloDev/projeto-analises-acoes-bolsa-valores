@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "4d2feaef-fca7-4f13-ab6f-99855e3514d2",
+		"_postman_id": "51362f2a-cf91-4e05-b1ed-ee8b208c54ef",
 		"name": "User",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -127,26 +127,6 @@
 							"key": "login",
 							"value": "RLOPES"
 						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GetAllUsers",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "https://localhost:7206/api/Users",
-					"protocol": "https",
-					"host": [
-						"localhost"
-					],
-					"port": "7206",
-					"path": [
-						"api",
-						"Users"
 					]
 				}
 			},

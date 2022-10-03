@@ -7,10 +7,10 @@ namespace App.Domain.Interfaces.Services.FileImport
 {
     public interface IFileImportService
     {
-        Task<FileImportDto> GetFileImportById(int id);
-        Task<IEnumerable<FileImportDto>> GetAllFileImport(int userId);
-        Task<FileImportDto> GetFileImportByDate(int userId, DateTime date);
-        Task<FileImportDtoCreateResult> InsertFileImport(FileImportDtoCreate fileImport);
-        Task<bool> DeleteFileImport(int id);
+        Task<FileImportDto> GetById(int id);
+        Task<IEnumerable<FileImportDto>> GetAll(int userId);
+        Task<FileImportDto> GetByDate(int userId, DateTime date);
+        Task<FileImportDtoCreateResult> Insert(FileImportDtoCreate fileImport);
+        Task<bool> Delete(int id);
     }
 }

@@ -16,7 +16,7 @@ namespace App.Service.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<BaseTickerDto>> GetAllBaseTickers()
+        public async Task<IEnumerable<BaseTickerDto>> GetAll()
         {
             var listEntity = await _repository.SelectAllAsync();
 

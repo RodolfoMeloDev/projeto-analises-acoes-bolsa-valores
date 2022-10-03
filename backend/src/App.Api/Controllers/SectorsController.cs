@@ -17,14 +17,14 @@ namespace App.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllSectors()
+        public async Task<IActionResult> GetAll()
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                return Ok(await _service.GetAllSectors());
+                return Ok(await _service.GetAll());
 
             }
             catch (ArgumentException e)
@@ -42,71 +42,7 @@ namespace App.Api.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                return Ok(await _service.GetSectorById(id));
-            }
-            catch (ArgumentException e)
-            {
-                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
-            }
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> InsertSector([FromBody] SectorDtoCreate sector)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest();
-
-                var result = await _service.InsertSector(sector);
-
-                if (result == null)
-                    return BadRequest();
-
-                var _url = Url.Link("GetSectorWithId", new { id = result.Id });
-                
-                if (string.IsNullOrEmpty(_url))
-                    return StatusCode((int)HttpStatusCode.InternalServerError, "Não foi possível gerar a URL para retorno dos dados inseridos.");                    
-
-                return Created(new Uri(_url), result);
-            }
-            catch (ArgumentException e)
-            {
-                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
-            }
-        }
-
-        [HttpPut]
-        public async Task<IActionResult> UpdateSector([FromBody] SectorDtoUpdate sector)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest();
-
-                var result = await _service.UpdateSector(sector);
-
-                if (result != null)
-                    return Ok(result);
-
-                return BadRequest();
-            }
-            catch (ArgumentException e)
-            {
-                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
-            }
-        }
-
-        [HttpDelete]
-        [Route("{id}")]
-        public async Task<IActionResult> DeleteSector(int id)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest();
-
-                return Ok(await _service.DeleteSector(id));
+                return Ok(await _service.GetById(id));
             }
             catch (ArgumentException e)
             {

@@ -18,7 +18,7 @@ namespace App.Api.Controllers
 
         [HttpGet]
         [Route("Greenblatt")]
-        public async Task<IActionResult> ReturnDataGreenblattOptions([FromBody] ParametersFilter parametersFilter)
+        public async Task<IActionResult> ReturnDataGreenblatt([FromBody] ParametersFilter parametersFilter)
         {
             try
             {
@@ -35,7 +35,7 @@ namespace App.Api.Controllers
 
         [HttpGet]
         [Route("PriceAndProfit")]
-        public async Task<IActionResult> ReturnDataPriceAndProfitOptions([FromBody] ParametersFilter parametersFilter)
+        public async Task<IActionResult> ReturnDataPriceAndProfit([FromBody] ParametersFilter parametersFilter)
         {
             try
             {
@@ -52,7 +52,7 @@ namespace App.Api.Controllers
 
         [HttpGet]
         [Route("EvEbit")]
-        public async Task<IActionResult> ReturnDataEvEbitOptions([FromBody] ParametersFilter parametersFilter)
+        public async Task<IActionResult> ReturnDataEvEbit([FromBody] ParametersFilter parametersFilter)
         {
             try
             {
@@ -69,7 +69,7 @@ namespace App.Api.Controllers
 
         [HttpGet]
         [Route("ValuetionByBazin")]
-        public async Task<IActionResult> ReturnDataValuetionByBazinOptions([FromBody] ParametersFilter parametersFilter)
+        public async Task<IActionResult> ReturnDataValuetionByBazin([FromBody] ParametersFilter parametersFilter)
         {
             try
             {
@@ -86,7 +86,7 @@ namespace App.Api.Controllers
 
         [HttpGet]
         [Route("ValuetionByGraham")]
-        public async Task<IActionResult> ReturnDataValuetionByGrahamOptions([FromBody] ParametersFilter parametersFilter)
+        public async Task<IActionResult> ReturnDataValuetionByGraham([FromBody] ParametersFilter parametersFilter)
         {
             try
             {
@@ -103,7 +103,7 @@ namespace App.Api.Controllers
 
         [HttpGet]
         [Route("ValuetionByGordon")]
-        public async Task<IActionResult> ReturnDataValuetionByGordonOptions([FromBody] ParametersFilter parametersFilter)
+        public async Task<IActionResult> ReturnDataValuetionByGordon([FromBody] ParametersFilter parametersFilter)
         {
             try
             {

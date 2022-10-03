@@ -26,7 +26,7 @@ namespace App.Service.Services
         private IHistoryTickerService _historyTickerService;
         private IBaseTickerService _baseTickerService;
 
-        public FileFundamentusService(ISegmentService segmentService, ITickerService tickerService, IHistoryTickerService historyTickerService, 
+        public FileFundamentusService(ISegmentService segmentService, ITickerService tickerService, IHistoryTickerService historyTickerService,
             IBaseTickerService baseTickerService)
         {
             _tickerService = tickerService;
@@ -34,7 +34,7 @@ namespace App.Service.Services
             _baseTickerService = baseTickerService;
         }
 
-        public IEnumerable<FileFundamentus> GetLinesFile(IFormFile file, string directoryUser)
+        public IEnumerable<FileFundamentus> GetLines(IFormFile file, string directoryUser)
         {
             _pathFile = Utils.CopyFileToServer(file, directoryUser);
 
@@ -65,7 +65,7 @@ namespace App.Service.Services
 
         public async Task<bool> InsertListTickers(IEnumerable<FileFundamentus> lines)
         {
-            var _listBaseTickers = await _baseTickerService.GetAllBaseTickers();
+            var _listBaseTickers = await _baseTickerService.GetAll();
 
             foreach (var line in lines)
             {
@@ -83,8 +83,8 @@ namespace App.Service.Services
                         tickerCreate.Ticker = line.Ticker;
                         tickerCreate.BaseTickerId = _baseTicker.Id;
                         tickerCreate.TypeTicker = TypeTicker.ACAO;
-                        tickerCreate.JudicialRecovery = false;                    
-    
+                        tickerCreate.JudicialRecovery = false;
+
                         await _tickerService.Insert(tickerCreate);
                     }
                 }
@@ -109,7 +109,7 @@ namespace App.Service.Services
 
                 if (historyTicker.TickerId == 0)
                     continue;
-                                                
+
                 historyTicker.FileImportId = fileImportId;
                 historyTicker.UnitPrice = line.Preco;
 
@@ -134,7 +134,7 @@ namespace App.Service.Services
                 success = decimal.TryParse(line.CAGRLucro, out value);
                 historyTicker.ProfitCAGR = (success ? (value == 0 ? null : value) : null);
 
-                await _historyTickerService.InsertHistoryTicker(historyTicker);
+                await _historyTickerService.Insert(historyTicker);
             }
 
             return true;
@@ -142,7 +142,7 @@ namespace App.Service.Services
 
         public async Task<bool> DeleteHistoryTickers(int fileImportId)
         {
-            return await _historyTickerService.DeleteHistoryTickerByFileImport(fileImportId);
+            return await _historyTickerService.DeleteByFileImport(fileImportId);
         }
     }
 }

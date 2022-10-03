@@ -1,39 +1,10 @@
 {
 	"info": {
-		"_postman_id": "1b8bd63f-86ff-4c50-b2cc-2186426493f3",
+		"_postman_id": "b9cfb693-3f4e-47e5-a3fa-cc8bcbc53990",
 		"name": "Ticker",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
-		{
-			"name": "Insert",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"baseTicker\": \"string\",\r\n  \"ticker\": \"string\",\r\n  \"company\": \"string\",\r\n  \"cnpj\": \"string\",\r\n  \"typeTicker\": 0,\r\n  \"judicialRecovery\": true,\r\n  \"segmentId\": 1\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "https://localhost:7206/api/Tickers",
-					"protocol": "https",
-					"host": [
-						"localhost"
-					],
-					"port": "7206",
-					"path": [
-						"api",
-						"Tickers"
-					]
-				}
-			},
-			"response": []
-		},
 		{
 			"name": "Update",
 			"request": {
@@ -41,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"id\": 602,\r\n  \"baseTicker\": \"string\",\r\n  \"ticker\": \"string\",\r\n  \"company\": \"string\",\r\n  \"cnpj\": \"string\",\r\n  \"typeTicker\": 0,\r\n  \"judicialRecovery\": true,\r\n  \"segmentId\": 1,\r\n  \"active\": true\r\n}",
+					"raw": "{\r\n  \"id\": 1,\r\n  \"ticker\": \"AALR3\",\r\n  \"baseTickerId\": 245,\r\n  \"typeTicker\": 0,\r\n  \"judicialRecovery\": true,\r\n  \"active\": true\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -58,27 +29,6 @@
 					"path": [
 						"api",
 						"Tickers"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "https://localhost:7206/api/Tickers/602",
-					"protocol": "https",
-					"host": [
-						"localhost"
-					],
-					"port": "7206",
-					"path": [
-						"api",
-						"Tickers",
-						"602"
 					]
 				}
 			},
@@ -129,7 +79,7 @@
 			"response": []
 		},
 		{
-			"name": "GetAllTickers",
+			"name": "GetAll",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -171,7 +121,7 @@
 			"response": []
 		},
 		{
-			"name": "GetAllCompleteTickers",
+			"name": "GetAllComplete",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -192,7 +142,7 @@
 			"response": []
 		},
 		{
-			"name": "GetTickersBySegment",
+			"name": "GetBySegment",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -214,7 +164,7 @@
 			"response": []
 		},
 		{
-			"name": "GetTickersBySubSector",
+			"name": "GetBySubSector",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -236,7 +186,7 @@
 			"response": []
 		},
 		{
-			"name": "GetTickersBySector",
+			"name": "GetBySector",
 			"request": {
 				"method": "GET",
 				"header": [],

@@ -25,7 +25,7 @@ namespace App.Service.Services
             return _mapper.Map<IEnumerable<HistoryTickerDto>>(listEntity);
         }
 
-        public async Task<HistoryTickerDtoCreateResult> InsertHistoryTicker(HistoryTickerDtoCreate historyTicker)
+        public async Task<HistoryTickerDtoCreateResult> Insert(HistoryTickerDtoCreate historyTicker)
         {
             var model = _mapper.Map<HistoryTickerModel>(historyTicker);
             var entity = _mapper.Map<HistoryTickerEntity>(model);
@@ -34,12 +34,12 @@ namespace App.Service.Services
             return _mapper.Map<HistoryTickerDtoCreateResult>(result);
         }
 
-        public async Task<bool> DeleteHistoryTickerByFileImport(int fileImportId)
+        public async Task<bool> DeleteByFileImport(int fileImportId)
         {
             return await _repository.DeleteByFileImport(fileImportId);
         }
 
-        public async Task<bool> DeleteHistoryTickertById(int id)
+        public async Task<bool> DeleteById(int id)
         {
             return await _repository.DeleteAsync(id);
         }

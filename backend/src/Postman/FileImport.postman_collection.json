@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "11cdb216-6ecf-4482-a259-73cbd3bff3a5",
+		"_postman_id": "03f8376c-9f76-449f-8103-c1e64f611fe6",
 		"name": "FileImport",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -126,7 +126,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://localhost:7206/api/FileImports/FilesByDate?userId=1&dateFile=2022-10-02",
+					"raw": "https://localhost:7206/api/FileImports/FilesByDate?userId=1&dateFile=2022-10-03",
 					"protocol": "https",
 					"host": [
 						"localhost"
@@ -144,7 +144,7 @@
 						},
 						{
 							"key": "dateFile",
-							"value": "2022-10-02"
+							"value": "2022-10-03"
 						}
 					]
 				}

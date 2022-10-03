@@ -19,7 +19,7 @@ namespace App.Data.Implementations
             _dataSet = context.Set<FileImportEntity>();
         }
 
-        public async Task<IEnumerable<FileImportEntity>> GetAllFileImport(int userId)
+        public async Task<IEnumerable<FileImportEntity>> GetAll(int userId)
         {
             return await _dataSet.Where(obj => obj.UserId.Equals(userId))
                                  .ToListAsync();
@@ -27,7 +27,7 @@ namespace App.Data.Implementations
 
         public async Task<FileImportEntity> GetByDate(int userId, DateTime date)
         {
-            return await _dataSet.FirstOrDefaultAsync(obj => obj.UserId.Equals(userId) && 
+            return await _dataSet.FirstOrDefaultAsync(obj => obj.UserId.Equals(userId) &&
                                                              obj.DateFile.Equals(date));
         }
     }
