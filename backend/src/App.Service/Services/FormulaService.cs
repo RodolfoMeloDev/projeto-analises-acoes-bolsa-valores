@@ -206,17 +206,17 @@ namespace App.Service.Services
             return _listReturn.OrderBy(obj => obj.Position);
         }
 
-        private IOrderedEnumerable<FormulaPriceAndProfit> ReturnListOrderedPriceAndProfit(IEnumerable<HistoryTickerDtoComplete> listTickers)
+        private IOrderedEnumerable<FormulaDtoPriceAndProfit> ReturnListOrderedPriceAndProfit(IEnumerable<HistoryTickerDtoComplete> listTickers)
         {
             var _historyTickerOrdered = listTickers.OrderBy(obj => obj.PriceByProfit);
 
-            List<FormulaPriceAndProfit> _listScore = new List<FormulaPriceAndProfit>();
+            List<FormulaDtoPriceAndProfit> _listScore = new List<FormulaDtoPriceAndProfit>();
             int _Position = 0;
 
             foreach (var item in _historyTickerOrdered)
             {
                 _Position++;
-                var _ticker = new FormulaPriceAndProfit();
+                var _ticker = new FormulaDtoPriceAndProfit();
 
                 _ticker.Position = _Position;
                 _ticker.NameSeguiment = item.Ticker.BaseTicker.Segment.Name;
@@ -435,7 +435,7 @@ namespace App.Service.Services
             return ReturnListOrderedGreenBlatt(await ReturnListWithParametersExecuted(parametersFilter));
         }
 
-        public async Task<IEnumerable<FormulaPriceAndProfit>> PriceAndProfit(ParametersFilter parametersFilter)
+        public async Task<IEnumerable<FormulaDtoPriceAndProfit>> PriceAndProfit(ParametersFilter parametersFilter)
         {
             return ReturnListOrderedPriceAndProfit(await ReturnListWithParametersExecuted(parametersFilter));
         }

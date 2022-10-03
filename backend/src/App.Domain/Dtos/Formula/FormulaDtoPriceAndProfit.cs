@@ -1,6 +1,6 @@
 namespace App.Domain.Dtos.Formula
 {
-    public class FormulaPriceAndProfit : FormulaDto
+    public class FormulaDtoPriceAndProfit : FormulaDto
     {
         public int Position { get; set; }
     }
