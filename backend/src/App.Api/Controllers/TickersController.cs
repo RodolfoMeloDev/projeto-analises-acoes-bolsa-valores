@@ -1,6 +1,7 @@
 using System.Net;
 using App.Domain.Dtos.Ticker;
 using App.Domain.Interfaces.Services.Ticker;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace App.Api.Controllers
@@ -16,6 +17,7 @@ namespace App.Api.Controllers
             _service = service;
         }
 
+        [Authorize("Bearer")]
         [HttpGet]
         [Route("{id}", Name = "GetTickerWithId")]
         public async Task<IActionResult> GetById(int id)
@@ -33,6 +35,7 @@ namespace App.Api.Controllers
             }
         }
 
+        [Authorize("Bearer")]
         [HttpGet]
         [Route("Complete/{id}")]
         public async Task<IActionResult> GetByIdComplete(int id)
@@ -50,6 +53,7 @@ namespace App.Api.Controllers
             }
         }
 
+        [Authorize("Bearer")]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -66,6 +70,7 @@ namespace App.Api.Controllers
             }
         }
 
+        [Authorize("Bearer")]
         [HttpGet]
         [Route("Complete/")]
         public async Task<IActionResult> GetAllComplete()
@@ -83,6 +88,7 @@ namespace App.Api.Controllers
             }
         }
 
+        [Authorize("Bearer")]
         [HttpGet]
         [Route("Complete/Ticker/{ticker}")]
         public async Task<IActionResult> GetByTickerComplete(string ticker)
@@ -100,6 +106,7 @@ namespace App.Api.Controllers
             }
         }
 
+        [Authorize("Bearer")]
         [HttpGet]
         [Route("Segment/{segment}")]
         public async Task<IActionResult> GetTickersBySegment(int segment)
@@ -117,6 +124,7 @@ namespace App.Api.Controllers
             }
         }
 
+        [Authorize("Bearer")]
         [HttpGet]
         [Route("SubSector/{subSector}")]
         public async Task<IActionResult> GetTickersBySubSector(int subSector)
@@ -134,6 +142,7 @@ namespace App.Api.Controllers
             }
         }
 
+        [Authorize("Bearer")]
         [HttpGet]
         [Route("Sector/{sector}")]
         public async Task<IActionResult> GetTickersBySector(int sector)
@@ -151,6 +160,7 @@ namespace App.Api.Controllers
             }
         }
 
+        [Authorize("Bearer")]
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] TickerDtoUpdate ticker)
         {

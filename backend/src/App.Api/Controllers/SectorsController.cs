@@ -1,6 +1,7 @@
 using System.Net;
 using App.Domain.Dtos.Sector;
 using App.Domain.Interfaces.Services.Sector;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace App.Api.Controllers
@@ -16,6 +17,7 @@ namespace App.Api.Controllers
             _service = service;
         }
 
+        [Authorize("Bearer")]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -33,6 +35,7 @@ namespace App.Api.Controllers
             }
         }
 
+        [Authorize("Bearer")]
         [HttpGet]
         [Route("{id}", Name = "GetSectorWithId")]
         public async Task<IActionResult> GetById(int id)

@@ -1,6 +1,7 @@
 using System.Net;
 using App.Domain.Dtos.Segment;
 using App.Domain.Interfaces.Services.Segment;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace App.Api.Controllers
@@ -16,6 +17,7 @@ namespace App.Api.Controllers
             _service = service;
         }
 
+        [Authorize("Bearer")]
         [HttpGet]
         [Route("{id}", Name = "GetSegmentWithId")]
         public async Task<IActionResult> GetById(int id)
@@ -33,6 +35,7 @@ namespace App.Api.Controllers
             }
         }
 
+        [Authorize("Bearer")]
         [HttpGet]
         [Route("Complete/{id}")]
         public async Task<IActionResult> GetByIdComplete(int id)
@@ -50,6 +53,7 @@ namespace App.Api.Controllers
             }
         }
 
+        [Authorize("Bearer")]
         [HttpGet]
         public async Task<IActionResult> GetByAll()
         {
@@ -66,6 +70,7 @@ namespace App.Api.Controllers
             }
         }
 
+        [Authorize("Bearer")]
         [HttpGet]
         [Route("Setor/{setorId}")]
         public async Task<IActionResult> GetBySetorId(int setorId)
@@ -83,6 +88,7 @@ namespace App.Api.Controllers
             }
         }
 
+        [Authorize("Bearer")]
         [HttpGet]
         [Route("SubSetor/{subSetorId}")]
         public async Task<IActionResult> GetBySubSetorId(int subSetorId)
@@ -100,6 +106,7 @@ namespace App.Api.Controllers
             }
         }
 
+        [Authorize("Bearer")]
         [HttpGet]
         [Route("Complete")]
         public async Task<IActionResult> GetByAllComplete()

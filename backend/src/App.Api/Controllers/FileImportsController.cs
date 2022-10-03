@@ -1,6 +1,7 @@
 using System.Net;
 using App.Domain.Dtos.FileImport;
 using App.Domain.Interfaces.Services.FileImport;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace App.Api.Controllers
@@ -16,6 +17,7 @@ namespace App.Api.Controllers
             _service = service;
         }
 
+        [Authorize("Bearer")]
         [HttpGet]
         [Route("{id}", Name = "GetFileImportWithId")]
         public async Task<IActionResult> GetById(int id)
@@ -34,6 +36,7 @@ namespace App.Api.Controllers
             }
         }
 
+        [Authorize("Bearer")]
         [HttpGet]
         [Route("User/{userId}")]
         public async Task<IActionResult> GetAll(int userId)
@@ -52,6 +55,7 @@ namespace App.Api.Controllers
             }
         }
 
+        [Authorize("Bearer")]
         [HttpGet]
         [Route("FilesByDate")]
         public async Task<IActionResult> GetByDate([FromQuery] int userId, DateTime dateFile)
@@ -70,6 +74,7 @@ namespace App.Api.Controllers
             }
         }
 
+        [Authorize("Bearer")]
         [HttpPost]
         public async Task<IActionResult> Insert([FromForm] FileImportDtoCreate fileImport)
         {
@@ -101,6 +106,7 @@ namespace App.Api.Controllers
             }
         }
 
+        [Authorize("Bearer")]
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> Delete(int id)
