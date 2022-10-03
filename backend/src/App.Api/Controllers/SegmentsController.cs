@@ -16,32 +16,6 @@ namespace App.Api.Controllers
             _service = service;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> InsertSegment([FromBody] SegmentDtoCreate segment)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest();
-
-                var result = await _service.Insert(segment);
-
-                if (result == null)
-                    return BadRequest();
-
-                var _url = Url.Link("GetSegmentWithId", new { id = result.Id });
-                
-                if (string.IsNullOrEmpty(_url))
-                    return StatusCode((int)HttpStatusCode.InternalServerError, "Não foi possível gerar a URL para retorno dos dados inseridos.");
-
-                return Created(new Uri(_url), result);
-            }
-            catch (ArgumentException e)
-            {
-                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
-            }
-        }
-
         [HttpGet]
         [Route("{id}", Name = "GetSegmentWithId")]
         public async Task<IActionResult> GetById(int id)
@@ -77,7 +51,7 @@ namespace App.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetByAllSegments()
+        public async Task<IActionResult> GetByAll()
         {
             try
             {
@@ -128,7 +102,7 @@ namespace App.Api.Controllers
 
         [HttpGet]
         [Route("Complete")]
-        public async Task<IActionResult> GetByAllSegmentsComplete()
+        public async Task<IActionResult> GetByAllComplete()
         {
             try
             {
@@ -136,44 +110,6 @@ namespace App.Api.Controllers
                     return BadRequest();
 
                 return Ok(await _service.GetAllComplete());
-            }
-            catch (ArgumentException e)
-            {
-                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
-            }
-        }
-
-        [HttpPut]
-        public async Task<IActionResult> UpdateSegment([FromBody] SegmentDtoUpdate segment)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest();
-
-                var result = await _service.Update(segment);
-
-                if (result != null)
-                    return Ok(result);
-
-                return BadRequest();
-            }
-            catch (ArgumentException e)
-            {
-                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
-            }
-        }
-
-        [HttpDelete]
-        [Route("{id}")]
-        public async Task<IActionResult> DeleteSegment(int id)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest();
-
-                return Ok(await _service.Delete(id));
             }
             catch (ArgumentException e)
             {

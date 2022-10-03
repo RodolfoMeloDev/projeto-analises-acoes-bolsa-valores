@@ -6,6 +6,6 @@ namespace App.Domain.Interfaces.Services.BaseTicker
 {
     public interface IBaseTickerService
     {
-        Task<IEnumerable<BaseTickerDto>> GetAllBaseTickers();
+        Task<IEnumerable<BaseTickerDto>> GetAll();
     }
 }

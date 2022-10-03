@@ -19,28 +19,28 @@ namespace App.Service.Services
             _mapper = mapper;
         }
 
-        public async Task<SectorDto> GetSectorByName(string name)
+        public async Task<SectorDto> GetByName(string name)
         {
             var entity = await _repository.GetByName(name);
 
             return _mapper.Map<SectorDto>(entity);
         }
 
-        public async Task<SectorDto> GetSectorById(int id)
+        public async Task<SectorDto> GetById(int id)
         {
             var entity = await _repository.SelectAsync(id);
 
             return _mapper.Map<SectorDto>(entity);
         }
 
-        public async Task<IEnumerable<SectorDto>> GetAllSectors()
+        public async Task<IEnumerable<SectorDto>> GetAll()
         {
             var listEntity = await _repository.SelectAllAsync();
 
             return _mapper.Map<IEnumerable<SectorDto>>(listEntity);
         }
 
-        public async Task<SectorDtoCreateResult> InsertSector(SectorDtoCreate sector)
+        public async Task<SectorDtoCreateResult> Insert(SectorDtoCreate sector)
         {
             var existSector = await _repository.GetByName(sector.Name);
 
@@ -58,7 +58,7 @@ namespace App.Service.Services
             }
         }
 
-        public async Task<SectorDtoUpdateResult> UpdateSector(SectorDtoUpdate sector)
+        public async Task<SectorDtoUpdateResult> Update(SectorDtoUpdate sector)
         {
             var model = _mapper.Map<SectorModel>(sector);
             var entity = _mapper.Map<SectorEntity>(model);
@@ -67,7 +67,7 @@ namespace App.Service.Services
             return _mapper.Map<SectorDtoUpdateResult>(result);
         }
 
-        public async Task<bool> DeleteSector(int id)
+        public async Task<bool> Delete(int id)
         {
             return await _repository.DeleteAsync(id);
         }

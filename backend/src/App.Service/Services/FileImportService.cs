@@ -19,7 +19,7 @@ namespace App.Service.Services
         private readonly IMapper _mapper;
 
         public FileImportService(IFileImportRepository repository,
-               IFilesService<FileStatusInvest> fileStatusInvestService, 
+               IFilesService<FileStatusInvest> fileStatusInvestService,
                IFilesService<FileFundamentus> fileFundamentusService,
                IMapper mapper)
         {
@@ -29,21 +29,21 @@ namespace App.Service.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<FileImportDto>> GetAllFileImport(int UserId)
+        public async Task<IEnumerable<FileImportDto>> GetAll(int UserId)
         {
-            var listEntity = await _repository.GetAllFileImport(UserId);
+            var listEntity = await _repository.GetAll(UserId);
 
             return _mapper.Map<IEnumerable<FileImportDto>>(listEntity);
         }
 
-        public async Task<FileImportDto> GetFileImportById(int id)
+        public async Task<FileImportDto> GetById(int id)
         {
             var entity = await _repository.SelectAsync(id);
 
             return _mapper.Map<FileImportDto>(entity);
         }
 
-        public async Task<FileImportDto> GetFileImportByDate(int UserId, DateTime date)
+        public async Task<FileImportDto> GetByDate(int UserId, DateTime date)
         {
             if (date.Kind != DateTimeKind.Utc)
                 date = TimeZoneInfo.ConvertTimeToUtc(date);
@@ -53,7 +53,7 @@ namespace App.Service.Services
             return _mapper.Map<FileImportDto>(entity);
         }
 
-        public async Task<FileImportDtoCreateResult> InsertFileImport(FileImportDtoCreate fileImport)
+        public async Task<FileImportDtoCreateResult> Insert(FileImportDtoCreate fileImport)
         {
             if (fileImport.DateFile.Kind != DateTimeKind.Utc)
                 fileImport.DateFile = TimeZoneInfo.ConvertTimeToUtc(fileImport.DateFile);
@@ -80,7 +80,7 @@ namespace App.Service.Services
                     {
                         if (fileImport.TypeFile == TypeFileImport.STATUS_INVEST)
                         {
-                            var linesFiles = _statusInvestService.GetLinesFile(fileImport.File, fileImport.UserId.ToString());
+                            var linesFiles = _statusInvestService.GetLines(fileImport.File, fileImport.UserId.ToString());
 
                             if (await _statusInvestService.InsertListTickers(linesFiles))
                             {
@@ -89,7 +89,7 @@ namespace App.Service.Services
                         }
                         else
                         {
-                            var linesFiles = _fundamentusService.GetLinesFile(fileImport.File, fileImport.UserId.ToString());
+                            var linesFiles = _fundamentusService.GetLines(fileImport.File, fileImport.UserId.ToString());
 
                             if (await _fundamentusService.InsertListTickers(linesFiles))
                             {
@@ -107,7 +107,7 @@ namespace App.Service.Services
                 throw new IntegrityException("Já existe uma importação para está Data");
         }
 
-        public async Task<bool> DeleteFileImport(int id)
+        public async Task<bool> Delete(int id)
         {
             using (var scope = new TransactionScope(TransactionScopeOption.Required,
                                                         new TransactionOptions

@@ -17,44 +17,6 @@ namespace App.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllUsers()
-        {
-            try
-            {
-                // aqui está válidando se os parametros da requisição são válidos
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
-
-                return Ok(await _service.GetAllUsers());
-            }
-            catch (ArgumentException e)
-            {
-                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
-            }
-        }
-
-        [HttpGet]
-        [Route("{id}", Name = "GetUserWithId")]
-        public async Task<IActionResult> GetById(int id)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
-
-                return Ok(await _service.GetUserById(id));
-            }
-            catch (ArgumentException e)
-            {
-                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
-            }
-        }
-
-        [HttpGet]
         [Route("Login")]
         public async Task<IActionResult> GetByLogin([FromQuery] string login)
         {
@@ -74,7 +36,7 @@ namespace App.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> InsertUser([FromBody] UserDtoCreate user)
+        public async Task<IActionResult> Insert([FromBody] UserDtoCreate user)
         {
             try
             {
@@ -83,7 +45,7 @@ namespace App.Api.Controllers
                     return BadRequest(ModelState);
                 }
 
-                var result = await _service.InsertUser(user);
+                var result = await _service.Insert(user);
 
                 if (result == null)
                 {
@@ -91,7 +53,7 @@ namespace App.Api.Controllers
                 }
 
                 var _url = Url.Link("GetUserWithId", new { id = result.Id });
-                
+
                 if (string.IsNullOrEmpty(_url))
                     return StatusCode((int)HttpStatusCode.InternalServerError, "Não foi possível gerar a URL para retorno dos dados inseridos.");
 
@@ -104,7 +66,7 @@ namespace App.Api.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateUser([FromBody] UserDtoUpdate user)
+        public async Task<IActionResult> Update([FromBody] UserDtoUpdate user)
         {
             try
             {
@@ -113,7 +75,7 @@ namespace App.Api.Controllers
                     return BadRequest(ModelState);
                 }
 
-                var result = await _service.UpdateUser(user);
+                var result = await _service.Update(user);
 
                 if (result == null)
                 {
@@ -130,7 +92,7 @@ namespace App.Api.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {
@@ -139,7 +101,7 @@ namespace App.Api.Controllers
                     return BadRequest(ModelState);
                 }
 
-                return Ok(await _service.DeleteUser(id));
+                return Ok(await _service.Delete(id));
             }
             catch (ArgumentException e)
             {

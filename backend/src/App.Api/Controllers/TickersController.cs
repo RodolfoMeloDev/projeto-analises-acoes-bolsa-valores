@@ -16,32 +16,6 @@ namespace App.Api.Controllers
             _service = service;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> InsertTicker([FromBody] TickerDtoCreate ticker)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest();
-
-                var result = await _service.Insert(ticker);
-
-                if (result == null)
-                    return BadRequest();
-
-                var _url = Url.Link("GetTickerWithId", new { id = result.Id });
-                
-                if (string.IsNullOrEmpty(_url))
-                    return StatusCode((int)HttpStatusCode.InternalServerError, "Não foi possível gerar a URL para retorno dos dados inseridos.");
-
-                return Created(new Uri(_url), result);
-            }
-            catch (ArgumentException e)
-            {
-                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
-            }
-        }
-
         [HttpGet]
         [Route("{id}", Name = "GetTickerWithId")]
         public async Task<IActionResult> GetById(int id)
@@ -77,7 +51,7 @@ namespace App.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllTicker()
+        public async Task<IActionResult> GetAll()
         {
             try
             {
@@ -94,7 +68,7 @@ namespace App.Api.Controllers
 
         [HttpGet]
         [Route("Complete/")]
-        public async Task<IActionResult> GetAllTickersComplete()
+        public async Task<IActionResult> GetAllComplete()
         {
             try
             {
@@ -178,7 +152,7 @@ namespace App.Api.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateTicker([FromBody] TickerDtoUpdate ticker)
+        public async Task<IActionResult> Update([FromBody] TickerDtoUpdate ticker)
         {
             try
             {
@@ -191,23 +165,6 @@ namespace App.Api.Controllers
                     return Ok(result);
 
                 return BadRequest();
-            }
-            catch (ArgumentException e)
-            {
-                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
-            }
-        }
-
-        [HttpDelete]
-        [Route("{id}")]
-        public async Task<IActionResult> DeleteTicker(int id)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest();
-
-                return Ok(await _service.Delete(id));
             }
             catch (ArgumentException e)
             {

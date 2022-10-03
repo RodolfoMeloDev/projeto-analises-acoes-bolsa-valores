@@ -9,8 +9,8 @@ namespace App.Domain.Interfaces.Services.HistoryTicker
         Task<IEnumerable<HistoryTickerDto>> GetAllByFileImport(int fileImportId);
         Task<IEnumerable<HistoryTickerDtoComplete>> GetAllByFileImportComplete(int fileImportId);
         Task<IEnumerable<HistoryTickerDto>> GetAllByTicker(string ticker);
-        Task<HistoryTickerDtoCreateResult> InsertHistoryTicker(HistoryTickerDtoCreate historyTicker);
-        Task<bool> DeleteHistoryTickertById(int id);
-        Task<bool> DeleteHistoryTickerByFileImport(int fileImportId);
+        Task<HistoryTickerDtoCreateResult> Insert(HistoryTickerDtoCreate historyTicker);
+        Task<bool> DeleteById(int id);
+        Task<bool> DeleteByFileImport(int fileImportId);
     }
 }
