@@ -241,7 +241,7 @@ namespace App.Service.Services
                 _listScore.Add(_ticker);
             }
 
-            return _listScore.OrderByDescending(obj => obj.PriceByProfit);
+            return _listScore.OrderBy(obj => obj.PriceByProfit);
         }
 
         private IOrderedEnumerable<FormulaDtoEvEbit> ReturnListOrderedEvEbit(IEnumerable<HistoryTickerDtoComplete> listTickers)
