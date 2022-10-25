@@ -262,6 +262,49 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "GetByTickersAnalisys",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6WyJSTE9QRVMiLCJybG9wZXMiXSwianRpIjoiMGZiNGJlYzEtYmIwOC00YzIyLWFkNjYtNmRkYzQ4YmU5OGQ1IiwibmJmIjoxNjY2NzA5MTM1LCJleHAiOjE2NjY3MjM1MzUsImlhdCI6MTY2NjcwOTEzNSwiaXNzIjoid3d3LmF2YWxpYW5kb2Fjb2VzLmNvbS5iciIsImF1ZCI6Ind3dy5hdmFsaWFuZG9hY29lcy5jb20uYnIvVXNlciJ9.E8whOUvIhcBdGHFgMrA2PewrToFtbZvTPaxAEX6mK8N4Q9LzQAm1HO8hsTfT6ZSbJqMAfM4uA36d31JQxaycQmoshctdJOi-9AhIvrM796TKUlLZxWTSZ9gNYlWWeU5XC7DqWATHxRrPAJH20Q5sHVMe6TM4zNZE1BRGtJsvz3hdP46uqkNS1xU5q4fNeRZoqbqVAOZ9wi2uRDBI5FAH3INASGyDywd38hsUUXJVK9b7CpAmCKaqvTPNuOrXyVUJsmd05fWladWsuNdwsF0Fh1zLNDLhmO3uKuazKOOAiBgjG-WakJISJFvQ2jrTBqN8GMZscNutCtIfK-KvLnDeRw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"fileImportId\": 4,\r\n  \"removeItemsJudicialRecovery\": true,\r\n  \"removeLowerLiquidity\": true,\r\n  \"removeItemsWithZeroValue\": true,\r\n  \"removeItemsWithNegativeValue\": true,\r\n  \"minimumLiquidity\": 150000,\r\n  \"marketRisk\": 14.63,\r\n  \"ticker\": \"wizs3\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7206/api/Formulas/TickersAnalisys",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7206",
+					"path": [
+						"api",
+						"Formulas",
+						"TickersAnalisys"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

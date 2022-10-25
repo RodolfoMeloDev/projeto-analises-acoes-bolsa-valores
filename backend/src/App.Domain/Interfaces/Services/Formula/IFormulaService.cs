@@ -12,5 +12,6 @@ namespace App.Domain.Interfaces.Services.Formula
         Task<IEnumerable<FormulaDtoBazin>> ValuetionByBazin(ParametersFilter parametersFilter);
         Task<IEnumerable<FormulaDtoGraham>> ValuetionByGraham(ParametersFilter parametersFilter);
         Task<IEnumerable<FormulaDtoGordon>> ValuetionByGordon(ParametersFilter parametersFilter);
+        Task<FormulaDtoPosition> TickersAnalisys(ParametersFilter parametersFilter);
     }
 }

@@ -124,5 +124,23 @@ namespace App.Api.Controllers
                 return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
             }
         }
+
+        [Authorize("Bearer")]
+        [HttpGet]
+        [Route("TickersAnalisys")]
+        public async Task<IActionResult> TickersAnalisys([FromBody] ParametersFilter parametersFilter)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest();
+
+                return Ok(await _service.TickersAnalisys(parametersFilter));
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
     }
 }

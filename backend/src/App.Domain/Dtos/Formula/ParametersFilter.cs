@@ -15,6 +15,6 @@ namespace App.Domain.Dtos.Formula
         public decimal? MinimumEbitMargem { get; set; }
         public decimal? MaximumEbitMargem { get; set; }
         public decimal? MarketRisk { get; set; }
-
+        public string Ticker { get; set; }
     }
 }

@@ -462,5 +462,175 @@ namespace App.Service.Services
         {
             return ReturnListOrderedEvEbit(await ReturnListWithParametersExecuted(parametersFilter));
         }
+
+        public async Task<FormulaDtoPosition> TickersAnalisys(ParametersFilter parametersFilter)
+        {
+            if (parametersFilter.MarketRisk == null || parametersFilter.MarketRisk <= 0)
+                throw new FormulaException("Deve ser informado um valor válido, acima de ZERO, para o parametro Risco de Mercado");
+
+            if (string.IsNullOrEmpty(parametersFilter.Ticker))
+                throw new FormulaException("Deve ser informado o Ticker!");
+
+            var tickerGreenBlatt = ReturnListOrderedGreenBlatt(await ReturnListWithParametersExecuted(parametersFilter)).Where(x => x.Ticker.Equals(parametersFilter.Ticker.ToUpper()))
+                                                                                                                        .FirstOrDefault();
+            var tickerPriceAndProfit = ReturnListOrderedPriceAndProfit(await ReturnListWithParametersExecuted(parametersFilter)).Where(x => x.Ticker.Equals(parametersFilter.Ticker.ToUpper()))
+                                                                                                                                .FirstOrDefault();
+            var tickerEvEbit = ReturnListOrderedEvEbit(await ReturnListWithParametersExecuted(parametersFilter)).Where(x => x.Ticker.Equals(parametersFilter.Ticker.ToUpper()))
+                                                                                                                .FirstOrDefault();
+            var tickerBazin = ReturnListValuetionByBazin(await ReturnListWithParametersExecuted(parametersFilter)).Where(x => x.Ticker.Equals(parametersFilter.Ticker.ToUpper()))
+                                                                                                                  .FirstOrDefault();
+            var tickerGraham = ReturnListValuetionByGraham(await ReturnListWithParametersExecuted(parametersFilter)).Where(x => x.Ticker.Equals(parametersFilter.Ticker.ToUpper()))
+                                                                                                                    .FirstOrDefault();
+            var tickerGordon = ReturnListValuetionByGordon(await ReturnListWithParametersExecuted(parametersFilter),
+                                                           Convert.ToDecimal(parametersFilter.MarketRisk)).Where(x => x.Ticker.Equals(parametersFilter.Ticker.ToUpper()))
+                                                                                                                              .FirstOrDefault();
+
+            if (tickerGreenBlatt == null && tickerPriceAndProfit == null && tickerEvEbit == null && tickerBazin == null && tickerGraham == null && tickerGordon == null)
+                throw new FormulaException("Não foi encontrado resultado valídos para o Ticker: " + parametersFilter.Ticker);
+
+            FormulaDtoPosition tickerPosition = new FormulaDtoPosition();
+
+            tickerPosition.NameSeguiment = (tickerGreenBlatt != null ? tickerGreenBlatt.NameSeguiment :
+                                            tickerEvEbit != null ? tickerEvEbit.NameSeguiment :
+                                            tickerPriceAndProfit != null ? tickerPriceAndProfit.NameSeguiment :
+                                            tickerBazin != null ? tickerBazin.NameSeguiment :
+                                            tickerGordon != null ? tickerGordon.NameSeguiment :
+                                            tickerGraham != null ? tickerGraham.NameSeguiment : null);
+
+            tickerPosition.Ticker = (tickerGreenBlatt != null ? tickerGreenBlatt.Ticker :
+                                     tickerEvEbit != null ? tickerEvEbit.Ticker :
+                                     tickerPriceAndProfit != null ? tickerPriceAndProfit.Ticker :
+                                     tickerBazin != null ? tickerBazin.Ticker :
+                                     tickerGordon != null ? tickerGordon.Ticker :
+                                     tickerGraham != null ? tickerGraham.Ticker : null);
+
+            tickerPosition.Price = (tickerGreenBlatt != null ? tickerGreenBlatt.Price :
+                                    tickerEvEbit != null ? tickerEvEbit.Price :
+                                    tickerPriceAndProfit != null ? tickerPriceAndProfit.Price :
+                                    tickerBazin != null ? tickerBazin.Price :
+                                    tickerGordon != null ? tickerGordon.Price :
+                                    tickerGraham != null ? tickerGraham.Price : 0);
+
+            tickerPosition.PriceByProfit = (tickerGreenBlatt != null ? tickerGreenBlatt.PriceByProfit :
+                                            tickerEvEbit != null ? tickerEvEbit.PriceByProfit :
+                                            tickerPriceAndProfit != null ? tickerPriceAndProfit.PriceByProfit :
+                                            tickerBazin != null ? tickerBazin.PriceByProfit :
+                                            tickerGordon != null ? tickerGordon.PriceByProfit :
+                                            tickerGraham != null ? tickerGraham.PriceByProfit : 0);
+
+            tickerPosition.DividendYield = (tickerGreenBlatt != null ? tickerGreenBlatt.DividendYield :
+                                            tickerEvEbit != null ? tickerEvEbit.DividendYield :
+                                            tickerPriceAndProfit != null ? tickerPriceAndProfit.DividendYield :
+                                            tickerBazin != null ? tickerBazin.DividendYield :
+                                            tickerGordon != null ? tickerGordon.DividendYield :
+                                            tickerGraham != null ? tickerGraham.DividendYield : 0);
+
+            tickerPosition.EvEbit = (tickerGreenBlatt != null ? tickerGreenBlatt.EvEbit :
+                                     tickerEvEbit != null ? tickerEvEbit.EvEbit :
+                                     tickerPriceAndProfit != null ? tickerPriceAndProfit.EvEbit :
+                                     tickerBazin != null ? tickerBazin.EvEbit :
+                                     tickerGordon != null ? tickerGordon.EvEbit :
+                                     tickerGraham != null ? tickerGraham.EvEbit : 0);
+
+            tickerPosition.Roic = (tickerGreenBlatt != null ? tickerGreenBlatt.Roic :
+                                   tickerEvEbit != null ? tickerEvEbit.Roic :
+                                   tickerPriceAndProfit != null ? tickerPriceAndProfit.Roic :
+                                   tickerBazin != null ? tickerBazin.Roic :
+                                   tickerGordon != null ? tickerGordon.Roic :
+                                   tickerGraham != null ? tickerGraham.Roic : 0);
+
+            tickerPosition.Roe = (tickerGreenBlatt != null ? tickerGreenBlatt.Roe :
+                                  tickerEvEbit != null ? tickerEvEbit.Roe :
+                                  tickerPriceAndProfit != null ? tickerPriceAndProfit.Roe :
+                                  tickerBazin != null ? tickerBazin.Roe :
+                                  tickerGordon != null ? tickerGordon.Roe :
+                                  tickerGraham != null ? tickerGraham.Roe : 0);
+
+            tickerPosition.Vpa = (tickerGreenBlatt != null ? tickerGreenBlatt.Vpa :
+                                  tickerEvEbit != null ? tickerEvEbit.Vpa :
+                                  tickerPriceAndProfit != null ? tickerPriceAndProfit.Vpa :
+                                  tickerBazin != null ? tickerBazin.Vpa :
+                                  tickerGordon != null ? tickerGordon.Vpa :
+                                  tickerGraham != null ? tickerGraham.Vpa : 0);
+
+            tickerPosition.Lpa = (tickerGreenBlatt != null ? tickerGreenBlatt.Lpa :
+                                  tickerEvEbit != null ? tickerEvEbit.Lpa :
+                                  tickerPriceAndProfit != null ? tickerPriceAndProfit.Lpa :
+                                  tickerBazin != null ? tickerBazin.Lpa :
+                                  tickerGordon != null ? tickerGordon.Lpa :
+                                  tickerGraham != null ? tickerGraham.Lpa : 0);
+
+            tickerPosition.Dpa = (tickerGreenBlatt != null ? tickerGreenBlatt.Dpa :
+                                  tickerEvEbit != null ? tickerEvEbit.Dpa :
+                                  tickerPriceAndProfit != null ? tickerPriceAndProfit.Dpa :
+                                  tickerBazin != null ? tickerBazin.Dpa :
+                                  tickerGordon != null ? tickerGordon.Dpa :
+                                  tickerGraham != null ? tickerGraham.Dpa : null);
+
+            tickerPosition.JudicialRecovery = (tickerGreenBlatt != null ? tickerGreenBlatt.JudicialRecovery :
+                                               tickerEvEbit != null ? tickerEvEbit.JudicialRecovery :
+                                               tickerPriceAndProfit != null ? tickerPriceAndProfit.JudicialRecovery :
+                                               tickerBazin != null ? tickerBazin.JudicialRecovery :
+                                               tickerGordon != null ? tickerGordon.JudicialRecovery :
+                                               tickerGraham != null ? tickerGraham.JudicialRecovery : false);
+
+            tickerPosition.Payout = (tickerGreenBlatt != null ? tickerGreenBlatt.Payout :
+                                     tickerEvEbit != null ? tickerEvEbit.Payout :
+                                     tickerPriceAndProfit != null ? tickerPriceAndProfit.Payout :
+                                     tickerBazin != null ? tickerBazin.Payout :
+                                     tickerGordon != null ? tickerGordon.Payout :
+                                     tickerGraham != null ? tickerGraham.Payout : null);
+
+            tickerPosition.EbitMargin = (tickerGreenBlatt != null ? tickerGreenBlatt.EbitMargin :
+                                         tickerEvEbit != null ? tickerEvEbit.EbitMargin :
+                                         tickerPriceAndProfit != null ? tickerPriceAndProfit.EbitMargin :
+                                         tickerBazin != null ? tickerBazin.EbitMargin :
+                                         tickerGordon != null ? tickerGordon.EbitMargin :
+                                         tickerGraham != null ? tickerGraham.EbitMargin : 0);
+
+            tickerPosition.ProfitCAGR = (tickerGreenBlatt != null ? tickerGreenBlatt.ProfitCAGR :
+                                         tickerEvEbit != null ? tickerEvEbit.ProfitCAGR :
+                                         tickerPriceAndProfit != null ? tickerPriceAndProfit.ProfitCAGR :
+                                         tickerBazin != null ? tickerBazin.ProfitCAGR :
+                                         tickerGordon != null ? tickerGordon.ProfitCAGR :
+                                         tickerGraham != null ? tickerGraham.ProfitCAGR : null);
+
+            tickerPosition.AverageGrowth = (tickerGreenBlatt != null ? tickerGreenBlatt.AverageGrowth :
+                                            tickerEvEbit != null ? tickerEvEbit.AverageGrowth :
+                                            tickerPriceAndProfit != null ? tickerPriceAndProfit.AverageGrowth :
+                                            tickerBazin != null ? tickerBazin.AverageGrowth :
+                                            tickerGordon != null ? tickerGordon.AverageGrowth :
+                                            tickerGraham != null ? tickerGraham.AverageGrowth : 0);
+
+            tickerPosition.ExpectedGrowth = (tickerGreenBlatt != null ? tickerGreenBlatt.ExpectedGrowth :
+                                             tickerEvEbit != null ? tickerEvEbit.ExpectedGrowth :
+                                             tickerPriceAndProfit != null ? tickerPriceAndProfit.ExpectedGrowth :
+                                             tickerBazin != null ? tickerBazin.ExpectedGrowth :
+                                             tickerGordon != null ? tickerGordon.ExpectedGrowth :
+                                             tickerGraham != null ? tickerGraham.ExpectedGrowth : 0);
+
+            tickerPosition.AverageDailyLiquidity = (tickerGreenBlatt != null ? tickerGreenBlatt.AverageDailyLiquidity :
+                                                    tickerEvEbit != null ? tickerEvEbit.AverageDailyLiquidity :
+                                                    tickerPriceAndProfit != null ? tickerPriceAndProfit.AverageDailyLiquidity :
+                                                    tickerBazin != null ? tickerBazin.AverageDailyLiquidity :
+                                                    tickerGordon != null ? tickerGordon.AverageDailyLiquidity :
+                                                    tickerGraham != null ? tickerGraham.AverageDailyLiquidity : 0);
+
+            tickerPosition.DiscountPercentageBazin = (tickerBazin != null ? tickerBazin.DiscountPercentage : null);
+            tickerPosition.JustPriceBazin = (tickerBazin != null ? tickerBazin.JustPrice : null);
+
+            tickerPosition.JustPriceGordon = (tickerGordon != null ? tickerGordon.JustPrice : null);
+            tickerPosition.DiscountPercentageGordon = (tickerGordon != null ? tickerGordon.DiscountPercentage : null);
+            tickerPosition.MarketRisk = (tickerGordon != null ? tickerGordon.MarketRisk : 0);
+
+            tickerPosition.JustPriceGraham = (tickerGraham != null ? tickerGraham.JustPrice : null);
+            tickerPosition.DiscountPercentageGraham = (tickerGraham != null ? tickerGraham.DiscountPercentage : null);
+
+            tickerPosition.PositionEvEbit = (tickerEvEbit != null ? tickerEvEbit.Position : null);
+            tickerPosition.PositionGreenBlatt = (tickerGreenBlatt != null ? tickerGreenBlatt.Position : null);
+            tickerPosition.PositionPriceAndProfit = (tickerPriceAndProfit != null ? tickerPriceAndProfit.Position : null);
+
+            return tickerPosition;
+        }
     }
 }
