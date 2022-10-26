@@ -23,5 +23,12 @@ namespace App.Domain.Models
             set { _password = (string.IsNullOrEmpty(value) ? null : value.ToUpper()); }
         }
 
+        private string _nickName;
+        public string NickName
+        {
+            get { return _nickName; }
+            set { _nickName = (string.IsNullOrEmpty(value) ? null : value.ToUpper()); }
+        }
+
     }
 }

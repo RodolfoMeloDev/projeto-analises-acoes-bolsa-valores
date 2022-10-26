@@ -35,12 +35,30 @@ namespace App.Api.Controllers
                     return BadRequest();
                 }
 
-                var _url = Url.Link("GetUserWithId", new { id = result.Id });
+                var _url = Url.Link("GetUserWithId", new { login = result.Login });
 
                 if (string.IsNullOrEmpty(_url))
                     return StatusCode((int)HttpStatusCode.InternalServerError, "Não foi possível gerar a URL para retorno dos dados inseridos.");
 
                 return Created(new Uri(_url), result);
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+
+        [Authorize("Bearer")]
+        [HttpGet]
+        [Route("{login}", Name = "GetUserWithId")]
+        public async Task<IActionResult> GetById(string login)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest();
+
+                return Ok(await _service.GetUserByLogin(login));
             }
             catch (ArgumentException e)
             {
