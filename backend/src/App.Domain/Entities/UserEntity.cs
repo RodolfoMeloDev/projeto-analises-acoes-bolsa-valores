@@ -5,7 +5,7 @@ namespace App.Domain.Entities
     public class UserEntity : BaseEntity
     {
         [Required]
-        [MaxLength(20)]
+        [MaxLength(100)]
         public string Login { get; set; }
 
         [Required]
@@ -14,6 +14,9 @@ namespace App.Domain.Entities
 
         [Required]
         [MaxLength(100)]
-        public string Name { get; set; }        
+        public string Name { get; set; }
+
+        [MaxLength(30)]
+        public string NickName { get; set; }
     }
 }

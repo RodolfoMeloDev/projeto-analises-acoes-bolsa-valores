@@ -51,6 +51,11 @@ namespace App.Service.Services
 
         public async Task<UserDtoUpdateResult> Update(UserDtoUpdate user)
         {
+            var oldUser = await _repository.SelectAsync(user.Id);
+
+            if (string.IsNullOrEmpty(user.NickName))
+                user.NickName = oldUser.NickName;
+
             var model = _mapper.Map<UserModel>(user);
             var entity = _mapper.Map<UserEntity>(model);
             var result = await _repository.UpdateAsync(entity);
