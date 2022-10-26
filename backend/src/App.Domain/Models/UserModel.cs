@@ -27,7 +27,7 @@ namespace App.Domain.Models
         public string NickName
         {
             get { return _nickName; }
-            set { _nickName = value; }
+            set { _nickName = (string.IsNullOrEmpty(value) ? null : value.ToUpper()); }
         }
 
     }
