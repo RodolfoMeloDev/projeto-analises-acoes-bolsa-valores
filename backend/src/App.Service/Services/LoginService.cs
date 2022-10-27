@@ -60,7 +60,7 @@ namespace App.Service.Services
 
                 string token = CreateToken(identity, createDate, expirationDate, handler);
 
-                return SuccessObject(createDate, expirationDate, token, user);
+                return SuccessObject(createDate, expirationDate, token, baseUser);
             }
 
             return new
@@ -86,7 +86,7 @@ namespace App.Service.Services
             return token;
         }
 
-        private object SuccessObject(DateTime createDate, DateTime expirationDate, string token, LoginDto user)
+        private object SuccessObject(DateTime createDate, DateTime expirationDate, string token, UserEntity user)
         {
             return new
             {
@@ -95,6 +95,8 @@ namespace App.Service.Services
                 expiration = expirationDate.ToString("yyyy-MM-dd HH:mm:ss"),
                 accessToken = token,
                 Login = user.Login,
+                Name = user.Name,
+                NickName = user.NickName,
                 message = "Usuário Logado com sucesso"
             };
         }
