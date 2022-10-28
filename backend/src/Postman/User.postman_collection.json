@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"name\": \"Rodolfo Lopes de Melo\",\r\n  \"login\": \"RLOPES1\",\r\n  \"password\": \"1234\"\r\n}",
+					"raw": "{\r\n  \"name\": \"Rodolfo Lopes de Melo\",\r\n  \"login\": \"rodollopes@gmail.com\",\r\n  \"password\": \"1234\",\r\n  \"nickName\": \"Rodolfo\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -99,6 +99,37 @@
 						"api",
 						"Users",
 						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetByLogin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6WyJST0RPTExPUEVTQEdNQUlMLkNPTSIsInJvZG9sbG9wZXNAZ21haWwuY29tIl0sImp0aSI6ImVmOTg4ODk4LTQwYmYtNDc2Zi04OGY5LTY2YjZiMTU4ZmY1MSIsIm5iZiI6MTY2Njk3ODEwOSwiZXhwIjoxNjY2OTkyNTA5LCJpYXQiOjE2NjY5NzgxMDksImlzcyI6Ind3dy5hdmFsaWFuZG9hY29lcy5jb20uYnIiLCJhdWQiOiJ3d3cuYXZhbGlhbmRvYWNvZXMuY29tLmJyL1VzZXIifQ.jVcjR4O6PBMpxSK1NmMnDOY1LLgY_y37xy-kYrxHN4pSPaOkoVGWVYMoCtnukKwGCOlxFeHHW5vhe_4l5lndydBN8W-XVjPQJxA5ntDVLjEa6oTMkJjsDkbUCGZDA12InGSxq2FO5sKLr1qUZuN47uZ9h8XuPk6FAVfMmqiAj0X2-zWtIfe8IqYEwY0RqnK4JowILNHi1U07_eljlPNvTpMalFnHmYVo5tzHEGyrQf8a3M_wwXI7EhMvmfou6qUfjXKsjhF2yZsoARR2djGJZrbGixZbxfuFlUdcUC8l3hqPvZZ3cTI21Z1scBKVff35Qlhgpe0AeHEX8EppyGp0pw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7206/api/Users/rodollopes@gmail.com",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7206",
+					"path": [
+						"api",
+						"Users",
+						"rodollopes@gmail.com"
 					]
 				}
 			},

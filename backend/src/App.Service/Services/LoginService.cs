@@ -41,8 +41,19 @@ namespace App.Service.Services
                     return new
                     {
                         authenticated = false,
-                        message = "Falha ao autenticar"
+                        message = "Falha ao autenticar: Login não encontrado!"
                     };
+                }
+                else
+                {
+                    if (!baseUser.Password.Equals(user.Password))
+                    {
+                        return new
+                        {
+                            authenticated = false,
+                            message = "Falha ao autenticar: Senha inválida!"
+                        };
+                    }
                 }
 
                 ClaimsIdentity identity = new ClaimsIdentity(new GenericIdentity(baseUser.Login),
