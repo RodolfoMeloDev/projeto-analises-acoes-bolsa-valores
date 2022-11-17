@@ -14,6 +14,7 @@ import imgLogo from "./logo.svg";
 
 import { useState, useEffect } from "react";
 import { ToastContainer } from "react-bootstrap";
+import { NavLink, useLocation } from "react-router-dom";
 
 const userLoginInitial = {
   login: "",
@@ -30,6 +31,8 @@ const newUserInitial = {
 let messageError;
 
 const Menu = () => {
+  const getActiveRoute = useLocation().pathname ? "Active" : "";
+
   const [validated, setValidated] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [error, setError] = useState(false);
@@ -155,6 +158,7 @@ const Menu = () => {
       if (response.status === 201) {
         setShowCreateUser(false);
         getLogin(false);
+        setNewUser(newUserInitial);
       } else {
         console.log(response);
         messageError = response.data.message;
@@ -170,8 +174,6 @@ const Menu = () => {
         .trim();
       setError(true);
     }
-
-    setNewUser(newUserInitial);
   };
 
   const handleOpenCloseModalLogin = () => {
@@ -188,6 +190,7 @@ const Menu = () => {
   const handleOpenCloseModalCreateUser = () => {
     setShowCreateUser(!showCreateUser);
     setShowLogin(!showLogin);
+    setValidated(false);
   };
 
   const handleOpenPasswordRecovery = () => {
@@ -211,7 +214,7 @@ const Menu = () => {
     <>
       <Navbar bg="dark" variant="dark" expand="lg">
         <Container>
-          <Navbar.Brand href="#home">
+          <Navbar.Brand as={NavLink} to="/">
             <img
               src={imgLogo}
               width="30"
@@ -224,10 +227,20 @@ const Menu = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="#home">Ações</Nav.Link>
-              <Nav.Link href="#link">Setores</Nav.Link>
+              <Nav.Link className={getActiveRoute} as={NavLink} to="/acoes">
+                Ações
+              </Nav.Link>
+              <Nav.Link className={getActiveRoute} as={NavLink} to="/setores">
+                Setores
+              </Nav.Link>
               {userLogado ? (
-                <Nav.Link href="#link">Formas de Analise</Nav.Link>
+                <Nav.Link
+                  className={getActiveRoute}
+                  as={NavLink}
+                  to="/formasAnalise"
+                >
+                  Formas de Analise
+                </Nav.Link>
               ) : null}
             </Nav>
             {!userLogado ? (
@@ -240,7 +253,11 @@ const Menu = () => {
             ) : (
               <Nav>
                 <NavDropdown title={user} id="basic-nav-dropdown">
-                  <NavDropdown.Item href="#action/3.1">
+                  <NavDropdown.Item
+                    className={getActiveRoute}
+                    as={NavLink}
+                    to="/dashboard"
+                  >
                     Dashboard
                   </NavDropdown.Item>
                   <NavDropdown.Item href="#action/3.2">
