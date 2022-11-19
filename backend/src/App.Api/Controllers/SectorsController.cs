@@ -17,7 +17,7 @@ namespace App.Api.Controllers
             _service = service;
         }
 
-        [Authorize("Bearer")]
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -35,7 +35,7 @@ namespace App.Api.Controllers
             }
         }
 
-        [Authorize("Bearer")]
+        [AllowAnonymous]
         [HttpGet]
         [Route("{id}", Name = "GetSectorWithId")]
         public async Task<IActionResult> GetById(int id)

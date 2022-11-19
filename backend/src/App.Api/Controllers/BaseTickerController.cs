@@ -1,6 +1,9 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
-using App.Domain.Dtos.SubSector;
-using App.Domain.Interfaces.Services.SubSector;
+using System.Threading.Tasks;
+using App.Domain.Interfaces.Services.BaseTicker;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,11 +11,11 @@ namespace App.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class SubSectorsController : ControllerBase
+    public class BaseTickerController : ControllerBase
     {
-        private readonly ISubSectorService _service;
+        private readonly IBaseTickerService _service;
 
-        public SubSectorsController(ISubSectorService service)
+        public BaseTickerController(IBaseTickerService service)
         {
             _service = service;
         }
@@ -24,87 +27,71 @@ namespace App.Api.Controllers
             try
             {
                 if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
+                    return BadRequest();
 
                 return Ok(await _service.GetAll());
-
             }
             catch (ArgumentException e)
             {
                 return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+                throw;
             }
         }
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("Complete")]
-        public async Task<IActionResult> GetAllComplete()
+        [Route("BySegment/{segment}")]
+        public async Task<IActionResult> GetAll(int segment)
         {
             try
             {
                 if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
+                    return BadRequest();
 
-                return Ok(await _service.GetAllComplete());
-
+                return Ok(await _service.GetAllBySegment(segment));
             }
             catch (ArgumentException e)
             {
                 return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+                throw;
             }
         }
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("{id}", Name = "GetSubSectorWithId")]
-        public async Task<IActionResult> GetById(int id)
+        [Route("BySubSector/{subSector}")]
+        public async Task<IActionResult> GetAllBySubSector(int subSector)
         {
             try
             {
                 if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
+                    return BadRequest();
 
-                return Ok(await _service.GetById(id));
+                return Ok(await _service.GetAllBySubSector(subSector));
             }
             catch (ArgumentException e)
             {
                 return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+                throw;
             }
         }
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("Complete/{id}")]
-        public async Task<IActionResult> GetByIdComplete(int id)
+        [Route("BySector/{sector}")]
+        public async Task<IActionResult> GetAllBySector(int sector)
         {
             try
             {
                 if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
+                    return BadRequest();
 
-                return Ok(await _service.GetByIdComplete(id));
+                return Ok(await _service.GetAllBySector(sector));
             }
             catch (ArgumentException e)
             {
                 return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
-            }
-        }
-
-        [AllowAnonymous]
-        [HttpGet]
-        [Route("Setor/{sectorId}")]
-        public async Task<IActionResult> GetBySetorId(int sectorId)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
-
-                return Ok(await _service.GetBySectorId(sectorId));
-            }
-            catch (ArgumentException e)
-            {
-                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+                throw;
             }
         }
     }
