@@ -17,7 +17,7 @@ namespace App.Api.Controllers
             _service = service;
         }
 
-        [Authorize("Bearer")]
+        [AllowAnonymous]
         [HttpGet]
         [Route("{id}", Name = "GetSegmentWithId")]
         public async Task<IActionResult> GetById(int id)
@@ -35,7 +35,7 @@ namespace App.Api.Controllers
             }
         }
 
-        [Authorize("Bearer")]
+        [AllowAnonymous]
         [HttpGet]
         [Route("Complete/{id}")]
         public async Task<IActionResult> GetByIdComplete(int id)
@@ -53,7 +53,7 @@ namespace App.Api.Controllers
             }
         }
 
-        [Authorize("Bearer")]
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetByAll()
         {
@@ -70,7 +70,7 @@ namespace App.Api.Controllers
             }
         }
 
-        [Authorize("Bearer")]
+        [AllowAnonymous]
         [HttpGet]
         [Route("Setor/{setorId}")]
         public async Task<IActionResult> GetBySetorId(int setorId)
@@ -88,7 +88,7 @@ namespace App.Api.Controllers
             }
         }
 
-        [Authorize("Bearer")]
+        [AllowAnonymous]
         [HttpGet]
         [Route("SubSetor/{subSetorId}")]
         public async Task<IActionResult> GetBySubSetorId(int subSetorId)
@@ -106,7 +106,7 @@ namespace App.Api.Controllers
             }
         }
 
-        [Authorize("Bearer")]
+        [AllowAnonymous]
         [HttpGet]
         [Route("Complete")]
         public async Task<IActionResult> GetByAllComplete()

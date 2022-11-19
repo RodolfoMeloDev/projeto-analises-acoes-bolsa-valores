@@ -22,5 +22,23 @@ namespace App.Service.Services
 
             return _mapper.Map<IEnumerable<BaseTickerDto>>(listEntity);
         }
+
+        public async Task<IEnumerable<BaseTickerDto>> GetAllBySegment(int segment){
+            var listEntity = await _repository.GetAllBySegment(segment);
+
+            return _mapper.Map<IEnumerable<BaseTickerDto>>(listEntity);
+        }
+
+        public async Task<IEnumerable<BaseTickerDto>> GetAllBySubSector(int subSector){
+            var listEntity = await _repository.GetAllBySubSector(subSector);
+
+            return _mapper.Map<IEnumerable<BaseTickerDto>>(listEntity);
+        }
+
+        public async Task<IEnumerable<BaseTickerDto>> GetAllBySector(int sector){
+            var listEntity = await _repository.GetAllBySector(sector);
+
+            return _mapper.Map<IEnumerable<BaseTickerDto>>(listEntity);
+        }
     }
 }

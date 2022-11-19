@@ -63,9 +63,6 @@ const Menu = () => {
               <Nav.Link className={getActiveRoute} as={NavLink} to="/acoes">
                 Ações
               </Nav.Link>
-              <Nav.Link className={getActiveRoute} as={NavLink} to="/setores">
-                Setores
-              </Nav.Link>
               {user !== "" ? (
                 <Nav.Link
                   className={getActiveRoute}
