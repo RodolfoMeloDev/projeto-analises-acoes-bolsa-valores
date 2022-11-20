@@ -61,7 +61,7 @@ const Menu = () => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link className={getActiveRoute} as={NavLink} to="/acoes">
-                Ações
+                Ações B3
               </Nav.Link>
               {user !== "" ? (
                 <Nav.Link

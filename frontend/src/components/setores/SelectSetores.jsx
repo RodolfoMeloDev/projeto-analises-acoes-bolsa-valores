@@ -2,15 +2,11 @@ import { useCallback, useEffect, useState } from "react";
 import { Col, Form } from "react-bootstrap";
 import apiSetor from "../../api/sectors";
 
-const SelectSetores = ({ idSelect, tamanhoSelect }) => {
+const SelectSetores = ({ idSelect, tamanhoSelect, getValue }) => {
   const [setores, setSetores] = useState([]);
 
   const getSetores = async () => {
-    const response = await apiSetor.get("", {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-    });
+    const response = await apiSetor.get("");
 
     if (response.status === 200) {
       return response.data;
@@ -28,9 +24,9 @@ const SelectSetores = ({ idSelect, tamanhoSelect }) => {
 
   return (
     <Form.Group as={Col} md={tamanhoSelect} controlId={idSelect}>
-      <Form.Label>Setores</Form.Label>
-      <Form.Select aria-label="Selecione um Setor">
-        <option key={0} defaultValue={0}></option>
+      <Form.Label><strong>Setores</strong></Form.Label>
+      <Form.Select aria-label="Selecione um Setor" onChange={ getValue === undefined ? null : () => getValue(idSelect)}>
+        <option key={0} Value={0}>TODOS OS SETORES</option>
         {setores
           .sort((a, b) => a.name.localeCompare(b.name))
           .map((setor) => {
