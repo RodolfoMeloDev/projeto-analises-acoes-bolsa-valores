@@ -7,6 +7,7 @@ namespace App.Domain.Repository
 {
     public interface IBaseTickerRepository : IRepository<BaseTickerEntity>
     {
+        Task<IEnumerable<BaseTickerEntity>> GetAllComplete();
         Task<IEnumerable<BaseTickerEntity>> GetAllBySegment(int segment);
         Task<IEnumerable<BaseTickerEntity>> GetAllBySubSector(int subSector);
         Task<IEnumerable<BaseTickerEntity>> GetAllBySector(int sector);

@@ -23,22 +23,29 @@ namespace App.Service.Services
             return _mapper.Map<IEnumerable<BaseTickerDto>>(listEntity);
         }
 
-        public async Task<IEnumerable<BaseTickerDto>> GetAllBySegment(int segment){
+        public async Task<IEnumerable<BaseTickerDtoComplete>> GetAllComplete()
+        {
+            var listEntity = await _repository.GetAllComplete();
+
+            return _mapper.Map<IEnumerable<BaseTickerDtoComplete>>(listEntity);
+        }
+
+        public async Task<IEnumerable<BaseTickerDtoComplete>> GetAllBySegment(int segment){
             var listEntity = await _repository.GetAllBySegment(segment);
 
-            return _mapper.Map<IEnumerable<BaseTickerDto>>(listEntity);
+            return _mapper.Map<IEnumerable<BaseTickerDtoComplete>>(listEntity);
         }
 
-        public async Task<IEnumerable<BaseTickerDto>> GetAllBySubSector(int subSector){
+        public async Task<IEnumerable<BaseTickerDtoComplete>> GetAllBySubSector(int subSector){
             var listEntity = await _repository.GetAllBySubSector(subSector);
 
-            return _mapper.Map<IEnumerable<BaseTickerDto>>(listEntity);
+            return _mapper.Map<IEnumerable<BaseTickerDtoComplete>>(listEntity);
         }
 
-        public async Task<IEnumerable<BaseTickerDto>> GetAllBySector(int sector){
+        public async Task<IEnumerable<BaseTickerDtoComplete>> GetAllBySector(int sector){
             var listEntity = await _repository.GetAllBySector(sector);
 
-            return _mapper.Map<IEnumerable<BaseTickerDto>>(listEntity);
+            return _mapper.Map<IEnumerable<BaseTickerDtoComplete>>(listEntity);
         }
     }
 }

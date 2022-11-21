@@ -26,7 +26,7 @@ const SelectSetores = ({ idSelect, tamanhoSelect, getValue }) => {
     <Form.Group as={Col} md={tamanhoSelect} controlId={idSelect}>
       <Form.Label><strong>Setores</strong></Form.Label>
       <Form.Select aria-label="Selecione um Setor" onChange={ getValue === undefined ? null : () => getValue(idSelect)}>
-        <option key={0} Value={0}>TODOS OS SETORES</option>
+        <option key={0} value={0}>TODOS OS SETORES</option>
         {setores
           .sort((a, b) => a.name.localeCompare(b.name))
           .map((setor) => {

@@ -7,8 +7,9 @@ namespace App.Domain.Interfaces.Services.BaseTicker
     public interface IBaseTickerService
     {
         Task<IEnumerable<BaseTickerDto>> GetAll();
-        Task<IEnumerable<BaseTickerDto>> GetAllBySegment(int segment);
-        Task<IEnumerable<BaseTickerDto>> GetAllBySubSector(int subSector);
-        Task<IEnumerable<BaseTickerDto>> GetAllBySector(int sector);
+        Task<IEnumerable<BaseTickerDtoComplete>> GetAllComplete();
+        Task<IEnumerable<BaseTickerDtoComplete>> GetAllBySegment(int segment);
+        Task<IEnumerable<BaseTickerDtoComplete>> GetAllBySubSector(int subSector);
+        Task<IEnumerable<BaseTickerDtoComplete>> GetAllBySector(int sector);
     }
 }
