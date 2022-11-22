@@ -15,12 +15,16 @@ const Acoes = () => {
   const [baseTickersFiltrados, setBaseTickersFiltrados] = useState(baseTickers);
   const [baseTickersGrid, setBaseTickersGrid] = useState(baseTickersFiltrados);
 
+  const [qtdeBotoesPaginacao, setQtdeBotoesPaginacao] = useState(1);
   const [qtdeRegistrosGrid, setQtdeRegistrosGrid] = useState(10);
   const [botoesPaginacao, setBotoesPaginacao] = useState([]);
   const [paginaAtiva, setPaginaAtiva] = useState(1);
 
   const [campoPesquisa, setCampoPesquisa] = useState("");
 
+  //* ************************************** */
+  //Metódos utilizados para filtros do grid
+  //* ************************************** */
   const handleInputLogin = (e) => {
     const { value } = e.target;
     setCampoPesquisa(value);
@@ -36,6 +40,153 @@ const Acoes = () => {
 
   const getValueSegmento = (idComponente) => {
     setValueSegmento(document.getElementById(idComponente).value);
+  };
+
+  const alterarQtdeRegistrosGrid = (idComponente) => {
+    setQtdeRegistrosGrid(parseInt(document.getElementById(idComponente).value));
+  };
+
+  //* ************************************** */
+  //Metódos utilizados para criar o componente de paginação
+  //* ************************************** */
+  const setPage = useCallback(
+    (e) => {
+      const page = parseInt(e.target.textContent);
+
+      if (page !== paginaAtiva) {
+        setPaginaAtiva(page);
+      }
+    },
+    [paginaAtiva]
+  );
+
+  const montaBotoes = useCallback(
+    (qtdeBotoes) => {
+      let botoes = [];
+      let labelBotal = 0;
+      let maisQueCincoBotoes = qtdeBotoes > 5;
+      let botaoAtivo = false;
+
+      if (qtdeBotoes === 1) {
+        botoes.push(
+          <Pagination.Item
+            style={{ width: "40px", textAlign: "center" }}
+            onClick={(e) => setPage(e)}
+            key={qtdeBotoes}
+            active={true}
+          >
+            {qtdeBotoes}
+          </Pagination.Item>
+        );
+        setBotoesPaginacao(botoes);
+        return;
+      }
+
+      for (let index = 1; index <= qtdeBotoes; index++) {
+        if (maisQueCincoBotoes) {
+          if (index === 6) {
+            setBotoesPaginacao(botoes);
+            break;
+          }
+
+          labelBotal =
+            paginaAtiva < 4
+              ? index
+              : qtdeBotoes - paginaAtiva > 1
+              ? paginaAtiva - 3 + index
+              : qtdeBotoes - 5 + index;
+
+          botaoAtivo =
+            ((index <= 3 && qtdeBotoes - paginaAtiva >= 2) ||
+              (index > 3 && qtdeBotoes - paginaAtiva < 2)) &&
+            paginaAtiva === parseInt(labelBotal);
+
+          botoes.push(
+            <Pagination.Item
+              style={{ width: "40px", textAlign: "center" }}
+              onClick={(e) => setPage(e)}
+              key={labelBotal}
+              active={botaoAtivo}
+            >
+              {labelBotal}
+            </Pagination.Item>
+          );
+        } else {
+          botoes.push(
+            <Pagination.Item
+              style={{ width: "40px", textAlign: "center" }}
+              onClick={(e) => setPage(e)}
+              key={index}
+              active={paginaAtiva === index}
+            >
+              {index}
+            </Pagination.Item>
+          );
+        }
+      }
+
+      setBotoesPaginacao(botoes);
+    },
+    [paginaAtiva, setPage]
+  );
+
+  const retornarQtdeBotoes = useCallback(() => {
+    return qtdeRegistrosGrid === 0
+      ? 1
+      : Math.trunc(baseTickersFiltrados.length / qtdeRegistrosGrid) +
+          (baseTickersFiltrados.length % qtdeRegistrosGrid === 0 ? 0 : 1);
+  }, [baseTickersFiltrados, qtdeRegistrosGrid]);
+
+  //* ************************************** */
+  //Metódos utilizados para Páginação do grid
+  //* ************************************** */
+  const setNextPage = () => {
+    const newPage = paginaAtiva + 1;
+    const qtdeBotoes = retornarQtdeBotoes();
+
+    if (newPage <= qtdeBotoes) {
+      setPaginaAtiva(newPage);
+    }
+
+    if (newPage > 8) montaBotoes(qtdeBotoes);
+  };
+
+  const setPreviusPage = () => {
+    const newPage = paginaAtiva - 1;
+    if (newPage > 0) {
+      setPaginaAtiva(newPage);
+    }
+  };
+
+  const setFirstPage = () => {
+    setPaginaAtiva(1);
+  };
+
+  const setLastPage = () => {
+    const page = retornarQtdeBotoes();
+    setPaginaAtiva(page);
+  };
+
+  //* ************************************** */
+  //Metódos para buscar os dados e ordenar o grid
+  //* ************************************** */
+  const retornarItensOrdenadosePaginado = (
+    itens,
+    registroInicial,
+    registroFinal
+  ) => {
+    return itens
+      .sort((a, b) => {
+        let itemA = a.baseTicker.toLowerCase(),
+          itemB = b.baseTicker.toLowerCase();
+
+        if (itemA < itemB) return -1;
+
+        if (itemA > itemB) return 1;
+
+        return 0;
+      })
+      .slice(registroInicial, registroFinal);
   };
 
   const getBaseTicker = async () => {
@@ -56,279 +207,52 @@ const Acoes = () => {
     dataBaseTickers();
   }, [dataBaseTickers]);
 
+  //* ************************************** */
+  // Efeitos comportamentais da tela
+  //* ************************************** */
+
   useEffect(() => {
     setValueSubSetor(0);
-    setBaseTickersFiltrados(
-      getTickersFiltered(valueSetor, valueSubSetor, valueSegmento)
-    );
   }, [valueSetor]);
 
   useEffect(() => {
     setValueSegmento(0);
-    setBaseTickersFiltrados(
-      getTickersFiltered(valueSetor, valueSubSetor, valueSegmento)
-    );
   }, [valueSubSetor]);
 
   useEffect(() => {
-    setBaseTickersFiltrados(
-      getTickersFiltered(valueSetor, valueSubSetor, valueSegmento)
-    );
-  }, [valueSegmento]);
-
-  const getTickersFiltered = (setor, subSetor, segmento) => {
-    let listaBaseTickres = baseTickers;
-
-    if (parseInt(segmento) > 0) {
-      listaBaseTickres = listaBaseTickres.filter(
-        (el) => el.segmentId === parseInt(segmento)
-      );
-    } else if (parseInt(subSetor) > 0) {
-      listaBaseTickres = listaBaseTickres.filter(
-        (el) => el.segment.subSector.id === parseInt(subSetor)
-      );
-    } else if (parseInt(setor) > 0) {
-      listaBaseTickres = listaBaseTickres.filter(
-        (el) => el.segment.subSector.sector.id === parseInt(setor)
-      );
-    }
-
-    if (campoPesquisa !== "") {
-      listaBaseTickres = listaBaseTickres.filter(
-        (el) =>
-          el.baseTicker.toLowerCase().includes(campoPesquisa) ||
-          el.company.toLowerCase().includes(campoPesquisa)
-      );
-    }
-
-    return listaBaseTickres;
-  };
-
-  const montaBotoes = (qtdeBotoes) => {
-    let botoes = [];
-    let labelBotal = 0;
-
-    console.log(qtdeBotoes);
-
-    if (qtdeBotoes === 1) {
-      botoes.push(
-        <Pagination.Item
-          style={{ width: "40px", textAlign: "center" }}
-          onClick={(e) => setPage(e)}
-          key={qtdeBotoes}
-          active={true}
-        >
-          {qtdeBotoes}
-        </Pagination.Item>
-      );
-      setBotoesPaginacao(botoes);
-      return;
-    }
-
-    for (let index = 0; index < qtdeBotoes; index++) {
-      if (qtdeBotoes > 5) {
-        if (index === 5) {
-          setBotoesPaginacao(botoes);
-          break;
-        }
-
-        labelBotal = index + 1 + (paginaAtiva <= 5 ? 0 : paginaAtiva - 5);
-        botoes.push(
-          <Pagination.Item
-            style={{ width: "40px", textAlign: "center" }}
-            onClick={(e) => setPage(e)}
-            key={labelBotal}
-            active={paginaAtiva === parseInt(labelBotal)}
-          >
-            {labelBotal}
-          </Pagination.Item>
-        );
-      } else {
-        botoes.push(
-          <Pagination.Item
-            style={{ width: "40px", textAlign: "center" }}
-            onClick={(e) => setPage(e)}
-            key={index + 1}
-            active={paginaAtiva === index + 1}
-          >
-            {index + 1}
-          </Pagination.Item>
-        );
-      }
-    }
-
-    setBotoesPaginacao(botoes);
-  };
-
-  useEffect(() => {
-    montaBotoes(
-      parseInt(qtdeRegistrosGrid) === 0
-        ? 1
-        : Math.trunc(baseTickersFiltrados.length / qtdeRegistrosGrid) +
-            (baseTickersFiltrados.length % qtdeRegistrosGrid === 0 ? 0 : 1)
+    setQtdeBotoesPaginacao(
+      parseInt(qtdeRegistrosGrid) === 0 ? 1 : retornarQtdeBotoes()
     );
     setPaginaAtiva(1);
-    setBaseTickersGrid(
-      baseTickersFiltrados
-        .sort((a, b) => {
-          let fa = a.baseTicker.toLowerCase(),
-            fb = b.baseTicker.toLowerCase();
-
-          if (fa < fb) {
-            return -1;
-          }
-          if (fa > fb) {
-            return 1;
-          }
-          return 0;
-        })
-        .slice(
-          0,
-          parseInt(qtdeRegistrosGrid) === 0
-            ? baseTickersFiltrados.length
-            : qtdeRegistrosGrid
-        )
-    );
-  }, [baseTickersFiltrados, qtdeRegistrosGrid]);
-
-  const setNextPage = () => {
-    const newPage = paginaAtiva + 1;
-    const qtdeBotoes =
-      Math.trunc(baseTickersFiltrados.length / qtdeRegistrosGrid) +
-      (baseTickersFiltrados.length % qtdeRegistrosGrid === 0 ? 0 : 1);
-
-    if (newPage <= qtdeBotoes) {
-      setPaginaAtiva(newPage);
-      setBaseTickersGrid(
-        baseTickersFiltrados
-          .sort((a, b) => {
-            let fa = a.baseTicker.toLowerCase(),
-              fb = b.baseTicker.toLowerCase();
-
-            if (fa < fb) {
-              return -1;
-            }
-            if (fa > fb) {
-              return 1;
-            }
-            return 0;
-          })
-          .slice(
-            newPage * qtdeRegistrosGrid - qtdeRegistrosGrid,
-            newPage * qtdeRegistrosGrid
-          )
-      );
-    }
-
-    if (newPage > 8) montaBotoes(qtdeBotoes);
-  };
-
-  const setPreviusPage = () => {
-    const newPage = paginaAtiva - 1;
-    if (newPage > 0) {
-      setPaginaAtiva(newPage);
-      setBaseTickersGrid(
-        baseTickersFiltrados
-          .sort((a, b) => {
-            let fa = a.baseTicker.toLowerCase(),
-              fb = b.baseTicker.toLowerCase();
-
-            if (fa < fb) {
-              return -1;
-            }
-            if (fa > fb) {
-              return 1;
-            }
-            return 0;
-          })
-          .slice(
-            newPage * qtdeRegistrosGrid - qtdeRegistrosGrid,
-            newPage * qtdeRegistrosGrid
-          )
-      );
-    }
-  };
-
-  const setFirstPage = () => {
-    setPaginaAtiva(1);
-    setBaseTickersGrid(
-      baseTickersFiltrados
-        .sort((a, b) => {
-          let fa = a.baseTicker.toLowerCase(),
-            fb = b.baseTicker.toLowerCase();
-
-          if (fa < fb) {
-            return -1;
-          }
-          if (fa > fb) {
-            return 1;
-          }
-          return 0;
-        })
-        .slice(0, qtdeRegistrosGrid)
-    );
-  };
-
-  const setLastPage = () => {
-    const page =
-      Math.trunc(baseTickersFiltrados.length / qtdeRegistrosGrid) +
-      (baseTickersFiltrados.length % qtdeRegistrosGrid === 0 ? 0 : 1);
-    setPaginaAtiva(page);
-    setBaseTickersGrid(
-      baseTickersFiltrados
-        .sort((a, b) => {
-          let fa = a.baseTicker.toLowerCase(),
-            fb = b.baseTicker.toLowerCase();
-
-          if (fa < fb) {
-            return -1;
-          }
-          if (fa > fb) {
-            return 1;
-          }
-          return 0;
-        })
-        .slice((page - 1) * qtdeRegistrosGrid)
-    );
-  };
-
-  const setPage = (e) => {
-    const page = parseInt(e.target.textContent);
-
-    if (page !== paginaAtiva) {
-      setPaginaAtiva(page);
-      setBaseTickersGrid(
-        baseTickersFiltrados
-          .sort((a, b) => {
-            let fa = a.baseTicker.toLowerCase(),
-              fb = b.baseTicker.toLowerCase();
-
-            if (fa < fb) {
-              return -1;
-            }
-            if (fa > fb) {
-              return 1;
-            }
-            return 0;
-          })
-          .slice(
-            page * qtdeRegistrosGrid - qtdeRegistrosGrid,
-            page * qtdeRegistrosGrid
-          )
-      );
-    }
-  };
+  }, [baseTickersFiltrados, qtdeRegistrosGrid, retornarQtdeBotoes]);
 
   useEffect(() => {
-    montaBotoes(
-      Math.trunc(baseTickersFiltrados.length / qtdeRegistrosGrid) +
-        (baseTickersFiltrados.length % qtdeRegistrosGrid === 0 ? 0 : 1)
-    );
-  }, [paginaAtiva]);
+    montaBotoes(qtdeBotoesPaginacao);
+  }, [montaBotoes, qtdeBotoesPaginacao]);
 
-  const alterarQtdeRegistrosGrid = (idComponente) => {
-    setQtdeRegistrosGrid(document.getElementById(idComponente).value);
-  };
+  useEffect(() => {
+    const registroInicial = paginaAtiva * qtdeRegistrosGrid - qtdeRegistrosGrid,
+      registroFinal =
+        paginaAtiva *
+        (qtdeRegistrosGrid === 0
+          ? baseTickersFiltrados.length
+          : qtdeRegistrosGrid);
+
+    montaBotoes(retornarQtdeBotoes());
+    setBaseTickersGrid(
+      retornarItensOrdenadosePaginado(
+        baseTickersFiltrados,
+        registroInicial,
+        registroFinal
+      )
+    );
+  }, [
+    baseTickersFiltrados,
+    montaBotoes,
+    paginaAtiva,
+    qtdeRegistrosGrid,
+    retornarQtdeBotoes,
+  ]);
 
   useEffect(() => {
     let itensFiltrados = baseTickers;
@@ -355,7 +279,7 @@ const Acoes = () => {
       );
 
     setBaseTickersFiltrados(itensFiltrados);
-  }, [campoPesquisa]);
+  }, [campoPesquisa, valueSegmento, valueSubSetor, valueSetor, baseTickers]);
 
   return (
     <>
@@ -421,7 +345,7 @@ const Acoes = () => {
       <div className="d-flex" style={{ height: "38px" }}>
         <Form.Select
           className="me-3"
-          style={{ width: "100px", textAlign: "center" }}
+          style={{ width: "110px", textAlign: "center" }}
           id="qtdeRegistros"
           aria-label="Selecione a quantidade de registros para mostrar no Grid"
           onChange={() => alterarQtdeRegistrosGrid("qtdeRegistros")}
@@ -449,9 +373,9 @@ const Acoes = () => {
             onClick={setLastPage}
           />
         </Pagination>
-        <lable className="ms-3 pt-3 ">
+        <label className="ms-3 pt-3 ">
           <b>Total de Registros: {baseTickersFiltrados.length}</b>
-        </lable>
+        </label>
       </div>
     </>
   );
