@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Form, Pagination, Row, Table } from "react-bootstrap";
 
 import apiBaseTicker from "../../api/baseTicker";
+import PaginacaoGrid from "../../components/paginacaoGrid/PaginacaoGrid";
 
 import SelectSegmentos from "../../components/segmentos/SelectSegmentos";
 import SelectSetores from "../../components/setores/SelectSetores";
@@ -281,6 +282,19 @@ const Acoes = () => {
     setBaseTickersFiltrados(itensFiltrados);
   }, [campoPesquisa, valueSegmento, valueSubSetor, valueSetor, baseTickers]);
 
+  const [itemInicial, setItemInicial] = useState(0);
+  const [itemFinal, setItemFinal] = useState(10);
+
+  useEffect(() => {
+    setBaseTickersGrid(
+      retornarItensOrdenadosePaginado(
+        baseTickersFiltrados,
+        itemInicial,
+        itemFinal
+      )
+    );
+  }, [baseTickersFiltrados, itemFinal, itemInicial]);
+
   return (
     <>
       <div id="filtros" className="mt-3">
@@ -342,7 +356,7 @@ const Acoes = () => {
         </tbody>
       </Table>
 
-      <div className="d-flex" style={{ height: "38px" }}>
+      {/* <div className="d-flex" style={{ height: "38px" }}>
         <Form.Select
           className="me-3"
           style={{ width: "110px", textAlign: "center" }}
@@ -376,7 +390,12 @@ const Acoes = () => {
         <label className="ms-3 pt-3 ">
           <b>Total de Registros: {baseTickersFiltrados.length}</b>
         </label>
-      </div>
+      </div> */}
+      <PaginacaoGrid
+        totalRegistros={baseTickersFiltrados.length}
+        itemInicial={setItemInicial}
+        itemFinal={setItemFinal}
+      />
     </>
   );
 };
