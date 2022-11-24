@@ -40,6 +40,25 @@ namespace App.Api.Controllers
 
         [AllowAnonymous]
         [HttpGet]
+        [Route("Complete")]
+        public async Task<IActionResult> GetAllComplete()
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest();
+
+                return Ok(await _service.GetAllComplete());
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+                throw;
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
         [Route("BySegment/{segment}")]
         public async Task<IActionResult> GetAll(int segment)
         {

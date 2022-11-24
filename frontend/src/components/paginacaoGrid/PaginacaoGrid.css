@@ -1,0 +1,24 @@
+.altura-div-paginacao {
+    height: 38px;
+}
+
+.tamanho-seletor-quantidade-registros {
+    width: 110px;
+    text-align: center;
+}
+
+.botao {
+    width: 40px;
+    text-align: center;
+}
+
+.label-registros {
+    font-weight: bold;
+    font-size: 1rem;
+    padding-top: 1rem;
+}
+
+.total-registros {
+    font-size: 1rem;
+    padding-top: 1rem;
+}
