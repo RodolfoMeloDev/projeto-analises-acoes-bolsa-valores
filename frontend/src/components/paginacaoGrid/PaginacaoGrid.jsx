@@ -40,8 +40,6 @@ const PaginacaoGrid = ({ totalRegistros, itemInicial, itemFinal }) => {
 
   const selectPage = (idComponente) => {
     let page;
-    console.log(idComponente);
-
     switch (idComponente) {
       case "btnFirstPage":
         page = 1;
@@ -179,7 +177,7 @@ const PaginacaoGrid = ({ totalRegistros, itemInicial, itemFinal }) => {
           className="botao"
           onClick={() => selectPage("btnLastPage")}
         />
-      </Pagination>
+      </Pagination >
       <label className="ms-3 label-registros">Total de Registros:</label>
       <label className="ms-1 total-registros"> {totalRegistros}</label>
     </div>

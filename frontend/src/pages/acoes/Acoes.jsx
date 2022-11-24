@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Form, Pagination, Row, Table } from "react-bootstrap";
+import { Form, Row, Table } from "react-bootstrap";
 
 import apiBaseTicker from "../../api/baseTicker";
 import PaginacaoGrid from "../../components/paginacaoGrid/PaginacaoGrid";
@@ -15,14 +15,10 @@ const Acoes = () => {
   const [baseTickers, setBaseTickers] = useState([]);
   const [baseTickersFiltrados, setBaseTickersFiltrados] = useState(baseTickers);
   const [baseTickersGrid, setBaseTickersGrid] = useState(baseTickersFiltrados);
-
-  const [qtdeBotoesPaginacao, setQtdeBotoesPaginacao] = useState(1);
-  const [qtdeRegistrosGrid, setQtdeRegistrosGrid] = useState(10);
-  const [botoesPaginacao, setBotoesPaginacao] = useState([]);
-  const [paginaAtiva, setPaginaAtiva] = useState(1);
-
   const [campoPesquisa, setCampoPesquisa] = useState("");
-
+  const [itemInicial, setItemInicial] = useState(0);
+  const [itemFinal, setItemFinal] = useState(10);
+  
   //* ************************************** */
   //Metódos utilizados para filtros do grid
   //* ************************************** */
@@ -41,131 +37,6 @@ const Acoes = () => {
 
   const getValueSegmento = (idComponente) => {
     setValueSegmento(document.getElementById(idComponente).value);
-  };
-
-  const alterarQtdeRegistrosGrid = (idComponente) => {
-    setQtdeRegistrosGrid(parseInt(document.getElementById(idComponente).value));
-  };
-
-  //* ************************************** */
-  //Metódos utilizados para criar o componente de paginação
-  //* ************************************** */
-  const setPage = useCallback(
-    (e) => {
-      const page = parseInt(e.target.textContent);
-
-      if (page !== paginaAtiva) {
-        setPaginaAtiva(page);
-      }
-    },
-    [paginaAtiva]
-  );
-
-  const montaBotoes = useCallback(
-    (qtdeBotoes) => {
-      let botoes = [];
-      let labelBotal = 0;
-      let maisQueCincoBotoes = qtdeBotoes > 5;
-      let botaoAtivo = false;
-
-      if (qtdeBotoes === 1) {
-        botoes.push(
-          <Pagination.Item
-            style={{ width: "40px", textAlign: "center" }}
-            onClick={(e) => setPage(e)}
-            key={qtdeBotoes}
-            active={true}
-          >
-            {qtdeBotoes}
-          </Pagination.Item>
-        );
-        setBotoesPaginacao(botoes);
-        return;
-      }
-
-      for (let index = 1; index <= qtdeBotoes; index++) {
-        if (maisQueCincoBotoes) {
-          if (index === 6) {
-            setBotoesPaginacao(botoes);
-            break;
-          }
-
-          labelBotal =
-            paginaAtiva < 4
-              ? index
-              : qtdeBotoes - paginaAtiva > 1
-              ? paginaAtiva - 3 + index
-              : qtdeBotoes - 5 + index;
-
-          botaoAtivo =
-            ((index <= 3 && qtdeBotoes - paginaAtiva >= 2) ||
-              (index > 3 && qtdeBotoes - paginaAtiva < 2)) &&
-            paginaAtiva === parseInt(labelBotal);
-
-          botoes.push(
-            <Pagination.Item
-              style={{ width: "40px", textAlign: "center" }}
-              onClick={(e) => setPage(e)}
-              key={labelBotal}
-              active={botaoAtivo}
-            >
-              {labelBotal}
-            </Pagination.Item>
-          );
-        } else {
-          botoes.push(
-            <Pagination.Item
-              style={{ width: "40px", textAlign: "center" }}
-              onClick={(e) => setPage(e)}
-              key={index}
-              active={paginaAtiva === index}
-            >
-              {index}
-            </Pagination.Item>
-          );
-        }
-      }
-
-      setBotoesPaginacao(botoes);
-    },
-    [paginaAtiva, setPage]
-  );
-
-  const retornarQtdeBotoes = useCallback(() => {
-    return qtdeRegistrosGrid === 0
-      ? 1
-      : Math.trunc(baseTickersFiltrados.length / qtdeRegistrosGrid) +
-          (baseTickersFiltrados.length % qtdeRegistrosGrid === 0 ? 0 : 1);
-  }, [baseTickersFiltrados, qtdeRegistrosGrid]);
-
-  //* ************************************** */
-  //Metódos utilizados para Páginação do grid
-  //* ************************************** */
-  const setNextPage = () => {
-    const newPage = paginaAtiva + 1;
-    const qtdeBotoes = retornarQtdeBotoes();
-
-    if (newPage <= qtdeBotoes) {
-      setPaginaAtiva(newPage);
-    }
-
-    if (newPage > 8) montaBotoes(qtdeBotoes);
-  };
-
-  const setPreviusPage = () => {
-    const newPage = paginaAtiva - 1;
-    if (newPage > 0) {
-      setPaginaAtiva(newPage);
-    }
-  };
-
-  const setFirstPage = () => {
-    setPaginaAtiva(1);
-  };
-
-  const setLastPage = () => {
-    const page = retornarQtdeBotoes();
-    setPaginaAtiva(page);
   };
 
   //* ************************************** */
@@ -211,7 +82,6 @@ const Acoes = () => {
   //* ************************************** */
   // Efeitos comportamentais da tela
   //* ************************************** */
-
   useEffect(() => {
     setValueSubSetor(0);
   }, [valueSetor]);
@@ -219,42 +89,7 @@ const Acoes = () => {
   useEffect(() => {
     setValueSegmento(0);
   }, [valueSubSetor]);
-
-  useEffect(() => {
-    setQtdeBotoesPaginacao(
-      parseInt(qtdeRegistrosGrid) === 0 ? 1 : retornarQtdeBotoes()
-    );
-    setPaginaAtiva(1);
-  }, [baseTickersFiltrados, qtdeRegistrosGrid, retornarQtdeBotoes]);
-
-  useEffect(() => {
-    montaBotoes(qtdeBotoesPaginacao);
-  }, [montaBotoes, qtdeBotoesPaginacao]);
-
-  useEffect(() => {
-    const registroInicial = paginaAtiva * qtdeRegistrosGrid - qtdeRegistrosGrid,
-      registroFinal =
-        paginaAtiva *
-        (qtdeRegistrosGrid === 0
-          ? baseTickersFiltrados.length
-          : qtdeRegistrosGrid);
-
-    montaBotoes(retornarQtdeBotoes());
-    setBaseTickersGrid(
-      retornarItensOrdenadosePaginado(
-        baseTickersFiltrados,
-        registroInicial,
-        registroFinal
-      )
-    );
-  }, [
-    baseTickersFiltrados,
-    montaBotoes,
-    paginaAtiva,
-    qtdeRegistrosGrid,
-    retornarQtdeBotoes,
-  ]);
-
+  
   useEffect(() => {
     let itensFiltrados = baseTickers;
 
@@ -281,9 +116,7 @@ const Acoes = () => {
 
     setBaseTickersFiltrados(itensFiltrados);
   }, [campoPesquisa, valueSegmento, valueSubSetor, valueSetor, baseTickers]);
-
-  const [itemInicial, setItemInicial] = useState(0);
-  const [itemFinal, setItemFinal] = useState(10);
+  
 
   useEffect(() => {
     setBaseTickersGrid(
@@ -355,42 +188,6 @@ const Acoes = () => {
           })}
         </tbody>
       </Table>
-
-      {/* <div className="d-flex" style={{ height: "38px" }}>
-        <Form.Select
-          className="me-3"
-          style={{ width: "110px", textAlign: "center" }}
-          id="qtdeRegistros"
-          aria-label="Selecione a quantidade de registros para mostrar no Grid"
-          onChange={() => alterarQtdeRegistrosGrid("qtdeRegistros")}
-        >
-          <option value={10}>10</option>
-          <option value={20}>20</option>
-          <option value={0}>TODOS</option>
-        </Form.Select>
-        <Pagination>
-          <Pagination.First
-            style={{ width: "40px", textAlign: "center" }}
-            onClick={setFirstPage}
-          />
-          <Pagination.Prev
-            style={{ width: "40px", textAlign: "center" }}
-            onClick={setPreviusPage}
-          />
-          {botoesPaginacao}
-          <Pagination.Next
-            style={{ width: "40px", textAlign: "center" }}
-            onClick={setNextPage}
-          />
-          <Pagination.Last
-            style={{ width: "40px", textAlign: "center" }}
-            onClick={setLastPage}
-          />
-        </Pagination>
-        <label className="ms-3 pt-3 ">
-          <b>Total de Registros: {baseTickersFiltrados.length}</b>
-        </label>
-      </div> */}
       <PaginacaoGrid
         totalRegistros={baseTickersFiltrados.length}
         itemInicial={setItemInicial}
