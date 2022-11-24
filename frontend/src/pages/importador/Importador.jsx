@@ -1,41 +1,187 @@
-import { Button, Col, Form, Row } from 'react-bootstrap';
+import { useEffect, useState } from "react";
+import apiFileImport from "../../api/fileImport";
+import { Button, Col, Form, Row, Toast, ToastContainer } from "react-bootstrap";
+
+const initialFileImport = {
+  UserId: 0,
+  Description: "",
+  DateFile: 0,
+  TypeFile: 0,
+  File: null,
+};
 
 const Importador = () => {
+  const [validated, setValidated] = useState(false);
+  const [error, setError] = useState("");
+  const [showToast, setShowToast] = useState(false);
+  const [fileImportData, setFileImportData] = useState(initialFileImport);
+  const [fileImported, setFileImported] = useState(null);
+
+  const handleFileImport = (e) => {
+    const { name, value } = e.target;
+
+    setFileImportData({ ...fileImportData, [name]: value });
+
+    console.log(fileImportData);
+  };
+
+  const handleFileImportFile = (e) => {
+    setFileImported(e.target.files[0]);
+
+    console.log(fileImported);
+  };
+
+  const handleSubmit = async (e) => {
+    setError("");
+
+    const form = e.currentTarget;
+    e.preventDefault();
+    if (form.checkValidity() === false) {
+      e.stopPropagation();
+    }
+
+    setValidated(true);
+
+    const formData = new FormData(form);
+
+    formData.append("UserId", 1);
+
+    try {
+      const response = await apiFileImport.post("", formData, {
+        headers: {
+          accept: "*",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (response.status === 201) {
+        console.log(response);
+        setShowToast(true);
+      } else {
+        console.log(response);
+        setError(response.data.message);
+      }
+    } catch (e) {
+      console.log(e);
+      setError(
+        e.response.data
+          .substr(
+            e.response.data.search(":") + 1,
+            e.response.data.search("\r\n") - e.response.data.search(":")
+          )
+          .trim()
+      );
+    }
+  };
+
+  useEffect(() => {
+    if (error !== "") {
+      setShowToast(true);
+    }
+  }, [error]);
+
   return (
-    <div className='mt-3 d-flex justify-content-center' >
-      <Form className='border rounded p-3'>
-        <Form.Group className="mt-3 mb-3" controlId="edtDescricaoArquivo">
+    <div className="mt-3 d-flex justify-content-center">
+      <Form
+        style={{ minWidth: "500px" }}
+        id="frmImportador"
+        className="border rounded p-3"
+        noValidate
+        validated={validated}
+        onSubmit={handleSubmit}
+      >
+        <Form.Group className="mb-3" controlId="edtDescricaoArquivo">
           <Form.Label className="text-start">Descrição Arquivo</Form.Label>
-          <Form.Control placeholder="Informe um identificador para o arquivo importado" />
+          <Form.Control
+            name="Description"
+            placeholder="Informe um identificador para o arquivo importado"
+            onChange={handleFileImport}
+            required
+          />
+          <Form.Control.Feedback type="invalid">
+            O campo Descrição do arquivo é obrigatório!
+          </Form.Control.Feedback>
         </Form.Group>
 
-        <Row className="mb-3">
-          <Form.Group controlId="selTipoArquivo">
+        <Row>
+          <Form.Group
+            as={Col}
+            md={6}
+            className="mb-3"
+            controlId="selOrigemArquivo"
+          >
             <Form.Label>Origem Arquivo</Form.Label>
-            <Form.Select>
-              <option defaultValue={0}>Escolha a fonte do arquivo</option>
+            <Form.Select name="TypeFile" onChange={handleFileImport} required>
+              <option value=""></option>
               <option value={1}>Status Invest</option>
               <option value={2}>Fundamentus</option>
             </Form.Select>
+            <Form.Control.Feedback type="invalid">
+              Selecione a origem do arquivo
+            </Form.Control.Feedback>
           </Form.Group>
 
-          <Form.Group controlId="edtDataBase">
+          <Form.Group
+            as={Col}
+            md={6}
+            className="mb-3"
+            controlId="dtDataBaseArquivo"
+          >
             <Form.Label>Data Base</Form.Label>
-            <Form.Control type="date"/>
+            <Form.Control
+              name="DateFile"
+              onChange={handleFileImport}
+              type="date"
+              required
+            />
+            <Form.Control.Feedback type="invalid">
+              Data informada inválida
+            </Form.Control.Feedback>
           </Form.Group>
         </Row>
 
-        <Form.Group className="mt-3 mb-3" controlId="edtArquivo">
+        <Form.Group className="mb-3" controlId="edtFile">
           <Form.Label>Arquivo Importação</Form.Label>
-          <Form.Control type="file" placeholder="Selecione o arquivo para importação" />
+          <Form.Control
+            name="File"
+            onChange={handleFileImportFile}
+            type="file"
+            placeholder="Selecione o arquivo para importação"
+            required
+          />
+          <Form.Control.Feedback type="invalid">
+            É necessário selecionar o arquivo para importação
+          </Form.Control.Feedback>
         </Form.Group>
 
         <Button variant="success" type="submit">
           Importar
         </Button>
       </Form>
+      <ToastContainer position="bottom-end">
+        <Toast
+          bg={error === "" ? "success" : "warning"}
+          onClose={() => setShowToast(false)}
+          show={showToast}
+          delay={5000}
+          autohide
+        >
+          <Toast.Header>
+            <img
+              src="holder.js/20x20?text=%20"
+              className="rounded me-2"
+              alt=""
+            />
+            <strong className="me-auto">Mensagem</strong>
+          </Toast.Header>
+          <Toast.Body>
+            {error === "" ? "Arquivo importado com sucesso !" : error}
+          </Toast.Body>
+        </Toast>
+      </ToastContainer>
     </div>
-  )
-}
+  );
+};
 
 export default Importador;
