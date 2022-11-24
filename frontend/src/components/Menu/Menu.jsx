@@ -64,13 +64,22 @@ const Menu = () => {
                 Ações B3
               </Nav.Link>
               {user !== "" ? (
-                <Nav.Link
-                  className={getActiveRoute}
-                  as={NavLink}
-                  to="/formasAnalise"
-                >
-                  Formas de Analise
-                </Nav.Link>
+                <>
+                  <Nav.Link
+                    className={getActiveRoute}
+                    as={NavLink}
+                    to="/importador"
+                  >
+                    Importador
+                  </Nav.Link>
+                  <Nav.Link
+                    className={getActiveRoute}
+                    as={NavLink}
+                    to="/analiseAcoes"
+                  >
+                    Analisador
+                  </Nav.Link>
+                </>
               ) : null}
             </Nav>
             {user === "" ? (
@@ -86,8 +95,11 @@ const Menu = () => {
                   <NavDropdown.Item as={NavLink} to="/dashboard">
                     Dashboard
                   </NavDropdown.Item>
-                  <NavDropdown.Item as={NavLink} to="/formasAnalise">
-                    Formas de Analise
+                  <NavDropdown.Item as={NavLink} to="/importador">
+                    Importador
+                  </NavDropdown.Item>
+                  <NavDropdown.Item as={NavLink} to="/analiseAcoes">
+                    Analisador
                   </NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item onClick={deslogar}>Sair</NavDropdown.Item>
