@@ -2,7 +2,7 @@ import React from 'react'
 
 const FormasAnalise = () => {
   return (
-    <div>FormaAnalise</div>
+    <div>Analisador</div>
   )
 }
 

@@ -42,6 +42,7 @@ export async function getLogin(userLogin, userPassword) {
         localStorage.setItem("data-validade", login.expiration);
         localStorage.setItem("token", login.accessToken);
         localStorage.setItem("nickName", nameUser);
+        localStorage.setItem("login", userLogin);
 
         return { logado: true, user: nameUser };
       } else {
