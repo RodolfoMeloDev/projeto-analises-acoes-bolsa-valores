@@ -27,6 +27,7 @@ const Menu = () => {
     localStorage.setItem("data-validade", null);
     localStorage.setItem("token", null);
     localStorage.setItem("nickName", null);
+    localStorage.setItem("login", null)
     setUser("");
     navigate("/");
   };

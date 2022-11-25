@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
+
 import apiFileImport from "../../api/fileImport";
+import apiUser from "../../api/users";
+
 import { Button, Col, Form, Row, Toast, ToastContainer } from "react-bootstrap";
 
 const initialFileImport = {
@@ -19,17 +22,50 @@ const Importador = () => {
 
   const handleFileImport = (e) => {
     const { name, value } = e.target;
-
     setFileImportData({ ...fileImportData, [name]: value });
-
-    console.log(fileImportData);
   };
 
   const handleFileImportFile = (e) => {
-    setFileImported(e.target.files[0]);
+    setError("");    
+    const file = e.target.files[0];
 
-    console.log(fileImported);
+    if (file === undefined){
+      setFileImported(null);
+      return;
+    }
+
+    if ((file.size / 1024) <= 2048){
+      setFileImported(e.target.files[0])
+    }
+    else{
+      setError("Não é possível importar um arquivo maior do que 2MB!");
+    }
   };
+
+  const retornaUserId = async() => {
+    try {
+      const response = await apiUser.get(localStorage.getItem("login"), { headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      }});      
+
+      if (response.status === 200){
+        return response.data.id;
+      }else{
+        setError(response.data.message);
+        return;
+      }
+
+    } catch (e) {
+      setError(
+        e.response.data
+          .substr(
+            e.response.data.search(":") + 1,
+            e.response.data.search("\r\n") - e.response.data.search(":")
+          )
+          .trim()
+      );
+    }
+  }
 
   const handleSubmit = async (e) => {
     setError("");
@@ -43,8 +79,7 @@ const Importador = () => {
     setValidated(true);
 
     const formData = new FormData(form);
-
-    formData.append("UserId", 1);
+    formData.append("UserId", await retornaUserId());
 
     try {
       const response = await apiFileImport.post("", formData, {
@@ -155,11 +190,10 @@ const Importador = () => {
           </Form.Control.Feedback>
         </Form.Group>
 
-        <Button variant="success" type="submit">
+        <Button variant="success" type="submit" disabled={fileImported === null}>
           Importar
         </Button>
-      </Form>
-      <ToastContainer position="bottom-end">
+        <ToastContainer position="middle-center">
         <Toast
           bg={error === "" ? "success" : "warning"}
           onClose={() => setShowToast(false)}
@@ -180,6 +214,7 @@ const Importador = () => {
           </Toast.Body>
         </Toast>
       </ToastContainer>
+      </Form>      
     </div>
   );
 };
