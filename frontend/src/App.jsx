@@ -5,7 +5,7 @@ import Home from "./pages/home/Home";
 import Acoes from "./pages/acoes/Acoes";
 import FormasAnalise from "./pages/analiseAcoes/AnaliseAcoes";
 import Dashboard from "./pages/dashboard/Dashboard";
-import Importador from './pages/importador/Importador';
+import Importador from "./pages/importador/Importador";
 
 import { Route, Routes } from "react-router-dom";
 

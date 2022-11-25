@@ -18,7 +18,7 @@ const Acoes = () => {
   const [campoPesquisa, setCampoPesquisa] = useState("");
   const [itemInicial, setItemInicial] = useState(0);
   const [itemFinal, setItemFinal] = useState(10);
-  
+
   //* ************************************** */
   //Metódos utilizados para filtros do grid
   //* ************************************** */
@@ -89,7 +89,7 @@ const Acoes = () => {
   useEffect(() => {
     setValueSegmento(0);
   }, [valueSubSetor]);
-  
+
   useEffect(() => {
     let itensFiltrados = baseTickers;
 
@@ -116,7 +116,6 @@ const Acoes = () => {
 
     setBaseTickersFiltrados(itensFiltrados);
   }, [campoPesquisa, valueSegmento, valueSubSetor, valueSetor, baseTickers]);
-  
 
   useEffect(() => {
     setBaseTickersGrid(
@@ -164,14 +163,21 @@ const Acoes = () => {
           </Form.Group>
         </Row>
       </div>
-      <Table className="mt-3" striped bordered hover responsive>
+      <Table
+        className="mt-3"
+        striped
+        bordered
+        hover
+        responsive
+        style={{ minWidth: "max-content" }}
+      >
         <thead>
           <tr>
-            <th style={{ width: "5%" }}>Ticker</th>
-            <th style={{ width: "25%" }}>Empresa</th>
-            <th style={{ width: "25%" }}>Setor</th>
-            <th style={{ width: "25%" }}>SubSetor</th>
-            <th style={{ width: "25%" }}>Segmento</th>
+            <th>Ticker</th>
+            <th>Empresa</th>
+            <th>Setor</th>
+            <th>SubSetor</th>
+            <th>Segmento</th>
           </tr>
         </thead>
         <tbody>
