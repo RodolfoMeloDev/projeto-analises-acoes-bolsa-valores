@@ -1,0 +1,25 @@
+.contador {
+    font-size: 100px;
+    font-weight: 600;
+    margin-top: 25px;
+}
+
+.coluna-grid {
+    width: 100px;
+}
+
+.card-formula {
+    width: 16.9rem;
+    height: 8rem;
+}
+
+@media screen and (max-width: 992px) {
+    .contador {
+        font-size: 80px;
+        margin-top: 35px;
+    }
+
+    .card-formula {
+        width: 15.65rem;
+    }
+  }
