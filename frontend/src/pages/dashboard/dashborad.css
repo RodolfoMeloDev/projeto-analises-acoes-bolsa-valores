@@ -1,0 +1,106 @@
+.dados-importacao {
+	flex-wrap: nowrap;
+}
+
+.card-header-page {
+	font-weight: bold;
+}
+
+.card-contador {
+	margin-top: 1rem;
+	width: 24%;
+}
+
+.card-contador-texto {
+	font-size: 100px;
+	display: flex;		
+	justify-content: center;
+	align-items: center;	
+}
+
+.card-importacoes {
+	margin-top: 1rem;
+	width: 75%;
+}
+
+.coluna-grid {
+  width: 150px;
+}
+
+.formulas {
+	justify-content: space-between;	
+}
+
+.card-formula {
+	width: 14%;
+	height: 250px;
+	margin-bottom: 1rem;	
+}
+
+.card-formula-body {
+	display: flex;		
+	justify-content: center;
+	align-items: center;
+}
+
+@media screen and (max-width: 1024px) {
+	.card-contador {
+		width: 32.00%;
+	}
+
+	.card-importacoes {
+		width: 66.0%;
+	}	
+
+	.formulas {
+		justify-content: space-between;
+	}
+
+	.card-formula {
+			width: 32%;			
+  }
+}
+
+@media screen and (max-width: 800px) {
+	.card-contador {
+		margin-right: 1rem;
+		width: 50%;
+	}
+
+	.card-importacoes {
+		width: 50%;
+	}
+
+	.formulas {
+		justify-content: space-between;
+	}
+	
+	.card-formula {				
+		width: 49%;		
+  }
+
+	.card-formula:nth-child(1n+1) {		
+		margin-left: 0;
+  }
+}
+
+@media screen and (max-width: 460px) {
+	.dados-importacao{
+		flex-wrap: wrap;
+	}
+
+	.card-contador {
+		width: 100%;
+		margin-right: 0;
+	}
+
+	.card-importacoes {
+		width: 100%;
+	}
+
+	.card-formula {
+		width: 100%;
+  }
+}
+
+
