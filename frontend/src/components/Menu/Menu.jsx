@@ -27,7 +27,7 @@ const Menu = () => {
     localStorage.setItem("data-validade", null);
     localStorage.setItem("token", null);
     localStorage.setItem("nickName", null);
-    localStorage.setItem("login", null)
+    localStorage.setItem("login", null);
     setUser("");
     navigate("/");
   };
@@ -73,13 +73,31 @@ const Menu = () => {
                   >
                     Importador
                   </Nav.Link>
-                  <Nav.Link
-                    className={getActiveRoute}
-                    as={NavLink}
-                    to="/analiseAcoes"
-                  >
-                    Analisador
-                  </Nav.Link>
+                  <NavDropdown title="Formulas" id="menFormulas">
+                    <NavDropdown.Item as={NavLink} to="/formula/comparador">
+                      Comparador
+                    </NavDropdown.Item>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item as={NavLink} to="/formula/evEbit/">
+                      Ev/Ebit
+                    </NavDropdown.Item>
+                    <NavDropdown.Item as={NavLink} to="/formula/pl/">
+                      Preço/Lucro
+                    </NavDropdown.Item>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item as={NavLink} to="/formula/bazin/">
+                      Bazin
+                    </NavDropdown.Item>
+                    <NavDropdown.Item as={NavLink} to="/formula/graham/">
+                      Graham
+                    </NavDropdown.Item>
+                    <NavDropdown.Item as={NavLink} to="/formula/greenblatt/">
+                      Greenblatt
+                    </NavDropdown.Item>
+                    <NavDropdown.Item as={NavLink} to="/formula/gordon/">
+                      Gordon
+                    </NavDropdown.Item>
+                  </NavDropdown>
                 </>
               ) : null}
             </Nav>
@@ -92,15 +110,12 @@ const Menu = () => {
               </Button>
             ) : (
               <Nav>
-                <NavDropdown title={user} id="basic-nav-dropdown">
+                <NavDropdown title={user} id="menLogado">
                   <NavDropdown.Item as={NavLink} to="/dashboard">
                     Dashboard
                   </NavDropdown.Item>
                   <NavDropdown.Item as={NavLink} to="/importador">
                     Importador
-                  </NavDropdown.Item>
-                  <NavDropdown.Item as={NavLink} to="/analiseAcoes">
-                    Analisador
                   </NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item onClick={deslogar}>Sair</NavDropdown.Item>

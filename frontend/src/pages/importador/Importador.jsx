@@ -59,11 +59,7 @@ const Importador = () => {
 
   const retornaUserId = async () => {
     try {
-      const response = await apiUser.get(localStorage.getItem("login"), {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-      });
+      const response = await apiUser.get(localStorage.getItem("login"));
 
       if (response.status === 200) {
         return response.data.id;
@@ -104,7 +100,6 @@ const Importador = () => {
       const response = await apiFileImport.post("", formData, {
         headers: {
           accept: "*",
-          Authorization: "Bearer " + localStorage.getItem("token"),
           "Content-Type": "multipart/form-data",
         },
       });
@@ -270,7 +265,7 @@ const Importador = () => {
         </Modal.Header>
         <Modal.Body>
           <p>A importação foi realizada com sucesso!</p>
-          <p>Deseja ser redirecionado para o Analisador ?</p>
+          <p>Deseja ser redirecionado para a tela de dashborad ?</p>
         </Modal.Body>
         <Modal.Footer className="d-flex justify-content-between">
           <Button variant="outline-danger" onClick={handleCloseModal}>
@@ -278,7 +273,7 @@ const Importador = () => {
           </Button>
           <Button
             variant="outline-success"
-            onClick={() => navigate("/analiseAcoes")}
+            onClick={() => navigate("/dashboard")}
           >
             Sim
           </Button>
