@@ -1,0 +1,17 @@
+.filtro {
+    width: calc(((1140px - 2rem)/3));
+}
+
+.filtro-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.filtro-row-input {
+    width: 43%;
+}
+
+.filtro-row-span {
+    width: 0;
+    padding: 0;
+}

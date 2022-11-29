@@ -9,6 +9,11 @@ import {
   Row,
 } from "react-bootstrap";
 import { useParams } from "react-router-dom";
+import FiltroEvEbit from "../../../components/filtroEvEbit/FiltroEvEbit";
+import FiltroLiquidezDiariaMinima from "../../../components/filtroLiquidezDiariaMinima/FiltroLiquidezDiariaMinima";
+import FiltroMargemEbit from "../../../components/filtroMargemEbit/FiltroMargemEbit";
+import FiltroPrecoLucro from "../../../components/filtroPrecoLucro/FiltroPrecoLucro";
+import FiltroRiscoMercado from "../../../components/filtroRiscoMercado/FiltroRiscoMercado";
 
 const Greenblatt = () => {
   const { id } = useParams();
@@ -17,105 +22,16 @@ const Greenblatt = () => {
     <div id="frmFormulaGreenblatt" className="mt-3">
       <h3>Filtros:</h3>
       <Container className="mb-1">
-        <Row>
-          <FormGroup
-            className="border rounded p-2 me-1"
-            style={{ width: "33%" }}
-          >
-            <FormLabel>
-              <strong>Ev/Ebit:</strong>
-            </FormLabel>
-            <Row className="d-flex justify-content-between">
-              <FormControl
-                id="edtEvEbitMinimo"
-                type="number"
-                className="ms-2 me-2"
-                placeholder="Valor"
-                style={{ width: "43%" }}
-              />
-              <FormLabel style={{ display: "contents" }}>à</FormLabel>
-              <FormControl
-                id="edtEvEbitMaximo"
-                type="number"
-                className="ms-2 me-2"
-                placeholder="Valor"
-                style={{ width: "43%" }}
-              />
-            </Row>
-          </FormGroup>
-
-          <FormGroup
-            className="border rounded p-2 me-1"
-            style={{ width: "33%" }}
-          >
-            <FormLabel>
-              <strong>P/L:</strong>
-            </FormLabel>
-            <Row className="d-flex justify-content-between">
-              <FormControl
-                id="edtPLMinimo"
-                type="number"
-                className="ms-2 me-2"
-                placeholder="Valor"
-                style={{ width: "43%" }}
-              />
-              <FormLabel style={{ display: "contents" }}>à</FormLabel>
-              <FormControl
-                id="edtPLMaximo"
-                type="number"
-                className="ms-2 me-2"
-                placeholder="Valor"
-                style={{ width: "43%" }}
-              />
-            </Row>
-          </FormGroup>
-
-          <FormGroup className="border rounded p-2" style={{ width: "33%" }}>
-            <FormLabel>
-              <strong>Margem Ebit:</strong>
-            </FormLabel>
-            <Row className="d-flex justify-content-between">
-              <FormControl
-                id="edtMargemEbitMinimo"
-                type="number"
-                className="ms-2 me-2"
-                placeholder="Valor"
-                style={{ width: "43%" }}
-              />
-              <FormLabel style={{ display: "contents" }}>à</FormLabel>
-              <FormControl
-                id="edtMargemEbitMaximo"
-                type="number"
-                className="ms-2 me-2"
-                placeholder="Valor"
-                style={{ width: "43%" }}
-              />
-            </Row>
-          </FormGroup>
+        <Row className="justify-content-between">
+          <FiltroEvEbit />
+          <FiltroPrecoLucro />
+          <FiltroMargemEbit />
         </Row>
       </Container>
       <Container className="mb-1">
-        <Row>
-          <FormGroup
-            controlId="edtLiquidezDiariaMinima"
-            className="border rounded p-2 me-1"
-            style={{ width: "33%" }}
-          >
-            <FormLabel>
-              <strong>Liquidez Diária Miníma:</strong>
-            </FormLabel>
-            <FormControl type="number" placeholder="Liquidez Miníma" />
-          </FormGroup>
-          <FormGroup
-            controlId="edtRiscoMercado"
-            className="border rounded p-2"
-            style={{ width: "33%" }}
-          >
-            <FormLabel>
-              <strong>% Risco de Mercado:</strong>
-            </FormLabel>
-            <FormControl type="number" placeholder="Valor" />
-          </FormGroup>
+        <Row className="gap-1">
+          <FiltroLiquidezDiariaMinima />
+          <FiltroRiscoMercado />
         </Row>
       </Container>
       <Container className="border rounded mb-1">
