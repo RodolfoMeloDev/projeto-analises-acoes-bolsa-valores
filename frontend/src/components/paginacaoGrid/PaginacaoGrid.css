@@ -3,22 +3,43 @@
 }
 
 .tamanho-seletor-quantidade-registros {
-    width: 110px;
-    text-align: center;
+	width: 110px;
+	text-align: center;
 }
 
 .botao {
-    width: 40px;
-    text-align: center;
+	width: 40px;
+	text-align: center;
 }
 
 .label-registros {
-    font-weight: bold;
-    font-size: 1rem;
-    padding-top: 1rem;
+	font-weight: bold;
+	font-size: 1rem;
+	padding-top: 1rem;
+	margin-left: 1rem;
 }
 
 .total-registros {
-    font-size: 1rem;
-    padding-top: 1rem;
+	font-size: 1rem;
+	padding-top: 1rem;
+}
+
+@media screen and (max-width: 1024px) {
+	.altura-div-paginacao {
+		flex-wrap: wrap;
+	}
+
+	.tamanho-seletor-quantidade-registros {
+		margin-bottom: 0.5rem;
+		height: 38px;
+	}
+
+	.label-registros {
+		margin-left: 0;
+		padding-top: 0.5rem;
+	}
+
+	.total-registros {
+		padding-top: 0.5rem;
+	}
 }

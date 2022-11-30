@@ -3,7 +3,12 @@ import { Form, Pagination } from "react-bootstrap";
 import { useCallback, useState } from "react";
 import { useEffect } from "react";
 
-const PaginacaoGrid = ({ totalRegistros, itemInicial, itemFinal }) => {
+const PaginacaoGrid = ({
+  totalRegistros,
+  itemInicial,
+  itemFinal,
+  idAlternativo,
+}) => {
   const botoesNoComponente = 5;
   const [paginaAtual, setPaginaAtual] = useState(1);
   const [quantidadeRegistrosGrid, setQuantidadeRegistrosGrid] = useState(10);
@@ -17,9 +22,9 @@ const PaginacaoGrid = ({ totalRegistros, itemInicial, itemFinal }) => {
 
   const [totalPaginas, setTotalPaginas] = useState(retornarQuantidadePaginas());
 
-  const mudarQuantidadeRegistrosGrid = () => {
+  const mudarQuantidadeRegistrosGrid = (e) => {
     setQuantidadeRegistrosGrid(
-      parseInt(document.getElementById("selQuantidadeRegistros").value)
+      parseInt(document.getElementById(e.target.getAttribute("id")).value)
     );
   };
 
@@ -147,9 +152,11 @@ const PaginacaoGrid = ({ totalRegistros, itemInicial, itemFinal }) => {
     <div className="d-flex altura-div-paginacao">
       <Form.Select
         className="me-3 tamanho-seletor-quantidade-registros"
-        id="selQuantidadeRegistros"
+        id={
+          idAlternativo === undefined ? "selQuantidadeRegistros" : idAlternativo
+        }
         aria-label="Selecione a quantidade de registros para mostrar no Grid"
-        onChange={() => mudarQuantidadeRegistrosGrid()}
+        onChange={mudarQuantidadeRegistrosGrid}
       >
         <option value={10}>10</option>
         <option value={20}>20</option>
@@ -177,8 +184,8 @@ const PaginacaoGrid = ({ totalRegistros, itemInicial, itemFinal }) => {
           className="botao"
           onClick={() => selectPage("btnLastPage")}
         />
-      </Pagination >
-      <label className="ms-3 label-registros">Total de Registros:</label>
+      </Pagination>
+      <label className="label-registros">Total de Registros:</label>
       <label className="ms-1 total-registros"> {totalRegistros}</label>
     </div>
   );

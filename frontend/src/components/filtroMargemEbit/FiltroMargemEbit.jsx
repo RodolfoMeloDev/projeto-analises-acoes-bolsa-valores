@@ -2,7 +2,17 @@ import { FormControl, FormGroup, FormLabel, Row } from "react-bootstrap";
 
 import "./filtroMargemEbit.css";
 
-const FiltroMargemEbit = () => {
+const FiltroMargemEbit = ({ values, setValues }) => {
+  const handleInput = (e) => {
+    const { id, value } = e.target;
+    setValues({
+      ...values,
+      [id === "edtMargemEbitMinimo"
+        ? "minimumEbitMargem"
+        : "maximumEbitMargem"]: value,
+    });
+  };
+
   return (
     <FormGroup className="border rounded p-2 filtroMargemEbit">
       <FormLabel>
@@ -13,14 +23,18 @@ const FiltroMargemEbit = () => {
           id="edtMargemEbitMinimo"
           type="number"
           className="ms-2 filtroMargemEbit-row-input"
-          placeholder="Valor"
+          placeholder="Valor Minímo"
+          value={values.minimumEbitMargem}
+          onChange={handleInput}
         />
         <span className="filtroMargemEbit-row-span">à</span>
         <FormControl
           id="edtMargemEbitMaximo"
           type="number"
           className="ms-2 me-2 filtroMargemEbit-row-input"
-          placeholder="Valor"
+          placeholder="Valor Máximo"
+          value={values.maximumEbitMargem}
+          onChange={handleInput}
         />
       </Row>
     </FormGroup>

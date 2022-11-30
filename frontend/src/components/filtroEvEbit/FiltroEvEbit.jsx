@@ -2,7 +2,15 @@ import { FormControl, FormGroup, FormLabel, Row } from "react-bootstrap";
 
 import "./filtroevebit.css";
 
-const FiltroEvEbit = () => {
+const FiltroEvEbit = ({ values, setValues }) => {
+  const handleInput = (e) => {
+    const { id, value } = e.target;
+    setValues({
+      ...values,
+      [id === "edtEvEbitMinimo" ? "minimunEvEbit" : "maximumEvEbit"]: value,
+    });
+  };
+
   return (
     <FormGroup className="border rounded p-2 filtroEvEbit">
       <FormLabel>
@@ -13,14 +21,18 @@ const FiltroEvEbit = () => {
           id="edtEvEbitMinimo"
           type="number"
           className="ms-2 filtroEvEbit-row-input"
-          placeholder="Valor"
+          placeholder="Valor Minímo"
+          value={values.minimunEvEbit}
+          onChange={handleInput}
         />
         <span className="filtroEvEbit-row-span">à</span>
         <FormControl
           id="edtEvEbitMaximo"
           type="number"
           className="ms-2 me-2 filtroEvEbit-row-input"
-          placeholder="Valor"
+          placeholder="Valor Máximo"
+          value={values.maximumEvEbit}
+          onChange={handleInput}
         />
       </Row>
     </FormGroup>

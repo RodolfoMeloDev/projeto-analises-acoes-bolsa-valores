@@ -59,7 +59,11 @@ const Importador = () => {
 
   const retornaUserId = async () => {
     try {
-      const response = await apiUser.get(localStorage.getItem("login"));
+      const response = await apiUser.get(localStorage.getItem("login"), {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
 
       if (response.status === 200) {
         return response.data.id;
@@ -100,6 +104,7 @@ const Importador = () => {
       const response = await apiFileImport.post("", formData, {
         headers: {
           accept: "*",
+          Authorization: "Bearer " + localStorage.getItem("token"),
           "Content-Type": "multipart/form-data",
         },
       });

@@ -34,8 +34,17 @@ const Dashboard = () => {
   const [filesGrid, setFilesGrid] = useState([]);
 
   const getFilesImport = async () => {
-    const user = await apiUser.get(localStorage.getItem("login"));
-    const response = await apiFilesImport.get("User/" + user.data.id);
+    const user = await apiUser.get(localStorage.getItem("login"), {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
+
+    const response = await apiFilesImport.get("User/" + user.data.id, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
 
     if (response.status === 200) {
       return response.data;
