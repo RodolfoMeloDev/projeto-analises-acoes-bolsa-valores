@@ -4,7 +4,7 @@ import "./filtroLiquidezDiariaMinima.css";
 
 const FiltroLiquidezDiariaMinima = () => {
   return (
-    <FormGroup className="border rounded p-2 filtro">
+    <FormGroup className="border rounded p-2 filtro-liquidez-diaria">
       <FormLabel>
         <strong>Liquidez Diária Miníma:</strong>
       </FormLabel>

@@ -1,15 +1,15 @@
-.filtro-risco-mercado {
-    width: 33%;
+.formcheck {
+  width: 33%;
 }
 
 @media screen and (max-width: 768px) {
-	.filtro-risco-mercado {
-		width: 49.5%;
+	.formcheck {
+		width: 50%;
 	}
 }
 
 @media screen and (max-width: 460px) {
-	.filtro-risco-mercado {
+	.formcheck {
 		width: 100%;
 	}
 }

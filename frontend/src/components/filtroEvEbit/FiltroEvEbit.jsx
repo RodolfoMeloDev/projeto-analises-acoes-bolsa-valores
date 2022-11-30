@@ -4,22 +4,22 @@ import "./filtroevebit.css";
 
 const FiltroEvEbit = () => {
   return (
-    <FormGroup className="border rounded p-2 filtro">
+    <FormGroup className="border rounded p-2 filtroEvEbit">
       <FormLabel>
         <strong>Ev/Ebit:</strong>
       </FormLabel>
-      <Row className="filtro-row">
+      <Row className="filtroEvEbit-row">
         <FormControl
           id="edtEvEbitMinimo"
           type="number"
-          className="ms-2 filtro-row-input"
+          className="ms-2 filtroEvEbit-row-input"
           placeholder="Valor"
         />
-        <span className="filtro-row-span">à</span>
+        <span className="filtroEvEbit-row-span">à</span>
         <FormControl
           id="edtEvEbitMaximo"
           type="number"
-          className="ms-2 me-2 filtro-row-input"
+          className="ms-2 me-2 filtroEvEbit-row-input"
           placeholder="Valor"
         />
       </Row>

@@ -4,22 +4,22 @@ import "./filtroPrecoLucro.css";
 
 const FiltroPrecoLucro = () => {
   return (
-    <FormGroup className="border rounded p-2 filtro">
+    <FormGroup className="border rounded p-2 filtroPrecoLucro">
       <FormLabel>
         <strong>Preço/Lucro:</strong>
       </FormLabel>
-      <Row className="filtro-row">
+      <Row className="filtroPrecoLucro-row">
         <FormControl
           id="edtPrecoLucrotMinimo"
           type="number"
-          className="ms-2 filtro-row-input"
+          className="ms-2 filtroPrecoLucro-row-input"
           placeholder="Valor"
         />
-        <span className="filtro-row-span">à</span>
+        <span className="filtroPrecoLucro-row-span">à</span>
         <FormControl
           id="edtPrecoLucroMaximo"
           type="number"
-          className="ms-2 me-2 filtro-row-input"
+          className="ms-2 me-2 filtroPrecoLucro-row-input"
           placeholder="Valor"
         />
       </Row>

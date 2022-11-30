@@ -1,17 +1,31 @@
-.filtro {
-    width: calc(((1140px - 2rem)/3));
+.filtroEvEbit {
+		width: 33%;
 }
 
-.filtro-row {
+.filtroEvEbit-row {
     display: flex;
     justify-content: space-between;
 }
 
-.filtro-row-input {
+.filtroEvEbit-row-input {
     width: 43%;
 }
 
-.filtro-row-span {
+.filtroEvEbit-row-span {
     width: 0;
     padding: 0;
 }
+
+@media screen and (max-width: 768px) {
+	.filtroEvEbit {
+		width: 49.5%;
+		margin-bottom: 0.25rem;
+	}
+}
+
+@media screen and (max-width: 460px) {
+	.filtroEvEbit {
+		width: 100%;
+	}
+}
+

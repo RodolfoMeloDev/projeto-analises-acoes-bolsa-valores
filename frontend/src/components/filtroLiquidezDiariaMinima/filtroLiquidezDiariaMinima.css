@@ -1,3 +1,16 @@
-.filtro {
-    width: calc(((1140px - 2rem)/3));
+.filtro-liquidez-diaria {
+  width: 33%;
+}
+
+@media screen and (max-width: 768px) {
+	.filtro-liquidez-diaria {
+		width: 49.4%;
+	}
+}
+
+@media screen and (max-width: 460px) {
+	.filtro-liquidez-diaria {
+		width: 100%;
+		margin-bottom: 0.25rem;
+	}
 }

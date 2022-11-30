@@ -1,17 +1,30 @@
-.filtro {
-    width: calc(((1140px - 2rem)/3));
+.filtroMargemEbit {
+    width: 33%;
 }
 
-.filtro-row {
+.filtroMargemEbit-row {
     display: flex;
     justify-content: space-between;
 }
 
-.filtro-row-input {
+.filtroMargemEbit-row-input {
     width: 43%;
 }
 
-.filtro-row-span {
+.filtroMargemEbit-row-span {
     width: 0;
     padding: 0;
+}
+
+@media screen and (max-width: 768px) {
+	.filtroMargemEbit {
+		width: 49.5%;
+		margin-bottom: 0.25rem;
+	}
+}
+
+@media screen and (max-width: 460px) {
+	.filtroMargemEbit {
+		width: 100%;
+	}
 }

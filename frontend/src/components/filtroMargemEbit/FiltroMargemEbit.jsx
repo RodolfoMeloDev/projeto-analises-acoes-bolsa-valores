@@ -4,22 +4,22 @@ import "./filtroMargemEbit.css";
 
 const FiltroMargemEbit = () => {
   return (
-    <FormGroup className="border rounded p-2 filtro">
+    <FormGroup className="border rounded p-2 filtroMargemEbit">
       <FormLabel>
         <strong>Margem Ebit:</strong>
       </FormLabel>
-      <Row className="filtro-row">
+      <Row className="filtroMargemEbit-row">
         <FormControl
           id="edtMargemEbitMinimo"
           type="number"
-          className="ms-2 filtro-row-input"
+          className="ms-2 filtroMargemEbit-row-input"
           placeholder="Valor"
         />
-        <span className="filtro-row-span">à</span>
+        <span className="filtroMargemEbit-row-span">à</span>
         <FormControl
           id="edtMargemEbitMaximo"
           type="number"
-          className="ms-2 me-2 filtro-row-input"
+          className="ms-2 me-2 filtroMargemEbit-row-input"
           placeholder="Valor"
         />
       </Row>

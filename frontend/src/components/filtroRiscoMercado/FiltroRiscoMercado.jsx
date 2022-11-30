@@ -4,7 +4,7 @@ import "./filtroRiscoMercado.css";
 
 const FiltroRiscoMercado = () => {
   return (
-    <FormGroup className="border rounded p-2 filtro">
+    <FormGroup className="border rounded p-2 filtro-risco-mercado">
       <FormLabel>
         <strong>Risco de Mercado:</strong>
       </FormLabel>
