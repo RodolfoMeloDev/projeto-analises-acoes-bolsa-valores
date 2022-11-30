@@ -163,8 +163,9 @@ const Acoes = () => {
           </Form.Group>
         </Row>
       </div>
+
       <Table
-        className="mt-3"
+        className="mt-3 mb-0"
         striped
         bordered
         hover

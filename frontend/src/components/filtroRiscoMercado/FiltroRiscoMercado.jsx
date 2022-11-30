@@ -7,7 +7,7 @@ const FiltroRiscoMercado = ({ values, setValues }) => {
     const { value } = e.target;
     setValues({
       ...values,
-      marketRisk: value,
+      marketRisk: value === "" ? null : parseFloat(value),
     });
   };
 
@@ -20,7 +20,7 @@ const FiltroRiscoMercado = ({ values, setValues }) => {
         id="edtRiscoMercado"
         type="number"
         placeholder="Percentual Risco Mercado"
-        value={values.marketRisk}
+        value={values.marketRisk === null ? "" : values.marketRisk}
         onChange={handleInput}
       />
     </FormGroup>

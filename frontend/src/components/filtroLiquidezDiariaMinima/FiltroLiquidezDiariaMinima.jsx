@@ -7,7 +7,7 @@ const FiltroLiquidezDiariaMinima = ({ values, setValues }) => {
     const { value } = e.target;
     setValues({
       ...values,
-      minimumLiquidity: value,
+      minimumLiquidity: value === "" ? null : parseFloat(value),
     });
   };
 
@@ -20,7 +20,7 @@ const FiltroLiquidezDiariaMinima = ({ values, setValues }) => {
         id="edtLiquidezDiariaMinima"
         type="number"
         placeholder="Liquidez Miníma"
-        value={values.minimumLiquidity}
+        value={values.minimumLiquidity === null ? "" : values.minimumLiquidity}
         onChange={handleInput}
       />
     </FormGroup>

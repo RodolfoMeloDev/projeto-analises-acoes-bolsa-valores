@@ -18,7 +18,7 @@ namespace App.Api.Controllers
         }
 
         [Authorize("Bearer")]
-        [HttpGet]
+        [HttpPost]
         [Route("Greenblatt")]
         public async Task<IActionResult> ReturnDataGreenblatt([FromBody] ParametersFilter parametersFilter)
         {

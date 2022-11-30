@@ -9,7 +9,7 @@ const FiltroMargemEbit = ({ values, setValues }) => {
       ...values,
       [id === "edtMargemEbitMinimo"
         ? "minimumEbitMargem"
-        : "maximumEbitMargem"]: value,
+        : "maximumEbitMargem"]: value === "" ? null : parseFloat(value),
     });
   };
 
@@ -24,7 +24,9 @@ const FiltroMargemEbit = ({ values, setValues }) => {
           type="number"
           className="ms-2 filtroMargemEbit-row-input"
           placeholder="Valor Minímo"
-          value={values.minimumEbitMargem}
+          value={
+            values.minimumEbitMargem === null ? "" : values.minimumEbitMargem
+          }
           onChange={handleInput}
         />
         <span className="filtroMargemEbit-row-span">à</span>
@@ -33,7 +35,9 @@ const FiltroMargemEbit = ({ values, setValues }) => {
           type="number"
           className="ms-2 me-2 filtroMargemEbit-row-input"
           placeholder="Valor Máximo"
-          value={values.maximumEbitMargem}
+          value={
+            values.maximumEbitMargem === null ? "" : values.maximumEbitMargem
+          }
           onChange={handleInput}
         />
       </Row>

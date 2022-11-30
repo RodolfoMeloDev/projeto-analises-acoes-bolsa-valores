@@ -26,7 +26,7 @@ const FiltroArquivosImportados = ({ values, setValues }) => {
   const handleOpenClose = () => {
     setValues({
       ...values,
-      fileImportId: "",
+      fileImportId: null,
       description: "",
     });
     setShow(!show);
@@ -67,7 +67,7 @@ const FiltroArquivosImportados = ({ values, setValues }) => {
 
     setValues({
       ...values,
-      fileImportId: fileImportId,
+      fileImportId: fileImportId === "" ? null : parseInt(fileImportId),
       description: description,
     });
     setShow(!show);
@@ -92,7 +92,7 @@ const FiltroArquivosImportados = ({ values, setValues }) => {
             disabled={true}
             aria-label="Código do Arquivo Importado"
             placeholder="Id"
-            value={values.fileImportId}
+            value={values.fileImportId === null ? "" : values.fileImportId}
           />
           <FormControl
             id="campo-descricao"

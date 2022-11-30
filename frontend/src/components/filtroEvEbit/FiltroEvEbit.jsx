@@ -7,7 +7,8 @@ const FiltroEvEbit = ({ values, setValues }) => {
     const { id, value } = e.target;
     setValues({
       ...values,
-      [id === "edtEvEbitMinimo" ? "minimunEvEbit" : "maximumEvEbit"]: value,
+      [id === "edtEvEbitMinimo" ? "minimunEvEbit" : "maximumEvEbit"]:
+        value === "" ? null : parseFloat(value),
     });
   };
 
@@ -22,7 +23,7 @@ const FiltroEvEbit = ({ values, setValues }) => {
           type="number"
           className="ms-2 filtroEvEbit-row-input"
           placeholder="Valor Minímo"
-          value={values.minimunEvEbit}
+          value={values.minimunEvEbit === null ? "" : values.minimunEvEbit}
           onChange={handleInput}
         />
         <span className="filtroEvEbit-row-span">à</span>
@@ -31,7 +32,7 @@ const FiltroEvEbit = ({ values, setValues }) => {
           type="number"
           className="ms-2 me-2 filtroEvEbit-row-input"
           placeholder="Valor Máximo"
-          value={values.maximumEvEbit}
+          value={values.maximumEvEbit === null ? "" : values.maximumEvEbit}
           onChange={handleInput}
         />
       </Row>

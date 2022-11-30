@@ -9,7 +9,7 @@ const FiltroPrecoLucro = ({ values, setValues }) => {
       ...values,
       [id === "edtPrecoLucrotMinimo"
         ? "minimumPriceByProfit"
-        : "maximumPriceByProfit"]: value,
+        : "maximumPriceByProfit"]: value === "" ? null : parseFloat(value),
     });
   };
 
@@ -24,7 +24,11 @@ const FiltroPrecoLucro = ({ values, setValues }) => {
           type="number"
           className="ms-2 filtroPrecoLucro-row-input"
           placeholder="Valor Minímo"
-          value={values.minimumPriceByProfit}
+          value={
+            values.minimumPriceByProfit === null
+              ? ""
+              : values.minimumPriceByProfit
+          }
           onChange={handleInput}
         />
         <span className="filtroPrecoLucro-row-span">à</span>
@@ -33,7 +37,11 @@ const FiltroPrecoLucro = ({ values, setValues }) => {
           type="number"
           className="ms-2 me-2 filtroPrecoLucro-row-input"
           placeholder="Valor Máximo"
-          value={values.maximumPriceByProfit}
+          value={
+            values.maximumPriceByProfit === null
+              ? ""
+              : values.maximumPriceByProfit
+          }
           onChange={handleInput}
         />
       </Row>

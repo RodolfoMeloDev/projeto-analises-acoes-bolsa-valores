@@ -3,7 +3,9 @@ import { Button, Card, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 import apiFilesImport from "../../api/fileImport";
-import apiUser from "../../api/users";
+import "../../utils/funcoesUsuario";
+
+import { retornarDadosUsuarioLogado } from "../../utils/funcoesUsuario";
 
 import "./dashborad.css";
 
@@ -34,11 +36,7 @@ const Dashboard = () => {
   const [filesGrid, setFilesGrid] = useState([]);
 
   const getFilesImport = async () => {
-    const user = await apiUser.get(localStorage.getItem("login"), {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-    });
+    const user = await retornarDadosUsuarioLogado();
 
     const response = await apiFilesImport.get("User/" + user.data.id, {
       headers: {
