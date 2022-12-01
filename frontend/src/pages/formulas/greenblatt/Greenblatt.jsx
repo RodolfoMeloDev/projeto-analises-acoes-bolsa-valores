@@ -1,5 +1,16 @@
 import { useEffect, useState } from "react";
-import { Badge, Button, Container, Form, OverlayTrigger, Row, Table, Toast, ToastContainer, Tooltip } from "react-bootstrap";
+import {
+  Badge,
+  Button,
+  Container,
+  Form,
+  OverlayTrigger,
+  Row,
+  Table,
+  Toast,
+  ToastContainer,
+  Tooltip,
+} from "react-bootstrap";
 
 import "./greenblatt.css";
 import "../../../utils/funcoesFormula";
@@ -47,10 +58,9 @@ const Greenblatt = () => {
   };
 
   const handleSubmit = async (e) => {
-    const form = e.currentTarget;
     e.preventDefault();
 
-    if (filters.fileImportId === null){
+    if (filters.fileImportId === null) {
       setShow(true);
       return;
     }
@@ -59,8 +69,6 @@ const Greenblatt = () => {
 
     setTickres(responseFormula);
     setTickersFiltrados(tickers);
-
-    form.reset();
   };
 
   useEffect(() => {
@@ -76,18 +84,18 @@ const Greenblatt = () => {
     let itensFiltrados = tickers;
 
     if (campoPesquisa !== "") {
-      itensFiltrados = itensFiltrados.filter(
-        (el) => el.ticker.toLowerCase().includes(campoPesquisa)
+      itensFiltrados = itensFiltrados.filter((el) =>
+        el.ticker.toLowerCase().includes(campoPesquisa)
       );
     }
     setTickersFiltrados(itensFiltrados);
-
-  }, [campoPesquisa, tickers])
+  }, [campoPesquisa, tickers]);
 
   return (
     <div id="frmFormulaGreenblatt" className="mt-3">
-      <h3>Greenblatt - Filtros:</h3>
-      <Form onSubmit={handleSubmit}>
+      <h3>Formula de Greenblatt</h3>
+      <Form className="border rounded p-3 mb-3" onSubmit={handleSubmit}>
+        <h5>Filtros:</h5>
         <Container className="mb-1">
           <Row>
             <FiltroArquivosImportados values={filters} setValues={setFilters} />
@@ -106,11 +114,11 @@ const Greenblatt = () => {
             />
           </Row>
         </Container>
-        <Container className="border rounded mb-1">
+        <Container className="border rounded mb-3">
           <FiltroSwitches values={filters} setValues={setFilters} />
         </Container>
 
-        <div id="botoesPesquisa" className="mb-3">
+        <div id="botoesPesquisa">
           <Button className="me-2" variant="success" type="submit">
             Buscar
           </Button>
@@ -120,25 +128,34 @@ const Greenblatt = () => {
         </div>
 
         <ToastContainer position="middle-center">
-          <Toast onClose={() => setShow(false)} show={show} bg={"warning"} delay={5000} autohide>
+          <Toast
+            onClose={() => setShow(false)}
+            show={show}
+            bg={"warning"}
+            delay={5000}
+            autohide
+          >
             <Toast.Header>
               <strong className="me-auto">Mensagem</strong>
             </Toast.Header>
-            <Toast.Body>Para realizar a busca é necessário selecionar pelo menos o filtro de arquivo importado</Toast.Body>
+            <Toast.Body>
+              Para realizar a busca é necessário selecionar pelo menos o filtro
+              de arquivo importado
+            </Toast.Body>
           </Toast>
         </ToastContainer>
-
       </Form>
       <div hidden={tickers.length === 0 ? true : false}>
         <h5>Resultado da Busca:</h5>
         <Form.Control
-          className='mb-1'
+          className="mb-1"
           type="text"
           placeholder="Filtra por Ticker"
-          onChange={handleInput}     
-          value={campoPesquisa} 
-        />        
+          onChange={handleInput}
+          value={campoPesquisa}
+        />
         <Table
+          id="resultadoGreenblatt"
           className="mb-0"
           striped
           bordered
@@ -150,10 +167,17 @@ const Greenblatt = () => {
             <tr>
               <th className="coluna-tabela-formula text-center">#</th>
               <th className="coluna-tabela-formula text-center">
-                <div style={{ display: "flex", justifyContent: "space-evenly" }}>
-                  R.J. 
-                  <OverlayTrigger overlay={
-                    <Tooltip id="tooltip-evEbit">Recuperação Judicial</Tooltip>}>
+                <div
+                  style={{ display: "flex", justifyContent: "space-evenly" }}
+                >
+                  R.J.
+                  <OverlayTrigger
+                    overlay={
+                      <Tooltip id="tooltip-evEbit">
+                        Recuperação Judicial
+                      </Tooltip>
+                    }
+                  >
                     <Badge bg="dark"> ? </Badge>
                   </OverlayTrigger>
                 </div>
@@ -171,47 +195,126 @@ const Greenblatt = () => {
               <th className="coluna-tabela-formula text-center">Dpa</th>
               <th className="coluna-tabela-formula text-center">Payout</th>
               <th className="coluna-tabela-formula text-center">Lucro CAGR</th>
-              <th className="coluna-tabela-formula text-center">Méd. Cresimento</th>
-              <th className="coluna-tabela-formula text-center">Expec. Crescimento</th>
-              <th className="coluna-tabela-formula text-center">Liq. Med. Diária</th>
+              <th className="coluna-tabela-formula text-center">
+                Méd. Cresimento
+              </th>
+              <th className="coluna-tabela-formula text-center">
+                Expec. Crescimento
+              </th>
+              <th className="coluna-tabela-formula text-center">
+                Liq. Med. Diária
+              </th>
               <th className="coluna-tabela-formula">Segmento</th>
             </tr>
           </thead>
           <tbody>
             {tickersGrid.map((ticker) => {
-              let mediaLiquidezDiaria = (ticker.averageDailyLiquidity / 1000.0).toFixed(2);
+              let mediaLiquidezDiaria = (
+                ticker.averageDailyLiquidity / 1000.0
+              ).toFixed(2);
               let volumeFinanceiro = "K";
-              
-              if (mediaLiquidezDiaria > 1000 ){
-                mediaLiquidezDiaria = (ticker.averageDailyLiquidity / 1000000.0).toFixed(2);
+
+              if (mediaLiquidezDiaria > 1000) {
+                mediaLiquidezDiaria = (
+                  ticker.averageDailyLiquidity / 1000000.0
+                ).toFixed(2);
                 volumeFinanceiro = "M";
               }
-              
-              if (mediaLiquidezDiaria > 1000 ){
-                mediaLiquidezDiaria = (ticker.averageDailyLiquidity / 1000000000.0).toFixed(2);
-                volumeFinanceiro = "B"
+
+              if (mediaLiquidezDiaria > 1000) {
+                mediaLiquidezDiaria = (
+                  ticker.averageDailyLiquidity / 1000000000.0
+                ).toFixed(2);
+                volumeFinanceiro = "B";
               }
 
               return (
                 <tr key={ticker.position}>
                   <td className="text-center p-2">{ticker.position}</td>
-                  <td className="text-center p-2">{ticker.judicialRecovery === false ? "N" : "S"}</td>
+                  <td className="text-center p-2">
+                    {ticker.judicialRecovery === false ? "N" : "S"}
+                  </td>
                   <td className="text-center p-2">{ticker.ticker}</td>
-                  <td className="text-end p-2">{ticker.price.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}</td>
-                  <td className="text-end p-2">{ticker.dividendYield.toLocaleString('pt-br', {minimumFractionDigits: 2})}</td>
-                  <td className="text-end p-2">{ticker.priceByProfit.toLocaleString('pt-br', {minimumFractionDigits: 2})}</td>
-                  <td className="text-end p-2">{ticker.roic.toLocaleString('pt-br', {minimumFractionDigits: 2})}</td>
-                  <td className="text-end p-2">{ticker.evEbit.toLocaleString('pt-br', {minimumFractionDigits: 2})}</td>
-                  <td className="text-end p-2">{ticker.ebitMargin.toLocaleString('pt-br', {minimumFractionDigits: 2})}</td>
-                  <td className="text-end p-2">{ticker.lpa.toLocaleString('pt-br', {minimumFractionDigits: 2})}</td>
-                  <td className="text-end p-2">{ticker.vpa.toLocaleString('pt-br', {minimumFractionDigits: 2})}</td>
-                  <td className="text-end p-2">{ticker.roe.toLocaleString('pt-br', {minimumFractionDigits: 2})}</td>
-                  <td className="text-end p-2">{ticker.dpa === null ? "" : ticker.dpa.toLocaleString('pt-br', {minimumFractionDigits: 2})}</td>
-                  <td className="text-end p-2">{ticker.payout === null ? "" : ticker.payout.toLocaleString('pt-br', {minimumFractionDigits: 2})}</td>
-                  <td className="text-end p-2">{ticker.profitCAGR === null ? "" : ticker.profitCAGR.toLocaleString('pt-br', {minimumFractionDigits: 2})}</td>
-                  <td className="text-end p-2">{ticker.averageGrowth.toLocaleString('pt-br', {minimumFractionDigits: 2})}</td>
-                  <td className="text-end p-2">{ticker.expectedGrowth.toLocaleString('pt-br', {minimumFractionDigits: 2})}</td>
-                  <td className="text-end p-2">{mediaLiquidezDiaria + " " + volumeFinanceiro}</td>
+                  <td className="text-end p-2">
+                    {ticker.price.toLocaleString("pt-br", {
+                      style: "currency",
+                      currency: "BRL",
+                    })}
+                  </td>
+                  <td className="text-end p-2">
+                    {ticker.dividendYield.toLocaleString("pt-br", {
+                      minimumFractionDigits: 2,
+                    })}
+                  </td>
+                  <td className="text-end p-2">
+                    {ticker.priceByProfit.toLocaleString("pt-br", {
+                      minimumFractionDigits: 2,
+                    })}
+                  </td>
+                  <td className="text-end p-2">
+                    {ticker.roic.toLocaleString("pt-br", {
+                      minimumFractionDigits: 2,
+                    })}
+                  </td>
+                  <td className="text-end p-2">
+                    {ticker.evEbit.toLocaleString("pt-br", {
+                      minimumFractionDigits: 2,
+                    })}
+                  </td>
+                  <td className="text-end p-2">
+                    {ticker.ebitMargin.toLocaleString("pt-br", {
+                      minimumFractionDigits: 2,
+                    })}
+                  </td>
+                  <td className="text-end p-2">
+                    {ticker.lpa.toLocaleString("pt-br", {
+                      minimumFractionDigits: 2,
+                    })}
+                  </td>
+                  <td className="text-end p-2">
+                    {ticker.vpa.toLocaleString("pt-br", {
+                      minimumFractionDigits: 2,
+                    })}
+                  </td>
+                  <td className="text-end p-2">
+                    {ticker.roe.toLocaleString("pt-br", {
+                      minimumFractionDigits: 2,
+                    })}
+                  </td>
+                  <td className="text-end p-2">
+                    {ticker.dpa === null
+                      ? ""
+                      : ticker.dpa.toLocaleString("pt-br", {
+                          minimumFractionDigits: 2,
+                        })}
+                  </td>
+                  <td className="text-end p-2">
+                    {ticker.payout === null
+                      ? ""
+                      : ticker.payout.toLocaleString("pt-br", {
+                          minimumFractionDigits: 2,
+                        })}
+                  </td>
+                  <td className="text-end p-2">
+                    {ticker.profitCAGR === null
+                      ? ""
+                      : ticker.profitCAGR.toLocaleString("pt-br", {
+                          minimumFractionDigits: 2,
+                        })}
+                  </td>
+                  <td className="text-end p-2">
+                    {ticker.averageGrowth.toLocaleString("pt-br", {
+                      minimumFractionDigits: 2,
+                    })}
+                  </td>
+                  <td className="text-end p-2">
+                    {ticker.expectedGrowth.toLocaleString("pt-br", {
+                      minimumFractionDigits: 2,
+                    })}
+                  </td>
+                  <td className="text-end p-2">
+                    {mediaLiquidezDiaria + " " + volumeFinanceiro}
+                  </td>
                   <td>{ticker.nameSeguiment}</td>
                 </tr>
               );

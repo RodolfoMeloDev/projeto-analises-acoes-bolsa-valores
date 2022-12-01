@@ -162,7 +162,7 @@ const PaginacaoGrid = ({
         <option value={20}>20</option>
         <option value={0}>TODOS</option>
       </Form.Select>
-      <Pagination>
+      <Pagination className="paginacao-grid">
         <Pagination.First
           id="btnFirstPage"
           className="botao"
@@ -186,7 +186,7 @@ const PaginacaoGrid = ({
         />
       </Pagination>
       <label className="label-registros">Total de Registros:</label>
-      <label className="ms-1 total-registros"> {totalRegistros}</label>
+      <label className="ms-1 mb-2 total-registros"> {totalRegistros}</label>
     </div>
   );
 };

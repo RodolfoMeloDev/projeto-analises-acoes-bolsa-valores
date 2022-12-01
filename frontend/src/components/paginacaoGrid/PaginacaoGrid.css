@@ -1,6 +1,7 @@
 .altura-div-paginacao {
     height: 38px;
-	margin-top: 0.5rem;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
 }
 
 .tamanho-seletor-quantidade-registros {
@@ -42,5 +43,9 @@
 
 	.total-registros {
 		padding-top: 0.5rem;
+	}
+
+	.paginacao-grid {
+		margin-bottom: 0;
 	}
 }

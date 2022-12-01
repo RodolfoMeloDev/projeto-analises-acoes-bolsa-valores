@@ -16,14 +16,14 @@
     padding: 0;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
 	.filtroPrecoLucro {
 		width: 49.5%;
 		margin-bottom: 0.25rem;
 	}
 }
 
-@media screen and (max-width: 460px) {
+@media screen and (max-width: 768px) {
 	.filtroPrecoLucro {
 		width: 100%;
 	}

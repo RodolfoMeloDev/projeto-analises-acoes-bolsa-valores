@@ -2,13 +2,13 @@
     width: 33%;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
 	.filtro-risco-mercado {
 		width: 49.5%;
 	}
 }
 
-@media screen and (max-width: 460px) {
+@media screen and (max-width: 768px) {
 	.filtro-risco-mercado {
 		width: 100%;
 	}
