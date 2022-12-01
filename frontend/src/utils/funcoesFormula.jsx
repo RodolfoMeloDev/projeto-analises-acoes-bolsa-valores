@@ -14,3 +14,18 @@ export async function getTickersGreenblatt(filters) {
 
   return [];
 }
+
+export async function getTickersCompareFormulas(filters) {
+  const response = await apiFormulas.post("TickersAnalisys", filters, {
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("token"),
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (response.status === 200) {
+    return response.data;
+  }
+
+  return null;
+}
