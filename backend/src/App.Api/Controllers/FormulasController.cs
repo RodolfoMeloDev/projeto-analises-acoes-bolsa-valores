@@ -36,7 +36,7 @@ namespace App.Api.Controllers
         }
 
         [Authorize("Bearer")]
-        [HttpGet]
+        [HttpPost]
         [Route("PriceAndProfit")]
         public async Task<IActionResult> ReturnDataPriceAndProfit([FromBody] ParametersFilter parametersFilter)
         {
@@ -54,7 +54,7 @@ namespace App.Api.Controllers
         }
 
         [Authorize("Bearer")]
-        [HttpGet]
+        [HttpPost]
         [Route("EvEbit")]
         public async Task<IActionResult> ReturnDataEvEbit([FromBody] ParametersFilter parametersFilter)
         {
@@ -72,7 +72,7 @@ namespace App.Api.Controllers
         }
 
         [Authorize("Bearer")]
-        [HttpGet]
+        [HttpPost]
         [Route("ValuetionByBazin")]
         public async Task<IActionResult> ReturnDataValuetionByBazin([FromBody] ParametersFilter parametersFilter)
         {
@@ -90,7 +90,7 @@ namespace App.Api.Controllers
         }
 
         [Authorize("Bearer")]
-        [HttpGet]
+        [HttpPost]
         [Route("ValuetionByGraham")]
         public async Task<IActionResult> ReturnDataValuetionByGraham([FromBody] ParametersFilter parametersFilter)
         {
@@ -108,7 +108,7 @@ namespace App.Api.Controllers
         }
 
         [Authorize("Bearer")]
-        [HttpGet]
+        [HttpPost]
         [Route("ValuetionByGordon")]
         public async Task<IActionResult> ReturnDataValuetionByGordon([FromBody] ParametersFilter parametersFilter)
         {
@@ -126,7 +126,7 @@ namespace App.Api.Controllers
         }
 
         [Authorize("Bearer")]
-        [HttpGet]
+        [HttpPost]
         [Route("TickersAnalisys")]
         public async Task<IActionResult> TickersAnalisys([FromBody] ParametersFilter parametersFilter)
         {
