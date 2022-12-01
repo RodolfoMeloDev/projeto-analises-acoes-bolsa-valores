@@ -1,0 +1,15 @@
+.formcheck {
+  width: 33%;
+}
+
+@media screen and (max-width: 1024px) {
+	.formcheck {
+		width: 50%;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.formcheck {
+		width: 100%;
+	}
+}

@@ -23,19 +23,12 @@ function App() {
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/importador" element={<Importador />} />
       <Route path="/formula/comparador" element={<Comparador />} />
-      <Route path="/formula/comparador/:id" element={<Comparador />} />
       <Route path="/formula/greenblatt" element={<Greenblatt />} />
-      <Route path="/formula/greenblatt/:id" element={<Greenblatt />} />
       <Route path="/formula/pl" element={<Precolucro />} />
-      <Route path="/formula/pl/:id" element={<Precolucro />} />
       <Route path="/formula/evEbit" element={<Evebit />} />
-      <Route path="/formula/evEbit/:id" element={<Evebit />} />
       <Route path="/formula/bazin" element={<Bazin />} />
-      <Route path="/formula/bazin/:id" element={<Bazin />} />
       <Route path="/formula/graham" element={<Graham />} />
-      <Route path="/formula/graham/:id" element={<Graham />} />
       <Route path="/formula/gordon" element={<Gordon />} />
-      <Route path="/formula/gordon/:id" element={<Gordon />} />
     </Routes>
   );
 }

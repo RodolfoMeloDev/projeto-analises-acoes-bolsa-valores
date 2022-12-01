@@ -1,0 +1,15 @@
+.filtro-risco-mercado {
+    width: 33%;
+}
+
+@media screen and (max-width: 1024px) {
+	.filtro-risco-mercado {
+		width: 49.5%;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.filtro-risco-mercado {
+		width: 100%;
+	}
+}

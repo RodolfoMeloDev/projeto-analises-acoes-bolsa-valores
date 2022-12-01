@@ -1,0 +1,19 @@
+#linha-filtro-2 {
+  gap: 0.33rem;
+}
+
+table>.tabela-cabecalho {
+	vertical-align: middle;
+}
+
+.coluna-tabela-formula {
+	min-width: 100px;
+	max-width: 120px;
+}
+
+@media screen and (max-width: 768px) {
+	#linha-filtro-2 {
+		justify-content: space-between;
+    gap: 0;
+	}
+}

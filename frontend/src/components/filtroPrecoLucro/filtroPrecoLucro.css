@@ -1,0 +1,30 @@
+.filtroPrecoLucro {
+    width: 33%;
+}
+
+.filtroPrecoLucro-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.filtroPrecoLucro-row-input {
+    width: 43%;
+}
+
+.filtroPrecoLucro-row-span {
+    width: 0;
+    padding: 0;
+}
+
+@media screen and (max-width: 1024px) {
+	.filtroPrecoLucro {
+		width: 49.5%;
+		margin-bottom: 0.25rem;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.filtroPrecoLucro {
+		width: 100%;
+	}
+}

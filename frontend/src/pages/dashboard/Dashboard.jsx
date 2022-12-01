@@ -3,7 +3,9 @@ import { Button, Card, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 import apiFilesImport from "../../api/fileImport";
-import apiUser from "../../api/users";
+import "../../utils/funcoesUsuario";
+
+import { retornarDadosUsuarioLogado } from "../../utils/funcoesUsuario";
 
 import "./dashborad.css";
 
@@ -34,8 +36,13 @@ const Dashboard = () => {
   const [filesGrid, setFilesGrid] = useState([]);
 
   const getFilesImport = async () => {
-    const user = await apiUser.get(localStorage.getItem("login"));
-    const response = await apiFilesImport.get("User/" + user.data.id);
+    const user = await retornarDadosUsuarioLogado();
+
+    const response = await apiFilesImport.get("User/" + user.data.id, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
 
     if (response.status === 200) {
       return response.data;
@@ -66,7 +73,7 @@ const Dashboard = () => {
           <Card.Body className="card-formula-body">
             <Button
               variant="outline-success"
-              onClick={() => navigate("/" + linkPage[index] + filesGrid[0].id)}
+              onClick={() => navigate("/" + linkPage[index])}
             >
               Acessar
             </Button>

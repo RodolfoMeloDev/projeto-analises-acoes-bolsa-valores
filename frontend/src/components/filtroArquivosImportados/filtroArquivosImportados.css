@@ -1,0 +1,25 @@
+#campo-codigo {
+  min-width: 50px;
+}
+
+#campo-descricao {
+	width: 80%;
+}
+
+@media screen and (max-width: 1024px) {
+	#campo-descricao {
+		width: 68%;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	#campo-descricao {
+		width: 58%;
+	}
+}
+
+@media screen and (max-width: 460px) {
+	#campo-descricao {
+		width: 52%;
+	}
+}
