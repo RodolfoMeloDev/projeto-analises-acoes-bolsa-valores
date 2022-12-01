@@ -3,7 +3,13 @@
 }
 
 #campo-descricao {
-	width: 85%;
+	width: 80%;
+}
+
+@media screen and (max-width: 1024px) {
+	#campo-descricao {
+		width: 68%;
+	}
 }
 
 @media screen and (max-width: 768px) {

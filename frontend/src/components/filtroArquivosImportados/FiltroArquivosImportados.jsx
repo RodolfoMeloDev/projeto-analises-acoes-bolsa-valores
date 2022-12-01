@@ -75,7 +75,7 @@ const FiltroArquivosImportados = ({ values, setValues }) => {
 
   return (
     <>
-      <Container className="border rounded p-2 mb-3">
+      <Container className="border rounded p-2 mb-1">
         <FormLabel>
           <strong>Arquivos Importados:</strong>
         </FormLabel>

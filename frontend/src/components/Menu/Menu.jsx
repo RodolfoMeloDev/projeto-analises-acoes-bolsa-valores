@@ -13,6 +13,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import Login from "../login/Login";
 
 import { useNavigate } from "react-router-dom";
+import { DropdownButton } from 'react-bootstrap';
 
 const Menu = () => {
   const navigate = useNavigate();
@@ -73,7 +74,7 @@ const Menu = () => {
                   >
                     Importador
                   </Nav.Link>
-                  <NavDropdown title="Formulas" id="menFormulas">
+                  <NavDropdown align="end" title="Formulas" id="menFormulas">
                     <NavDropdown.Item as={NavLink} to="/formula/comparador">
                       Comparador
                     </NavDropdown.Item>
@@ -110,7 +111,7 @@ const Menu = () => {
               </Button>
             ) : (
               <Nav>
-                <NavDropdown title={user} id="menLogado">
+                <NavDropdown align="end" title={user} id="menLogado">
                   <NavDropdown.Item as={NavLink} to="/dashboard">
                     Dashboard
                   </NavDropdown.Item>

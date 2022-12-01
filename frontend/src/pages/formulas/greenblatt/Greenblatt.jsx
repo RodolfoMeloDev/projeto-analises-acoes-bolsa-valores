@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Container, Form, Row, Table } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { Badge, Button, Container, Form, OverlayTrigger, Row, Table, Toast, ToastContainer, Tooltip } from "react-bootstrap";
 
 import "./greenblatt.css";
 import "../../../utils/funcoesFormula";
@@ -9,7 +8,6 @@ import FiltroEvEbit from "../../../components/filtroEvEbit/FiltroEvEbit";
 import FiltroLiquidezDiariaMinima from "../../../components/filtroLiquidezDiariaMinima/FiltroLiquidezDiariaMinima";
 import FiltroMargemEbit from "../../../components/filtroMargemEbit/FiltroMargemEbit";
 import FiltroPrecoLucro from "../../../components/filtroPrecoLucro/FiltroPrecoLucro";
-import FiltroRiscoMercado from "../../../components/filtroRiscoMercado/FiltroRiscoMercado";
 import FiltroSwitches from "../../../components/filtroSwitches/FiltroSwitches";
 import PaginacaoGrid from "../../../components/paginacaoGrid/PaginacaoGrid";
 import FiltroArquivosImportados from "../../../components/filtroArquivosImportados/FiltroArquivosImportados";
@@ -33,38 +31,63 @@ const initialFilters = {
 };
 
 const Greenblatt = () => {
-  const { id } = useParams();
-
   const [filters, setFilters] = useState(initialFilters);
   const [tickers, setTickres] = useState([]);
+  const [tickersFiltrados, setTickersFiltrados] = useState([]);
   const [tickersGrid, setTickersGrid] = useState([]);
   const [itemInicial, setItemInicial] = useState(0);
   const [itemFinal, setItemFinal] = useState(10);
+  const [show, setShow] = useState(false);
+  const [campoPesquisa, setCampoPesquisa] = useState("");
 
   const limparFiltros = () => {
     setFilters(initialFilters);
+    setTickres([]);
+    setCampoPesquisa("");
   };
 
   const handleSubmit = async (e) => {
     const form = e.currentTarget;
     e.preventDefault();
 
+    if (filters.fileImportId === null){
+      setShow(true);
+      return;
+    }
+
     const responseFormula = await getTickersGreenblatt(filters);
 
     setTickres(responseFormula);
-    setTickersGrid(tickers);
+    setTickersFiltrados(tickers);
 
     form.reset();
   };
 
   useEffect(() => {
-    setTickersGrid(tickers.slice(itemInicial, itemFinal));
-  }, [itemFinal, itemInicial, tickers]);
+    setTickersGrid(tickersFiltrados.slice(itemInicial, itemFinal));
+  }, [itemFinal, itemInicial, tickersFiltrados]);
+
+  const handleInput = (e) => {
+    const { value } = e.target;
+    setCampoPesquisa(value);
+  };
+
+  useEffect(() => {
+    let itensFiltrados = tickers;
+
+    if (campoPesquisa !== "") {
+      itensFiltrados = itensFiltrados.filter(
+        (el) => el.ticker.toLowerCase().includes(campoPesquisa)
+      );
+    }
+    setTickersFiltrados(itensFiltrados);
+
+  }, [campoPesquisa, tickers])
 
   return (
     <div id="frmFormulaGreenblatt" className="mt-3">
-      <h3>Greenblatt - Filtros: {id}</h3>
-      <Form noValidate onSubmit={handleSubmit}>
+      <h3>Greenblatt - Filtros:</h3>
+      <Form onSubmit={handleSubmit}>
         <Container className="mb-1">
           <Row>
             <FiltroArquivosImportados values={filters} setValues={setFilters} />
@@ -81,7 +104,6 @@ const Greenblatt = () => {
               values={filters}
               setValues={setFilters}
             />
-            <FiltroRiscoMercado values={filters} setValues={setFilters} />
           </Row>
         </Container>
         <Container className="border rounded mb-1">
@@ -96,8 +118,26 @@ const Greenblatt = () => {
             Limpar
           </Button>
         </div>
+
+        <ToastContainer position="middle-center">
+          <Toast onClose={() => setShow(false)} show={show} bg={"warning"} delay={5000} autohide>
+            <Toast.Header>
+              <strong className="me-auto">Mensagem</strong>
+            </Toast.Header>
+            <Toast.Body>Para realizar a busca é necessário selecionar pelo menos o filtro de arquivo importado</Toast.Body>
+          </Toast>
+        </ToastContainer>
+
       </Form>
-      <div hidden={tickersGrid.length === 0 ? true : false}>
+      <div hidden={tickers.length === 0 ? true : false}>
+        <h5>Resultado da Busca:</h5>
+        <Form.Control
+          className='mb-1'
+          type="text"
+          placeholder="Filtra por Ticker"
+          onChange={handleInput}     
+          value={campoPesquisa} 
+        />        
         <Table
           className="mb-0"
           striped
@@ -106,51 +146,72 @@ const Greenblatt = () => {
           responsive
           style={{ minWidth: "max-content" }}
         >
-          <thead>
+          <thead className="tabela-cabecalho">
             <tr>
-              <th>#</th>
-              <th>R.J.</th>
-              <th>Ticker</th>
-              <th>Preço</th>
-              <th>D.Y</th>
-              <th>P/L</th>
-              <th>Roic</th>
-              <th>Ev/Ebit</th>
-              <th>Margem Ebit</th>
-              <th>LPA</th>
-              <th>VPA</th>
-              <th>DPA</th>
-              <th>ROE</th>
-              <th>Payout</th>
-              <th>Lucro CAGR</th>
-              <th>Méd. Cresimento</th>
-              <th>Expec. Crescimento</th>
-              <th>Liq. Med. Diária</th>
-              <th>Segmento</th>
+              <th className="coluna-tabela-formula text-center">#</th>
+              <th className="coluna-tabela-formula text-center">
+                <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+                  R.J. 
+                  <OverlayTrigger overlay={
+                    <Tooltip id="tooltip-evEbit">Recuperação Judicial</Tooltip>}>
+                    <Badge bg="dark"> ? </Badge>
+                  </OverlayTrigger>
+                </div>
+              </th>
+              <th className="coluna-tabela-formula text-center">Ticker</th>
+              <th className="coluna-tabela-formula text-center">Preço</th>
+              <th className="coluna-tabela-formula text-center">D.Y</th>
+              <th className="coluna-tabela-formula text-center">P/L</th>
+              <th className="coluna-tabela-formula text-center">Roic</th>
+              <th className="coluna-tabela-formula text-center">Ev/Ebit</th>
+              <th className="coluna-tabela-formula text-center">Margem Ebit</th>
+              <th className="coluna-tabela-formula text-center">Lpa</th>
+              <th className="coluna-tabela-formula text-center">Vpa</th>
+              <th className="coluna-tabela-formula text-center">Roe</th>
+              <th className="coluna-tabela-formula text-center">Dpa</th>
+              <th className="coluna-tabela-formula text-center">Payout</th>
+              <th className="coluna-tabela-formula text-center">Lucro CAGR</th>
+              <th className="coluna-tabela-formula text-center">Méd. Cresimento</th>
+              <th className="coluna-tabela-formula text-center">Expec. Crescimento</th>
+              <th className="coluna-tabela-formula text-center">Liq. Med. Diária</th>
+              <th className="coluna-tabela-formula">Segmento</th>
             </tr>
           </thead>
           <tbody>
             {tickersGrid.map((ticker) => {
+              let mediaLiquidezDiaria = (ticker.averageDailyLiquidity / 1000.0).toFixed(2);
+              let volumeFinanceiro = "K";
+              
+              if (mediaLiquidezDiaria > 1000 ){
+                mediaLiquidezDiaria = (ticker.averageDailyLiquidity / 1000000.0).toFixed(2);
+                volumeFinanceiro = "M";
+              }
+              
+              if (mediaLiquidezDiaria > 1000 ){
+                mediaLiquidezDiaria = (ticker.averageDailyLiquidity / 1000000000.0).toFixed(2);
+                volumeFinanceiro = "B"
+              }
+
               return (
-                <tr>
-                  <td>{ticker.position}</td>
-                  <td>{ticker.judicialRecovery === false ? "N" : "S"}</td>
-                  <td>{ticker.ticker}</td>
-                  <td>{ticker.price}</td>
-                  <td>{ticker.dividendYield}</td>
-                  <td>{ticker.priceByProfit}</td>
-                  <td>{ticker.roic}</td>
-                  <td>{ticker.evEbit}</td>
-                  <td>{ticker.ebitMargin}</td>
-                  <td>{ticker.lpa}</td>
-                  <td>{ticker.vpa}</td>
-                  <td>{ticker.dpa}</td>
-                  <td>{ticker.roe}</td>
-                  <td>{ticker.payout}</td>
-                  <td>{ticker.profitCAGR}</td>
-                  <td>{ticker.averageGrowth}</td>
-                  <td>{ticker.expectedGrowth}</td>
-                  <td>{ticker.averageDailyLiquidity}</td>
+                <tr key={ticker.position}>
+                  <td className="text-center p-2">{ticker.position}</td>
+                  <td className="text-center p-2">{ticker.judicialRecovery === false ? "N" : "S"}</td>
+                  <td className="text-center p-2">{ticker.ticker}</td>
+                  <td className="text-end p-2">{ticker.price.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}</td>
+                  <td className="text-end p-2">{ticker.dividendYield.toLocaleString('pt-br', {minimumFractionDigits: 2})}</td>
+                  <td className="text-end p-2">{ticker.priceByProfit.toLocaleString('pt-br', {minimumFractionDigits: 2})}</td>
+                  <td className="text-end p-2">{ticker.roic.toLocaleString('pt-br', {minimumFractionDigits: 2})}</td>
+                  <td className="text-end p-2">{ticker.evEbit.toLocaleString('pt-br', {minimumFractionDigits: 2})}</td>
+                  <td className="text-end p-2">{ticker.ebitMargin.toLocaleString('pt-br', {minimumFractionDigits: 2})}</td>
+                  <td className="text-end p-2">{ticker.lpa.toLocaleString('pt-br', {minimumFractionDigits: 2})}</td>
+                  <td className="text-end p-2">{ticker.vpa.toLocaleString('pt-br', {minimumFractionDigits: 2})}</td>
+                  <td className="text-end p-2">{ticker.roe.toLocaleString('pt-br', {minimumFractionDigits: 2})}</td>
+                  <td className="text-end p-2">{ticker.dpa === null ? "" : ticker.dpa.toLocaleString('pt-br', {minimumFractionDigits: 2})}</td>
+                  <td className="text-end p-2">{ticker.payout === null ? "" : ticker.payout.toLocaleString('pt-br', {minimumFractionDigits: 2})}</td>
+                  <td className="text-end p-2">{ticker.profitCAGR === null ? "" : ticker.profitCAGR.toLocaleString('pt-br', {minimumFractionDigits: 2})}</td>
+                  <td className="text-end p-2">{ticker.averageGrowth.toLocaleString('pt-br', {minimumFractionDigits: 2})}</td>
+                  <td className="text-end p-2">{ticker.expectedGrowth.toLocaleString('pt-br', {minimumFractionDigits: 2})}</td>
+                  <td className="text-end p-2">{mediaLiquidezDiaria + " " + volumeFinanceiro}</td>
                   <td>{ticker.nameSeguiment}</td>
                 </tr>
               );
@@ -159,7 +220,7 @@ const Greenblatt = () => {
         </Table>
 
         <PaginacaoGrid
-          totalRegistros={tickers.length}
+          totalRegistros={tickersFiltrados.length}
           itemInicial={setItemInicial}
           itemFinal={setItemFinal}
         />

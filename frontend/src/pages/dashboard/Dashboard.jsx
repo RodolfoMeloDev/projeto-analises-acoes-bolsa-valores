@@ -73,7 +73,7 @@ const Dashboard = () => {
           <Card.Body className="card-formula-body">
             <Button
               variant="outline-success"
-              onClick={() => navigate("/" + linkPage[index] + filesGrid[0].id)}
+              onClick={() => navigate("/" + linkPage[index])}
             >
               Acessar
             </Button>

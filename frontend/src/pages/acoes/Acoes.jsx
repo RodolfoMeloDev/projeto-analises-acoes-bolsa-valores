@@ -22,7 +22,7 @@ const Acoes = () => {
   //* ************************************** */
   //Metódos utilizados para filtros do grid
   //* ************************************** */
-  const handleInputLogin = (e) => {
+  const handleInput = (e) => {
     const { value } = e.target;
     setCampoPesquisa(value);
   };
@@ -158,7 +158,7 @@ const Acoes = () => {
             <Form.Control
               type="text"
               placeholder="Filtra os dados das colunas"
-              onChange={handleInputLogin}
+              onChange={handleInput}
             />
           </Form.Group>
         </Row>
