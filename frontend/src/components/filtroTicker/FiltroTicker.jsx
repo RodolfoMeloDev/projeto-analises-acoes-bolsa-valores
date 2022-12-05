@@ -30,7 +30,6 @@ const FiltroTicker = ({ values, setValues }) => {
 
   const handleSelect = (e) => {
     const { value } = e.target;
-    console.log(value);
     setValues({
       ...values,
       ticker: value,

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Accordion,
   Badge,
@@ -26,7 +26,7 @@ import {
 
 import "./comparador.css";
 
-import imgLogo from "../../../../src/logo.svg";
+import imgArrowUp from "../../../icons/arrow-up.svg";
 
 const initialFilters = {
   fileImportId: null,
@@ -42,10 +42,14 @@ const Comparador = () => {
   const [cardsFormula, setCardsFormula] = useState(null);
   const [cardsInfoAdicionais, setCardsInfoAdicionais] = useState(null);
   const [showAccordion, setShowAccordion] = useState(0);
+  const [imgCss, setImgCss] = useState("");
 
   const limparFiltros = () => {
     setFilters(initialFilters);
+    setDataTicker(null);
     setCardsFormula(null);
+    setCardsInfoAdicionais(null);
+    setShowAccordion(0);
   };
 
   const preencheCards = (tickers) => {
@@ -315,6 +319,8 @@ const Comparador = () => {
   const montaCardsResultadoBusca = () => {
     let cardsMontados = [];
 
+    if (cardsFormula.length === 0) return [];
+
     for (let index = 0; index < cardsFormula.length; index++) {
       cardsMontados.push(
         <Card key={index} className="card-formulas">
@@ -360,6 +366,8 @@ const Comparador = () => {
   const montaCardsInformacoesAdicionais = () => {
     let cardsMontados = [];
 
+    if (cardsInfoAdicionais.length === 0) return [];
+
     for (let index = 0; index < cardsInfoAdicionais.length; index++) {
       cardsMontados.push(
         <FormGroup
@@ -396,6 +404,12 @@ const Comparador = () => {
 
     return cardsMontados;
   };
+
+  useEffect(() => {
+    setImgCss(
+      showAccordion === 0 ? "imagem-collapse" : "imagem-collapse-invertida"
+    );
+  }, [showAccordion]);
 
   return (
     <div id="frmComparadorFormula" className="mt-3">
@@ -464,14 +478,10 @@ const Comparador = () => {
                 <div className="d-flex justify-content-between">
                   <strong>Informações Adicionais</strong>
                   <img
-                    src={imgLogo}
+                    src={imgArrowUp}
                     width="25"
                     height="25"
-                    className={
-                      "d-inline-block align-top me-2" + showAccordion === 0
-                        ? ""
-                        : "teste-imagem"
-                    }
+                    className={"d-inline-block align-top me-2 " + imgCss}
                     alt="Login"
                   />
                 </div>

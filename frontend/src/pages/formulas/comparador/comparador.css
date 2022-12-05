@@ -2,8 +2,12 @@
     width: 13.6%;
 }
 
-.teste-imagem{
-    transform: scaleX(-1);
+.imagem-collapse{
+    transform: scaleY(1);
+}
+
+.imagem-collapse-invertida{
+    transform: scaleY(-1);
 }
 
 @media screen and (max-width: 1200px) {
