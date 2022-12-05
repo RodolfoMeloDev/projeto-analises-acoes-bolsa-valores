@@ -34,7 +34,7 @@ const FiltroRiscoMercado = ({ values, setValues }) => {
             </Tooltip>
           }
         >
-          <Badge bg="dark" style={{ height: "20px" }}>
+          <Badge bg="dark" style={{ height: "21px" }}>
             {" "}
             ?{" "}
           </Badge>

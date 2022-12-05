@@ -15,6 +15,21 @@ export async function getTickersGreenblatt(filters) {
   return [];
 }
 
+export async function getTickersGordon(filters) {
+  const response = await apiFormulas.post("ValuetionByGordon", filters, {
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("token"),
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (response.status === 200) {
+    return response.data;
+  }
+
+  return [];
+}
+
 export async function getTickersCompareFormulas(filters) {
   const response = await apiFormulas.post("TickersAnalisys", filters, {
     headers: {
@@ -30,7 +45,7 @@ export async function getTickersCompareFormulas(filters) {
   return null;
 }
 
-export function retornaLiquidezMediaDiariaTratada(valor){
+export function retornaLiquidezMediaDiariaTratada(valor) {
   let mediaLiquidezDiaria = (valor / 1000.0).toFixed(2);
   let volumeFinanceiro = "K";
 
@@ -44,7 +59,11 @@ export function retornaLiquidezMediaDiariaTratada(valor){
     volumeFinanceiro = "B";
   }
 
-  return parseFloat(mediaLiquidezDiaria).toLocaleString("pt-br", {
-    minimumFractionDigits: 2,
-  }) + " " + volumeFinanceiro;
+  return (
+    parseFloat(mediaLiquidezDiaria).toLocaleString("pt-br", {
+      minimumFractionDigits: 2,
+    }) +
+    " " +
+    volumeFinanceiro
+  );
 }

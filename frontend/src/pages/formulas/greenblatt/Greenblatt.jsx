@@ -1,15 +1,11 @@
 import { useEffect, useState } from "react";
 import {
-  Badge,
   Button,
   Container,
   Form,
-  OverlayTrigger,
   Row,
-  Table,
   Toast,
   ToastContainer,
-  Tooltip,
 } from "react-bootstrap";
 
 import "./greenblatt.css";
@@ -23,6 +19,41 @@ import FiltroSwitches from "../../../components/filtroSwitches/FiltroSwitches";
 import PaginacaoGrid from "../../../components/paginacaoGrid/PaginacaoGrid";
 import FiltroArquivosImportados from "../../../components/filtroArquivosImportados/FiltroArquivosImportados";
 import { getTickersGreenblatt } from "../../../utils/funcoesFormula";
+import TabelaPadrao from "../../../components/tabelaPadrao/TabelaFormulas";
+import {
+  colunaGridFormulaDividendYield,
+  colunaGridFormulaDpa,
+  colunaGridFormulaEvEbit,
+  colunaGridFormulaExpectativaCrescimento,
+  colunaGridFormulaLiquidezMediaDiaria,
+  colunaGridFormulaLpa,
+  colunaGridFormulaLucroCAGR,
+  colunaGridFormulaMargemEbit,
+  colunaGridFormulaMediaCrescimento,
+  colunaGridFormulaPayout,
+  colunaGridFormulaPosicao,
+  colunaGridFormulaPreco,
+  colunaGridFormulaPrecoLucro,
+  colunaGridFormulaRecuperacaoJudicial,
+  colunaGridFormulaRoe,
+  colunaGridFormulaRoic,
+  colunaGridFormulaSegmento,
+  colunaGridFormulaTicker,
+  colunaGridFormulaVpa,
+  tooltipTextoDividendYield,
+  tooltipTextoDpa,
+  tooltipTextoEbitMargem,
+  tooltipTextoEvEbit,
+  tooltipTextoLiquidezMediaDiaria,
+  tooltipTextoLpa,
+  tooltipTextoMediaCrescimento,
+  tooltipTextoPayout,
+  tooltipTextoPrecoLucro,
+  tooltipTextoRecuperacaoJudicial,
+  tooltipTextoRoe,
+  tooltipTextoRoic,
+  tooltipTextoVpa,
+} from "../../../constantes/constantes";
 
 const initialFilters = {
   fileImportId: null,
@@ -40,6 +71,85 @@ const initialFilters = {
   removeItemsWithZeroValue: true,
   removeItemsWithNegativeValue: true,
 };
+
+const cabecalhoTabela = [
+  {
+    label: colunaGridFormulaPosicao,
+    tooltip: null,
+  },
+  {
+    label: colunaGridFormulaRecuperacaoJudicial,
+    tooltip: tooltipTextoRecuperacaoJudicial,
+  },
+  {
+    label: colunaGridFormulaTicker,
+    tooltip: null,
+  },
+  {
+    label: colunaGridFormulaPreco,
+    tooltip: null,
+  },
+  {
+    label: colunaGridFormulaDividendYield,
+    tooltip: tooltipTextoDividendYield,
+  },
+  {
+    label: colunaGridFormulaPrecoLucro,
+    tooltip: tooltipTextoPrecoLucro,
+  },
+  {
+    label: colunaGridFormulaRoic,
+    tooltip: tooltipTextoRoic,
+  },
+  {
+    label: colunaGridFormulaEvEbit,
+    tooltip: tooltipTextoEvEbit,
+  },
+  {
+    label: colunaGridFormulaMargemEbit,
+    tooltip: tooltipTextoEbitMargem,
+  },
+  {
+    label: colunaGridFormulaLpa,
+    tooltip: tooltipTextoLpa,
+  },
+  {
+    label: colunaGridFormulaVpa,
+    tooltip: tooltipTextoVpa,
+  },
+  {
+    label: colunaGridFormulaRoe,
+    tooltip: tooltipTextoRoe,
+  },
+  {
+    label: colunaGridFormulaDpa,
+    tooltip: tooltipTextoDpa,
+  },
+  {
+    label: colunaGridFormulaPayout,
+    tooltip: tooltipTextoPayout,
+  },
+  {
+    label: colunaGridFormulaLucroCAGR,
+    tooltip: null,
+  },
+  {
+    label: colunaGridFormulaMediaCrescimento,
+    tooltip: tooltipTextoMediaCrescimento,
+  },
+  {
+    label: colunaGridFormulaExpectativaCrescimento,
+    tooltip: null,
+  },
+  {
+    label: colunaGridFormulaLiquidezMediaDiaria,
+    tooltip: tooltipTextoLiquidezMediaDiaria,
+  },
+  {
+    label: colunaGridFormulaSegmento,
+    tooltip: null,
+  },
+];
 
 const Greenblatt = () => {
   const [filters, setFilters] = useState(initialFilters);
@@ -154,173 +264,11 @@ const Greenblatt = () => {
           onChange={handleInput}
           value={campoPesquisa}
         />
-        <Table
-          id="resultadoGreenblatt"
-          className="mb-0"
-          striped
-          bordered
-          hover
-          responsive
-          style={{ minWidth: "max-content" }}
-        >
-          <thead className="tabela-cabecalho">
-            <tr>
-              <th className="coluna-tabela-formula text-center">#</th>
-              <th className="coluna-tabela-formula text-center">
-                <div
-                  style={{ display: "flex", justifyContent: "space-evenly" }}
-                >
-                  R.J.
-                  <OverlayTrigger
-                    overlay={
-                      <Tooltip id="tooltip-evEbit">
-                        Recuperação Judicial
-                      </Tooltip>
-                    }
-                  >
-                    <Badge bg="dark"> ? </Badge>
-                  </OverlayTrigger>
-                </div>
-              </th>
-              <th className="coluna-tabela-formula text-center">Ticker</th>
-              <th className="coluna-tabela-formula text-center">Preço</th>
-              <th className="coluna-tabela-formula text-center">D.Y</th>
-              <th className="coluna-tabela-formula text-center">P/L</th>
-              <th className="coluna-tabela-formula text-center">Roic</th>
-              <th className="coluna-tabela-formula text-center">Ev/Ebit</th>
-              <th className="coluna-tabela-formula text-center">Margem Ebit</th>
-              <th className="coluna-tabela-formula text-center">Lpa</th>
-              <th className="coluna-tabela-formula text-center">Vpa</th>
-              <th className="coluna-tabela-formula text-center">Roe</th>
-              <th className="coluna-tabela-formula text-center">Dpa</th>
-              <th className="coluna-tabela-formula text-center">Payout</th>
-              <th className="coluna-tabela-formula text-center">Lucro CAGR</th>
-              <th className="coluna-tabela-formula text-center">
-                Méd. Cresimento
-              </th>
-              <th className="coluna-tabela-formula text-center">
-                Expec. Crescimento
-              </th>
-              <th className="coluna-tabela-formula text-center">
-                Liq. Med. Diária
-              </th>
-              <th className="coluna-tabela-formula">Segmento</th>
-            </tr>
-          </thead>
-          <tbody>
-            {tickersGrid.map((ticker) => {
-              let mediaLiquidezDiaria = (
-                ticker.averageDailyLiquidity / 1000.0
-              ).toFixed(2);
-              let volumeFinanceiro = "K";
-
-              if (mediaLiquidezDiaria > 1000) {
-                mediaLiquidezDiaria = (
-                  ticker.averageDailyLiquidity / 1000000.0
-                ).toFixed(2);
-                volumeFinanceiro = "M";
-              }
-
-              if (mediaLiquidezDiaria > 1000) {
-                mediaLiquidezDiaria = (
-                  ticker.averageDailyLiquidity / 1000000000.0
-                ).toFixed(2);
-                volumeFinanceiro = "B";
-              }
-
-              return (
-                <tr key={ticker.position}>
-                  <td className="text-center p-2">{ticker.position}</td>
-                  <td className="text-center p-2">
-                    {ticker.judicialRecovery === false ? "N" : "S"}
-                  </td>
-                  <td className="text-center p-2">{ticker.ticker}</td>
-                  <td className="text-end p-2">
-                    {ticker.price.toLocaleString("pt-br", {
-                      style: "currency",
-                      currency: "BRL",
-                    })}
-                  </td>
-                  <td className="text-end p-2">
-                    {ticker.dividendYield.toLocaleString("pt-br", {
-                      minimumFractionDigits: 2,
-                    })}
-                  </td>
-                  <td className="text-end p-2">
-                    {ticker.priceByProfit.toLocaleString("pt-br", {
-                      minimumFractionDigits: 2,
-                    })}
-                  </td>
-                  <td className="text-end p-2">
-                    {ticker.roic.toLocaleString("pt-br", {
-                      minimumFractionDigits: 2,
-                    })}
-                  </td>
-                  <td className="text-end p-2">
-                    {ticker.evEbit.toLocaleString("pt-br", {
-                      minimumFractionDigits: 2,
-                    })}
-                  </td>
-                  <td className="text-end p-2">
-                    {ticker.ebitMargin.toLocaleString("pt-br", {
-                      minimumFractionDigits: 2,
-                    })}
-                  </td>
-                  <td className="text-end p-2">
-                    {ticker.lpa.toLocaleString("pt-br", {
-                      minimumFractionDigits: 2,
-                    })}
-                  </td>
-                  <td className="text-end p-2">
-                    {ticker.vpa.toLocaleString("pt-br", {
-                      minimumFractionDigits: 2,
-                    })}
-                  </td>
-                  <td className="text-end p-2">
-                    {ticker.roe.toLocaleString("pt-br", {
-                      minimumFractionDigits: 2,
-                    })}
-                  </td>
-                  <td className="text-end p-2">
-                    {ticker.dpa === null
-                      ? ""
-                      : ticker.dpa.toLocaleString("pt-br", {
-                          minimumFractionDigits: 2,
-                        })}
-                  </td>
-                  <td className="text-end p-2">
-                    {ticker.payout === null
-                      ? ""
-                      : ticker.payout.toLocaleString("pt-br", {
-                          minimumFractionDigits: 2,
-                        })}
-                  </td>
-                  <td className="text-end p-2">
-                    {ticker.profitCAGR === null
-                      ? ""
-                      : ticker.profitCAGR.toLocaleString("pt-br", {
-                          minimumFractionDigits: 2,
-                        })}
-                  </td>
-                  <td className="text-end p-2">
-                    {ticker.averageGrowth.toLocaleString("pt-br", {
-                      minimumFractionDigits: 2,
-                    })}
-                  </td>
-                  <td className="text-end p-2">
-                    {ticker.expectedGrowth.toLocaleString("pt-br", {
-                      minimumFractionDigits: 2,
-                    })}
-                  </td>
-                  <td className="text-end p-2">
-                    {mediaLiquidezDiaria + " " + volumeFinanceiro}
-                  </td>
-                  <td>{ticker.nameSeguiment}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </Table>
+        <TabelaPadrao
+          header={cabecalhoTabela}
+          body={tickersGrid}
+          css={"mb-0"}
+        />
 
         <PaginacaoGrid
           totalRegistros={tickersFiltrados.length}
