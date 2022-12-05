@@ -90,14 +90,6 @@ const cabecalhoTabela = [
     tooltip: null,
   },
   {
-    label: colunaGridFormulaDividendYield,
-    tooltip: tooltipTextoDividendYield,
-  },
-  {
-    label: colunaGridFormulaPrecoLucro,
-    tooltip: tooltipTextoPrecoLucro,
-  },
-  {
     label: colunaGridFormulaRoic,
     tooltip: tooltipTextoRoic,
   },
@@ -108,6 +100,14 @@ const cabecalhoTabela = [
   {
     label: colunaGridFormulaMargemEbit,
     tooltip: tooltipTextoEbitMargem,
+  },
+  {
+    label: colunaGridFormulaDividendYield,
+    tooltip: tooltipTextoDividendYield,
+  },
+  {
+    label: colunaGridFormulaPrecoLucro,
+    tooltip: tooltipTextoPrecoLucro,
   },
   {
     label: colunaGridFormulaLpa,
