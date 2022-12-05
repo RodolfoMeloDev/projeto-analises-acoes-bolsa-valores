@@ -45,6 +45,21 @@ export async function getTickersGraham(filters) {
   return [];
 }
 
+export async function getTickersBazin(filters) {
+  const response = await apiFormulas.post("ValuetionByBazin", filters, {
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("token"),
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (response.status === 200) {
+    return response.data;
+  }
+
+  return [];
+}
+
 export async function getTickersCompareFormulas(filters) {
   const response = await apiFormulas.post("TickersAnalisys", filters, {
     headers: {
