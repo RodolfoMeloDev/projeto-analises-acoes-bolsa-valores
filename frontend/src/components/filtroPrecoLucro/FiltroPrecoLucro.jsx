@@ -1,4 +1,12 @@
-import { Badge, FormControl, FormGroup, FormLabel, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
+import {
+  Badge,
+  FormControl,
+  FormGroup,
+  FormLabel,
+  OverlayTrigger,
+  Row,
+  Tooltip,
+} from "react-bootstrap";
 
 import "./filtroPrecoLucro.css";
 
@@ -15,11 +23,20 @@ const FiltroPrecoLucro = ({ values, setValues }) => {
 
   return (
     <FormGroup className="border rounded p-2 filtroPrecoLucro">
-      <FormLabel className='d-flex justify-content-between'>
+      <FormLabel className="d-flex justify-content-between">
         <strong>Preço/Lucro:</strong>
-        <OverlayTrigger overlay={
-          <Tooltip id="tooltip-precolucro">Dá uma ideia do quanto o mercado está disposto a pagar pelos lucros da empresa.</Tooltip>}>
-          <Badge bg="dark"> ? </Badge>
+        <OverlayTrigger
+          overlay={
+            <Tooltip id="tooltip-precolucro">
+              Dá uma ideia do quanto o mercado está disposto a pagar pelos
+              lucros da empresa.
+            </Tooltip>
+          }
+        >
+          <Badge bg="dark" style={{ height: "20px" }}>
+            {" "}
+            ?{" "}
+          </Badge>
         </OverlayTrigger>
       </FormLabel>
       <Row className="filtroPrecoLucro-row">

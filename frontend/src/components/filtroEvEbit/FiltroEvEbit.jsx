@@ -1,4 +1,12 @@
-import { Badge, FormControl, FormGroup, FormLabel, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
+import {
+  Badge,
+  FormControl,
+  FormGroup,
+  FormLabel,
+  OverlayTrigger,
+  Row,
+  Tooltip,
+} from "react-bootstrap";
 
 import "./filtroevebit.css";
 
@@ -14,11 +22,22 @@ const FiltroEvEbit = ({ values, setValues }) => {
 
   return (
     <FormGroup className="border rounded p-2 filtroEvEbit">
-      <FormLabel className='d-flex justify-content-between'>
+      <FormLabel className="d-flex justify-content-between">
         <strong>Ev/Ebit:</strong>
-        <OverlayTrigger overlay={
-          <Tooltip id="tooltip-evEbit">O EV (Enterprise Value ou Valor da Firma), indica quanto custaria para comprar todos os ativos da companhia, descontando o caixa. Este indicador mostra quanto tempo levaria para o valor calculado no EBIT pagar o investimento feito para compra-la.</Tooltip>}>
-          <Badge bg="dark"> ? </Badge>
+        <OverlayTrigger
+          overlay={
+            <Tooltip id="tooltip-evEbit">
+              O EV (Enterprise Value ou Valor da Firma), indica quanto custaria
+              para comprar todos os ativos da companhia, descontando o caixa.
+              Este indicador mostra quanto tempo levaria para o valor calculado
+              no EBIT pagar o investimento feito para compra-la.
+            </Tooltip>
+          }
+        >
+          <Badge bg="dark" style={{ height: "20px" }}>
+            {" "}
+            ?{" "}
+          </Badge>
         </OverlayTrigger>
       </FormLabel>
       <Row className="filtroEvEbit-row">

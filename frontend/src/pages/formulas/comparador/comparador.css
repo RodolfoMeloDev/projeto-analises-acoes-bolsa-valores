@@ -1,0 +1,35 @@
+.card-formulas {
+    width: 13.6%;
+}
+
+.imagem-collapse{
+    transform: scaleY(1);
+}
+
+.imagem-collapse-invertida{
+    transform: scaleY(-1);
+}
+
+@media screen and (max-width: 1200px) {
+    .card-formulas {
+        width: 19.3%;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .card-formulas {
+        width: 24%;
+    } 
+}
+
+@media screen and (max-width: 768px) {
+    .card-formulas {
+        width: 32%;
+    }
+}
+
+@media screen and (max-width: 490px) {
+    .card-formulas {
+        width: 48%;
+    }
+}
