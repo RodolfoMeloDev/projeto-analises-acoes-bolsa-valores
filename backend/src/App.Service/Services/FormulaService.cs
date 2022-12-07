@@ -488,6 +488,12 @@ namespace App.Service.Services
             if (tickerGreenBlatt == null && tickerPriceAndProfit == null && tickerEvEbit == null && tickerBazin == null && tickerGraham == null && tickerGordon == null)
                 throw new FormulaException("Não foi encontrado resultado valídos para o Ticker: " + parametersFilter.Ticker);
 
+            return ItemTickersAnalisys(tickerGreenBlatt, tickerEvEbit, tickerPriceAndProfit, tickerBazin, tickerGordon, tickerGraham);
+        }
+
+        private FormulaDtoPosition ItemTickersAnalisys(FormulaDtoGreenBlatt? tickerGreenBlatt, FormulaDtoEvEbit? tickerEvEbit,
+            FormulaDtoPriceAndProfit? tickerPriceAndProfit, FormulaDtoBazin? tickerBazin, FormulaDtoGordon? tickerGordon, FormulaDtoGraham? tickerGraham)
+        {
             FormulaDtoPosition tickerPosition = new FormulaDtoPosition();
 
             tickerPosition.NameSeguiment = (tickerGreenBlatt != null ? tickerGreenBlatt.NameSeguiment :
@@ -631,6 +637,137 @@ namespace App.Service.Services
             tickerPosition.PositionPriceAndProfit = (tickerPriceAndProfit != null ? tickerPriceAndProfit.Position : null);
 
             return tickerPosition;
+        }
+
+        public async Task<IEnumerable<FormulaDtoPosition>> ListTickersAnalisys(ParametersFilter parametersFilter)
+        {
+            if (parametersFilter.MarketRisk == null || parametersFilter.MarketRisk <= 0)
+                throw new FormulaException("Deve ser informado um valor válido, acima de ZERO, para o parametro Risco de Mercado");
+
+            var tickersGreenBlatt = ReturnListOrderedGreenBlatt(await ReturnListWithParametersExecuted(parametersFilter));
+
+            var tickersEvEbit = ReturnListOrderedEvEbit(await ReturnListWithParametersExecuted(parametersFilter));
+
+            var tickersPriceAndProfit = ReturnListOrderedPriceAndProfit(await ReturnListWithParametersExecuted(parametersFilter));
+
+            var tickersBazin = ReturnListValuetionByBazin(await ReturnListWithParametersExecuted(parametersFilter));
+
+            var tickersGordon = ReturnListValuetionByGordon(await ReturnListWithParametersExecuted(parametersFilter), Convert.ToDecimal(parametersFilter.MarketRisk));
+
+            var tickersGraham = ReturnListValuetionByGraham(await ReturnListWithParametersExecuted(parametersFilter));
+
+            List<FormulaDtoPosition> listTickerPosition = new List<FormulaDtoPosition>();
+
+            // Insere inicialmente todos os itens baseados na formula de greenblatt
+            foreach (var item in tickersGreenBlatt)
+            {
+                listTickerPosition.Add(ItemTickersAnalisys(item, null, null, null, null, null));
+            }
+
+            // valida se já existe na lista e insere os atualiza os dados baseado na formula de Ev/Ebit
+            foreach (var item in tickersEvEbit)
+            {
+                var tickerPosition = listTickerPosition.Where(x => x.Ticker.Equals(item.Ticker)).FirstOrDefault();
+
+                if (tickerPosition != null)
+                {
+                    // excluí o item que existia
+                    listTickerPosition.Remove(tickerPosition);
+                    // atualiza as informações
+                    tickerPosition.PositionEvEbit = item.Position;
+                    // insere novamente o teim atualizado
+                    listTickerPosition.Add(tickerPosition);
+                }
+                else
+                {
+                    listTickerPosition.Add(ItemTickersAnalisys(null, item, null, null, null, null));
+                }
+            }
+
+            // valida se já existe na lista e insere os atualiza os dados baseado na formula de P/L
+            foreach (var item in tickersPriceAndProfit)
+            {
+                var tickerPosition = listTickerPosition.Where(x => x.Ticker.Equals(item.Ticker)).FirstOrDefault();
+
+                if (tickerPosition != null)
+                {
+                    // excluí o item que existia
+                    listTickerPosition.Remove(tickerPosition);
+                    // atualiza as informações
+                    tickerPosition.PositionPriceAndProfit = item.Position;
+                    // insere novamente o teim atualizado
+                    listTickerPosition.Add(tickerPosition);
+                }
+                else
+                {
+                    listTickerPosition.Add(ItemTickersAnalisys(null, null, item, null, null, null));
+                }
+            }
+
+            // valida se já existe na lista e insere os atualiza os dados baseado na formula de Bazin
+            foreach (var item in tickersBazin)
+            {
+                var tickerPosition = listTickerPosition.Where(x => x.Ticker.Equals(item.Ticker)).FirstOrDefault();
+
+                if (tickerPosition != null)
+                {
+                    // excluí o item que existia
+                    listTickerPosition.Remove(tickerPosition);
+                    // atualiza as informações
+                    tickerPosition.DiscountPercentageBazin = item.DiscountPercentage;
+                    tickerPosition.JustPriceBazin = item.JustPrice;
+                    // insere novamente o teim atualizado
+                    listTickerPosition.Add(tickerPosition);
+                }
+                else
+                {
+                    listTickerPosition.Add(ItemTickersAnalisys(null, null, null, item, null, null));
+                }
+            }
+
+            // valida se já existe na lista e insere os atualiza os dados baseado na formula de Gordon
+            foreach (var item in tickersGordon)
+            {
+                var tickerPosition = listTickerPosition.Where(x => x.Ticker.Equals(item.Ticker)).FirstOrDefault();
+
+                if (tickerPosition != null)
+                {
+                    // excluí o item que existia
+                    listTickerPosition.Remove(tickerPosition);
+                    // atualiza as informações
+                    tickerPosition.DiscountPercentageGordon = item.DiscountPercentage;
+                    tickerPosition.JustPriceGordon = item.JustPrice;
+                    // insere novamente o teim atualizado
+                    listTickerPosition.Add(tickerPosition);
+                }
+                else
+                {
+                    listTickerPosition.Add(ItemTickersAnalisys(null, null, null, null, item, null));
+                }
+            }
+
+            // valida se já existe na lista e insere os atualiza os dados baseado na formula de Graham
+            foreach (var item in tickersGraham)
+            {
+                var tickerPosition = listTickerPosition.Where(x => x.Ticker.Equals(item.Ticker)).FirstOrDefault();
+
+                if (tickerPosition != null)
+                {
+                    // excluí o item que existia
+                    listTickerPosition.Remove(tickerPosition);
+                    // atualiza as informações
+                    tickerPosition.DiscountPercentageGraham = item.DiscountPercentage;
+                    tickerPosition.JustPriceGraham = item.JustPrice;
+                    // insere novamente o teim atualizado
+                    listTickerPosition.Add(tickerPosition);
+                }
+                else
+                {
+                    listTickerPosition.Add(ItemTickersAnalisys(null, null, null, null, null, item));
+                }
+            }
+
+            return listTickerPosition.OrderBy(x => x.Ticker);
         }
     }
 }
