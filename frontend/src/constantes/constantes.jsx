@@ -31,6 +31,15 @@ export const tooltipTextoRoe =
 export const tooltipTextoMediaCrescimento =
   "O CAGR (Compound Annual Growth Rate), ou taxa de crescimento anual composta, é a taxa de retorno necessária para um investimento crescer de seu saldo inicial para o seu saldo final.";
 
+export const tooltipTextoPosicaoGreenblatt =
+  "Posição baseado na formula de Greenblatt";
+
+export const tooltipTextoPosicaoEvEbit =
+  "Posição baseado na formula de Ev/Ebit";
+
+export const tooltipTextoPosicaoPrecoLucro =
+  "Posição baseado na formula de Preço/Lucro";
+
 export const tooltipTextoLiquidezMediaDiaria = "Média dos últimos 30 dias.";
 
 export const colunaGridFormulaPosicao = "#";
@@ -74,3 +83,21 @@ export const colunaGridFormulaSegmento = "Segmento";
 export const colunaGridFormulaPrecoJusto = "Preço Justo";
 
 export const colunaGridFormulaPercentualDesconto = "% Desconto";
+
+export const colunaGridFormulaPosicaoGreenblatt = "Pos. Greenblatt";
+
+export const colunaGridFormulaPosicaoEvEbit = "Pos. Ev/Ebit  ";
+
+export const colunaGridFormulaPosicaoPrecoLucro = "Pos. P/L";
+
+export const colunaGridFormulaPrecoJustoBazin = "Preço Justo Bazin";
+
+export const colunaGridFormulaDescontoBazin = "% Desconto Bazin";
+
+export const colunaGridFormulaPrecoJustoGraham = "Preço Justo Graham";
+
+export const colunaGridFormulaDescontoGraham = "% Desconto Graham";
+
+export const colunaGridFormulaPrecoJustoGordon = "Preço Justo Gordon";
+
+export const colunaGridFormulaDescontoGordon = "% Desconto Gordon";
