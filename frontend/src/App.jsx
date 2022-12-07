@@ -6,6 +6,7 @@ import Acoes from "./pages/acoes/Acoes";
 import Dashboard from "./pages/dashboard/Dashboard";
 import Importador from "./pages/importador/Importador";
 import Comparador from "./pages/formulas/comparador/Comparador";
+import ComparadorGeral from "./pages/formulas/comparadorGeral/ComparadorGeral";
 import Greenblatt from "./pages/formulas/greenblatt/Greenblatt";
 import Precolucro from "./pages/formulas/precolucro/PrecoLucro";
 import Evebit from "./pages/formulas/evebit/Evbit";
@@ -23,6 +24,7 @@ function App() {
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/importador" element={<Importador />} />
       <Route path="/formula/comparador" element={<Comparador />} />
+      <Route path="/formula/comparadorGeral" element={<ComparadorGeral />} />
       <Route path="/formula/greenblatt" element={<Greenblatt />} />
       <Route path="/formula/pl" element={<Precolucro />} />
       <Route path="/formula/evEbit" element={<Evebit />} />

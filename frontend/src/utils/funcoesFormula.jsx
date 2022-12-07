@@ -105,6 +105,21 @@ export async function getTickersCompareFormulas(filters) {
   return null;
 }
 
+export async function getTickersCompareAllFormulas(filters) {
+  const response = await apiFormulas.post("ListTickersAnalisys", filters, {
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("token"),
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (response.status === 200) {
+    return response.data;
+  }
+
+  return null;
+}
+
 export function retornaLiquidezMediaDiariaTratada(valor) {
   let mediaLiquidezDiaria = (valor / 1000.0).toFixed(2);
   let volumeFinanceiro = "K";

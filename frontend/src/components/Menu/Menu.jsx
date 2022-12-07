@@ -75,7 +75,13 @@ const Menu = () => {
                   </Nav.Link>
                   <NavDropdown align="end" title="Formulas" id="menFormulas">
                     <NavDropdown.Item as={NavLink} to="/formula/comparador">
-                      Comparador
+                      Comparador Individual
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                      as={NavLink}
+                      to="/formula/comparadorGeral"
+                    >
+                      Comparador Geral
                     </NavDropdown.Item>
                     <NavDropdown.Divider />
                     <NavDropdown.Item as={NavLink} to="/formula/evEbit/">

@@ -1,5 +1,8 @@
 import { Badge, OverlayTrigger, Table, Tooltip } from "react-bootstrap";
 import {
+  colunaGridFormulaDescontoBazin,
+  colunaGridFormulaDescontoGordon,
+  colunaGridFormulaDescontoGraham,
   colunaGridFormulaDividendYield,
   colunaGridFormulaDpa,
   colunaGridFormulaEvEbit,
@@ -12,8 +15,14 @@ import {
   colunaGridFormulaPayout,
   colunaGridFormulaPercentualDesconto,
   colunaGridFormulaPosicao,
+  colunaGridFormulaPosicaoEvEbit,
+  colunaGridFormulaPosicaoGreenblatt,
+  colunaGridFormulaPosicaoPrecoLucro,
   colunaGridFormulaPreco,
   colunaGridFormulaPrecoJusto,
+  colunaGridFormulaPrecoJustoBazin,
+  colunaGridFormulaPrecoJustoGordon,
+  colunaGridFormulaPrecoJustoGraham,
   colunaGridFormulaPrecoLucro,
   colunaGridFormulaRecuperacaoJudicial,
   colunaGridFormulaRoe,
@@ -204,6 +213,76 @@ const TabelaPadrao = ({ header, body, css }) => {
             minimumFractionDigits: 2,
           });
           css = "text-end";
+          break;
+        case colunaGridFormulaPrecoJustoBazin:
+          textoColuna =
+            item.justPriceBazin === null
+              ? ""
+              : item.justPriceBazin.toLocaleString("pt-br", {
+                  style: "currency",
+                  currency: "BRL",
+                });
+          css = "text-end";
+          break;
+        case colunaGridFormulaDescontoBazin:
+          textoColuna =
+            item.discountPercentageBazin === null
+              ? ""
+              : item.discountPercentageBazin.toLocaleString("pt-br", {
+                  minimumFractionDigits: 2,
+                });
+          css = "text-end";
+          break;
+        case colunaGridFormulaPrecoJustoGraham:
+          textoColuna =
+            item.justPriceGraham === null
+              ? ""
+              : item.justPriceGraham.toLocaleString("pt-br", {
+                  style: "currency",
+                  currency: "BRL",
+                });
+          css = "text-end";
+          break;
+        case colunaGridFormulaDescontoGraham:
+          textoColuna =
+            item.discountPercentageGraham === null
+              ? ""
+              : item.discountPercentageGraham.toLocaleString("pt-br", {
+                  minimumFractionDigits: 2,
+                });
+          css = "text-end";
+          break;
+        case colunaGridFormulaPrecoJustoGordon:
+          textoColuna =
+            item.justPriceGordon === null
+              ? ""
+              : item.justPriceGordon.toLocaleString("pt-br", {
+                  style: "currency",
+                  currency: "BRL",
+                });
+          css = "text-end";
+          break;
+        case colunaGridFormulaDescontoGordon:
+          textoColuna =
+            item.discountPercentageGordon === null
+              ? ""
+              : item.discountPercentageGordon.toLocaleString("pt-br", {
+                  minimumFractionDigits: 2,
+                });
+          css = "text-end";
+          break;
+        case colunaGridFormulaPosicaoGreenblatt:
+          textoColuna =
+            item.positionGreenBlatt === null ? "" : item.positionGreenBlatt;
+          break;
+        case colunaGridFormulaPosicaoEvEbit:
+          textoColuna = item.positionEvEbit === null ? "" : item.positionEvEbit;
+          break;
+        case colunaGridFormulaPosicaoPrecoLucro:
+          textoColuna =
+            item.positionPriceAndProfit === null
+              ? ""
+              : item.positionPriceAndProfit;
           break;
         default:
           break;

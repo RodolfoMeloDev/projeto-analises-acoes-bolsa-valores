@@ -1,11 +1,17 @@
 import React from "react";
-//import PaginacaoGrid from "../../components/paginacaoGrid/PaginacaoGrid";
 
 const Home = () => {
   return (
     <>
-      <div>Home</div>
-      {/* <PaginacaoGrid totalRegistros={100} /> */}
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <h1>
+        Aqui terá uma explicação melhor sobre o projeto e como ele funciona
+      </h1>
     </>
   );
 };

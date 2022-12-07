@@ -10,7 +10,8 @@ import { retornarDadosUsuarioLogado } from "../../utils/funcoesUsuario";
 import "./dashborad.css";
 
 const formulas = [
-  "Comp. Formula",
+  "Comparador Individual",
+  "Comparador Geral",
   "Ev/Ebit",
   "Preço/Lucro",
   "Bazin",
@@ -21,6 +22,7 @@ const formulas = [
 
 const linkPage = [
   "formula/comparador/",
+  "formula/comparadorGeral/",
   "formula/evEbit/",
   "formula/pl/",
   "formula/bazin/",
