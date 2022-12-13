@@ -54,6 +54,7 @@ import {
   tooltipTextoRoic,
   tooltipTextoVpa,
 } from "../../../constantes/constantes";
+import { validaSeTokenEstaExpirado } from "../../../utils/funcoesLogin";
 
 const initialFilters = {
   fileImportId: null,
@@ -163,6 +164,7 @@ const Bazin = () => {
   const [itemInicial, setItemInicial] = useState(0);
   const [itemFinal, setItemFinal] = useState(10);
   const [show, setShow] = useState(false);
+  const [messageError, setMessageError] = useState(";");
   const [campoPesquisa, setCampoPesquisa] = useState("");
 
   const limparFiltros = () => {
@@ -174,15 +176,33 @@ const Bazin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // if (!validaSeTokenEstaExpirado()) {
+    //   setMessageError(
+    //     "Sua sessão está expirada, é necessário que realize novamente o Login"
+    //   );
+    //   setShow(true);
+    //   return;
+    // }
+
     if (filters.fileImportId === null) {
+      setMessageError(
+        "Para realizar a busca é necessário selecionar pelo menos o filtro de arquivo importado"
+      );
       setShow(true);
       return;
     }
 
     const responseFormula = await getTickersBazin(filters);
 
-    setTickres(responseFormula);
-    setTickersFiltrados(tickers);
+    if (responseFormula.statusCode === 200) {
+      setTickres(responseFormula.dados);
+      setTickersFiltrados(tickers);
+    } else {
+      setTickres([]);
+      setTickersFiltrados([]);
+      setMessageError(responseFormula.mensagem);
+      setShow(true);
+    }
   };
 
   useEffect(() => {
@@ -252,10 +272,7 @@ const Bazin = () => {
             <Toast.Header>
               <strong className="me-auto">Mensagem</strong>
             </Toast.Header>
-            <Toast.Body>
-              Para realizar a busca é necessário selecionar pelo menos o filtro
-              de arquivo importado
-            </Toast.Body>
+            <Toast.Body>{messageError}</Toast.Body>
           </Toast>
         </ToastContainer>
       </Form>

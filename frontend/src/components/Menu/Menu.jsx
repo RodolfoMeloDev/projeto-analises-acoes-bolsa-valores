@@ -6,20 +6,17 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 
 import imgLogo from "../../../src/logo.svg";
 
-import { usuarioToken } from "../../utils/funcoesLogin";
-
 import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import Login from "../login/Login";
 
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
-const Menu = () => {
+const Menu = ({ user, setUserLogado }) => {
   const navigate = useNavigate();
   const getActiveRoute = useLocation().pathname ? "Active" : "";
   const [showLogin, setShowLogin] = useState(false);
-
-  const [user, setUser] = useState(usuarioToken);
 
   const deslogar = (e) => {
     e.preventDefault();
@@ -28,7 +25,7 @@ const Menu = () => {
     localStorage.setItem("token", null);
     localStorage.setItem("nickName", null);
     localStorage.setItem("login", null);
-    setUser("");
+    setUserLogado("");
     navigate("/");
   };
 
@@ -41,8 +38,12 @@ const Menu = () => {
   };
 
   const setUserLogin = (value) => {
-    setUser(value);
+    setUserLogado(value);
   };
+
+  useEffect(() => {
+    console.log("teste 2");
+  }, []);
 
   return (
     <>

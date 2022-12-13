@@ -33,6 +33,7 @@ export async function getTickersGordon(filters) {
 export async function getTickersGraham(filters) {
   const response = await apiFormulas.post("ValuetionByGraham", filters, {
     headers: {
+      accept: "*",
       Authorization: "Bearer " + localStorage.getItem("token"),
       "Content-Type": "application/json",
     },
@@ -46,18 +47,40 @@ export async function getTickersGraham(filters) {
 }
 
 export async function getTickersBazin(filters) {
-  const response = await apiFormulas.post("ValuetionByBazin", filters, {
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("token"),
-      "Content-Type": "application/json",
-    },
-  });
+  let retornoDados = null;
 
-  if (response.status === 200) {
-    return response.data;
-  }
+  await apiFormulas
+    .post("ValuetionByBazin", filters, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+        "Content-Type": "application/json",
+      },
+    })
+    .then((response) => {
+      console.log(response);
+      console.log(response.request);
 
-  return [];
+      if (response.status === 200) {
+        retornoDados = {
+          statusCode: response.status,
+          mensagem: "Retorno de dados com sucesso!",
+          dados: response.data,
+        };
+      } else {
+        retornoDados = {
+          statusCode: response.status,
+          mensagem: response.data.message,
+          dados: null,
+        };
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+
+      console.log(error.request);
+    });
+
+  return retornoDados;
 }
 
 export async function getTickersPrecoLucro(filters) {

@@ -1,25 +1,9 @@
 import apiLogin from "../api/login";
 
 export function usuarioToken() {
-  const today = new Date(Date.now());
-  let dataValidade = localStorage.getItem("data-validade");
+  if (!validaSeTokenEstaExpirado()) return "";
 
-  // caso não tenha acessado ainda
-  if (dataValidade === "null" || dataValidade === null) return "";
-
-  dataValidade = new Date(
-    dataValidade.substring(0, 4),
-    dataValidade.substring(5, 7) - 1,
-    dataValidade.substring(8, 10),
-    dataValidade.substring(11, 13),
-    dataValidade.substring(14, 16),
-    dataValidade.substring(17, 19)
-  );
-
-  if (today > dataValidade) return "";
-  else {
-    return localStorage.getItem("nickName");
-  }
+  return localStorage.getItem("nickName");
 }
 
 export async function getLogin(userLogin, userPassword) {
@@ -57,4 +41,31 @@ export async function getLogin(userLogin, userPassword) {
   } else {
     return { logado: true, user: user };
   }
+}
+
+export function validaSeTokenEstaExpirado(setUserLogado) {
+  const today = new Date(Date.now());
+  let dataValidade = localStorage.getItem("data-validade");
+
+  if (dataValidade === "null" || dataValidade === null) return false;
+
+  dataValidade = new Date(
+    dataValidade.substring(0, 4),
+    dataValidade.substring(5, 7) - 1,
+    dataValidade.substring(8, 10),
+    dataValidade.substring(11, 13),
+    dataValidade.substring(14, 16),
+    dataValidade.substring(17, 19)
+  );
+
+  if (today > dataValidade) {
+    localStorage.setItem("data-validade", null);
+    localStorage.setItem("token", null);
+    localStorage.setItem("nickName", null);
+    localStorage.setItem("login", null);
+    setUserLogado("");
+    return false;
+  }
+
+  return true;
 }

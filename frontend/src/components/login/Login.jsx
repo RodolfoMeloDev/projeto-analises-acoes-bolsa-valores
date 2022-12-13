@@ -124,11 +124,7 @@ const Login = ({ open, openCloseModalLogin, userLogin }) => {
               >
                 Esqueceu sua Senha
               </Button>
-              <Button
-                className="btn btn-success"
-                // onClick={() => getLogin(true)}
-                onClick={handleClickLogin}
-              >
+              <Button className="btn btn-success" onClick={handleClickLogin}>
                 Entrar
               </Button>
             </div>
