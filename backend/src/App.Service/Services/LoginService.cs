@@ -1,18 +1,13 @@
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Security.Principal;
-using System.Threading.Tasks;
 using App.Domain.Dtos.Login;
 using App.Domain.Entities;
 using App.Domain.Interfaces.Services.Login;
 using App.Domain.Repository;
 using App.Domain.Security;
 using App.Service.Services.Exceptions;
-using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
@@ -23,14 +18,12 @@ namespace App.Service.Services
         private IUserRepository _repository;
         private SigningConfigurations _signingConfigurations;
         private IConfiguration _configuration;
-        private readonly IMapper _mapper;
 
-        public LoginService(IUserRepository repository, SigningConfigurations signingConfigurations, IConfiguration configuration, IMapper mapper)
+        public LoginService(IUserRepository repository, SigningConfigurations signingConfigurations, IConfiguration configuration)
         {
             _repository = repository;
             _signingConfigurations = signingConfigurations;
             _configuration = configuration;
-            _mapper = mapper;
         }
 
         public async Task<object> FindByLogin(LoginDto user)
@@ -90,7 +83,7 @@ namespace App.Service.Services
             };
         }
 
-        public async Task<LoginDtoRefreshTokenUpdateResult> RefreshToken(LoginDtoRefreshTokenUpdate refreshToken)
+        public async Task<object> RefreshToken(LoginDtoRefreshTokenUpdate refreshToken)
         {
             var user = await _repository.GetByLogin(refreshToken.Login);
 
@@ -119,7 +112,13 @@ namespace App.Service.Services
 
             var result = await _repository.UpdateRefreshToken(user.Id, newRefreshToken, refreshTokenexpirationDate);
 
-            return _mapper.Map<LoginDtoRefreshTokenUpdateResult>(result);
+            return new
+            {
+                login = user.Login,
+                expiration = expirationDate.ToString("yyyy-MM-dd HH:mm:ss"),
+                accessToken = newToken,
+                refreshToken = newRefreshToken,
+            };
         }
 
         private string CreateToken(ClaimsIdentity identity, DateTime createDate, DateTime expirationDate, JwtSecurityTokenHandler handler)
@@ -154,7 +153,6 @@ namespace App.Service.Services
                 created = createDate.ToString("yyyy-MM-dd HH:mm:ss"),
                 expiration = expirationDate.ToString("yyyy-MM-dd HH:mm:ss"),
                 accessToken = token,
-                expirationRefreshToken = refreshTokenexpirationDate.ToString("yyyy-MM-dd HH:mm:ss"),
                 refreshToken = refreshToken,
                 Login = user.Login,
                 Name = user.Name,
