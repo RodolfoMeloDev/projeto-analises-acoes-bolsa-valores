@@ -9,6 +9,5 @@ namespace App.Domain.Dtos.Login
     {
         public string Login { get; set; }
         public string RefreshToken { get; set; }
-        public DateTime RefreshTokenExpiration { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 using App.Domain.Dtos.BaseTicker;
 using App.Domain.Dtos.FileImport;
 using App.Domain.Dtos.HistoryTicker;
+using App.Domain.Dtos.Login;
 using App.Domain.Dtos.Sector;
 using App.Domain.Dtos.Segment;
 using App.Domain.Dtos.SubSector;
@@ -62,6 +63,10 @@ namespace App.CrossCutting.Mappings
             #region Base Ticker
             CreateMap<BaseTickerDto, BaseTickerEntity>().ReverseMap();
             CreateMap<BaseTickerDtoComplete, BaseTickerEntity>().ReverseMap();
+            #endregion
+
+            #region  Login
+            CreateMap<LoginDtoRefreshTokenUpdateResult, UserEntity>().ReverseMap();
             #endregion
         }
     }

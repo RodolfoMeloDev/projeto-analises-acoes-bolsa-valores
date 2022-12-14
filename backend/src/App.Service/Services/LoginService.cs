@@ -80,7 +80,7 @@ namespace App.Service.Services
 
                 await _repository.UpdateRefreshToken(baseUser.Id, refreshToken, refreshTokenexpirationDate);
 
-                return SuccessObject(createDate, expirationDate, token, baseUser, refreshToken, refreshTokenexpirationDate);
+                return SuccessObject(createDate, expirationDate, token, baseUser, refreshToken);
             }
 
             return new
@@ -146,7 +146,7 @@ namespace App.Service.Services
             return Convert.ToBase64String(randomNumber);
         }
 
-        private object SuccessObject(DateTime createDate, DateTime expirationDate, string token, UserEntity user, string refreshToken, DateTime refreshTokenexpirationDate)
+        private object SuccessObject(DateTime createDate, DateTime expirationDate, string token, UserEntity user, string refreshToken)
         {
             return new
             {
@@ -154,7 +154,6 @@ namespace App.Service.Services
                 created = createDate.ToString("yyyy-MM-dd HH:mm:ss"),
                 expiration = expirationDate.ToString("yyyy-MM-dd HH:mm:ss"),
                 accessToken = token,
-                expirationRefreshToken = refreshTokenexpirationDate.ToString("yyyy-MM-dd HH:mm:ss"),
                 refreshToken = refreshToken,
                 Login = user.Login,
                 Name = user.Name,
