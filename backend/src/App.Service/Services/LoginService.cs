@@ -91,7 +91,7 @@ namespace App.Service.Services
                 throw new IntegrityException("Login não encontrado");
 
             if (user.RefreshToken != refreshToken.RefreshToken || DateTime.UtcNow >= user.RefreshTokenExpiration)
-                throw new IntegrityException("Token inválido!");
+                throw new IntegrityException("RefreshToken inválido!");
 
             ClaimsIdentity identity = new ClaimsIdentity(new GenericIdentity(user.Login),
                     new[]

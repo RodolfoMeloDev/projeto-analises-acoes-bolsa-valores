@@ -115,11 +115,9 @@ const Importador = () => {
         form.reset();
         setShow(true);
       } else {
-        console.log(response);
         setError(response.data.message);
       }
     } catch (e) {
-      console.log(e);
       setError(
         e.response.data
           .substr(

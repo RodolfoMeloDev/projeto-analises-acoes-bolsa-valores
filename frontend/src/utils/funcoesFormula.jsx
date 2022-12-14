@@ -1,4 +1,5 @@
 import apiFormulas from "../api/formulas";
+import { refreshTokenExec } from "./funcoesLogin";
 
 export async function getTickersGreenblatt(filters) {
   const response = await apiFormulas.post("Greenblatt", filters, {
@@ -57,9 +58,6 @@ export async function getTickersBazin(filters) {
       },
     })
     .then((response) => {
-      console.log(response);
-      console.log(response.request);
-
       if (response.status === 200) {
         retornoDados = {
           statusCode: response.status,
@@ -74,10 +72,29 @@ export async function getTickersBazin(filters) {
         };
       }
     })
-    .catch(function (error) {
-      console.log(error);
+    .catch(async function (error) {
+      if (error.response.status === 401) {
+        const returnRefreshToken = await refreshTokenExec(
+          localStorage.getItem("login"),
+          localStorage.getItem("refreshToken")
+        );
 
-      console.log(error.request);
+        let responseRefreshToken = null;
+        if (returnRefreshToken.statusCode === 200) {
+          responseRefreshToken = await getTickersBazin(filters);
+          retornoDados = {
+            statusCode: responseRefreshToken.statusCode,
+            mensagem: "Retorno de dados com sucesso!",
+            dados: responseRefreshToken.dados,
+          };
+        } else {
+          retornoDados = {
+            statusCode: returnRefreshToken.statusCode,
+            mensagem: returnRefreshToken.message,
+            dados: null,
+          };
+        }
+      }
     });
 
   return retornoDados;

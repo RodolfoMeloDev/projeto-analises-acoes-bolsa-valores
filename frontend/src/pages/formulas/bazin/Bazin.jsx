@@ -54,7 +54,6 @@ import {
   tooltipTextoRoic,
   tooltipTextoVpa,
 } from "../../../constantes/constantes";
-import { validaSeTokenEstaExpirado } from "../../../utils/funcoesLogin";
 
 const initialFilters = {
   fileImportId: null,
@@ -175,14 +174,6 @@ const Bazin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // if (!validaSeTokenEstaExpirado()) {
-    //   setMessageError(
-    //     "Sua sessão está expirada, é necessário que realize novamente o Login"
-    //   );
-    //   setShow(true);
-    //   return;
-    // }
 
     if (filters.fileImportId === null) {
       setMessageError(

@@ -11,7 +11,6 @@ import { NavLink, useLocation } from "react-router-dom";
 import Login from "../login/Login";
 
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 
 const Menu = ({ user, setUserLogado }) => {
   const navigate = useNavigate();
@@ -23,6 +22,7 @@ const Menu = ({ user, setUserLogado }) => {
 
     localStorage.setItem("data-validade", null);
     localStorage.setItem("token", null);
+    localStorage.setItem("refreshToken", null);
     localStorage.setItem("nickName", null);
     localStorage.setItem("login", null);
     setUserLogado("");
@@ -40,10 +40,6 @@ const Menu = ({ user, setUserLogado }) => {
   const setUserLogin = (value) => {
     setUserLogado(value);
   };
-
-  useEffect(() => {
-    console.log("teste 2");
-  }, []);
 
   return (
     <>
