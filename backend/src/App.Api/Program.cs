@@ -1,3 +1,5 @@
+using System.Text;
+using System.Text.Json;
 using App.CrossCutting.DependencyInjection;
 using App.CrossCutting.Mappings;
 using App.Data.Context;
@@ -6,6 +8,8 @@ using App.Domain.Security;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,15 +37,55 @@ builder.Services.AddAuthentication(authOptions =>
 {
     authOptions.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     authOptions.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    authOptions.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(bearerOptions =>
 {
-    var paramsValidation = bearerOptions.TokenValidationParameters;
-    paramsValidation.IssuerSigningKey = signingConfigurations.Key;
-    paramsValidation.ValidAudience = Environment.GetEnvironmentVariable("Audience");
-    paramsValidation.ValidIssuer = Environment.GetEnvironmentVariable("Issuer");
-    paramsValidation.ValidateIssuerSigningKey = true;
-    paramsValidation.ValidateLifetime = true;
-    paramsValidation.ClockSkew = TimeSpan.Zero;
+    bearerOptions.SaveToken = true;
+    bearerOptions.RequireHttpsMetadata = false;
+
+    bearerOptions.TokenValidationParameters = new TokenValidationParameters()
+    {
+        RequireExpirationTime = false,
+        LifetimeValidator = (DateTime? notBefore, DateTime? expires, SecurityToken securityToken, TokenValidationParameters validationParameters) =>
+        {
+            return notBefore <= DateTime.UtcNow &&
+            expires >= DateTime.UtcNow;
+        },
+        ValidateLifetime = true,
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateIssuerSigningKey = true,
+        ClockSkew = TimeSpan.Zero,
+
+        ValidAudience = Environment.GetEnvironmentVariable("Audience"),
+        ValidIssuer = Environment.GetEnvironmentVariable("Issuer"),
+        IssuerSigningKey = signingConfigurations.Key
+    };
+
+    bearerOptions.Events = new JwtBearerEvents()
+    {
+        OnAuthenticationFailed = c =>
+        {
+            c.NoResult();
+            c.Response.StatusCode = 401;
+            c.Response.ContentType = "application/json";
+            c.Response.WriteAsync(JsonSerializer.Serialize(new { StatusCode = 401, Message = "Token inválido", MessageException = c.Exception.Message }));
+            return Task.CompletedTask;
+        },
+        OnForbidden = c =>
+        {
+            c.NoResult();
+            c.Response.StatusCode = 403;
+            c.Response.ContentType = "application/json";
+            c.Response.WriteAsync(JsonSerializer.Serialize(new { StatusCode = 403, Message = "Forbidden" }));
+            return Task.CompletedTask;
+        },
+        OnChallenge = c =>
+        {
+            c.HandleResponse();
+            return Task.CompletedTask;
+        }
+    };
 });
 
 builder.Services.AddAuthorization(auth =>
@@ -85,6 +129,8 @@ builder.Services.AddSwaggerGen(
 
 builder.Services.AddCors();
 
+builder.Services.AddMvc(opt => opt.EnableEndpointRouting = false);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -102,7 +148,7 @@ app.UseCors(opt => opt.AllowAnyHeader()
                       .AllowAnyMethod()
                       .AllowAnyOrigin());
 
-app.MapControllers();
+app.UseMvc();
 
 if (Environment.GetEnvironmentVariable("INSERT_SEED") == "true")
 {

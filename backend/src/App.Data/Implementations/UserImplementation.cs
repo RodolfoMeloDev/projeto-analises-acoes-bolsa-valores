@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using App.Data.Context;
 using App.Data.Repository;
@@ -19,6 +20,32 @@ namespace App.Data.Implementations
         public async Task<UserEntity> GetByLogin(string login)
         {
             return await _dataSet.FirstOrDefaultAsync(obj => obj.Login.Equals(login.ToUpper()));
+        }
+
+        public async Task<UserEntity> UpdateRefreshToken(int id, string refreshToken, DateTime expirationRefreshToken)
+        {
+            try
+            {
+                if (expirationRefreshToken.Kind != DateTimeKind.Utc)
+                    expirationRefreshToken = TimeZoneInfo.ConvertTimeToUtc(expirationRefreshToken);
+
+                var result = await SelectAsync(id);
+
+                result.DateUpdated = DateTime.UtcNow;
+                result.RefreshToken = refreshToken;
+
+                result.RefreshTokenExpiration = expirationRefreshToken;
+
+                _context.Entry(result).CurrentValues.SetValues(result);
+
+                await _context.SaveChangesAsync();
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

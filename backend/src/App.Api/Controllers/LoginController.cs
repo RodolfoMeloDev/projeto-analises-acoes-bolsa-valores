@@ -45,5 +45,31 @@ namespace App.Api.Controllers
                 return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
             }
         }
+
+        [AllowAnonymous]
+        [HttpPut]
+        [Route("RefreshToken")]
+        public async Task<object> RefreshToken([FromBody] LoginDtoRefreshTokenUpdate userRefreshToken)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                if (userRefreshToken == null)
+                    return BadRequest();
+
+                var result = await _service.RefreshToken(userRefreshToken);
+
+                if (result != null)
+                    return Ok(result);
+
+                return NotFound();
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
     }
 }

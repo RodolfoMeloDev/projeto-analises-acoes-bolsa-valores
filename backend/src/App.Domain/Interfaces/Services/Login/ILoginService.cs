@@ -6,5 +6,6 @@ namespace App.Domain.Interfaces.Services.Login
     public interface ILoginService
     {
         Task<object> FindByLogin(LoginDto user);
+        Task<LoginDtoRefreshTokenUpdateResult> RefreshToken(LoginDtoRefreshTokenUpdate refreshToken);
     }
 }

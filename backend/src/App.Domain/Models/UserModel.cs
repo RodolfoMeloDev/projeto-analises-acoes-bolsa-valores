@@ -1,3 +1,5 @@
+using System;
+
 namespace App.Domain.Models
 {
     public class UserModel : BaseModel
@@ -30,5 +32,18 @@ namespace App.Domain.Models
             set { _nickName = (string.IsNullOrEmpty(value) ? null : value.ToUpper()); }
         }
 
+        private string _refreshToken;
+        public string RefreshToken
+        {
+            get { return _refreshToken; }
+            set { _refreshToken = (string.IsNullOrEmpty(value) ? null : value); }
+        }
+
+        private DateTime? _refreshTokenExpiration;
+        public DateTime? RefreshTokenExpiration
+        {
+            get { return _refreshTokenExpiration; }
+            set { _refreshTokenExpiration = value == null ? DateTime.UtcNow : value; }
+        }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace App.Domain.Entities
@@ -18,5 +19,10 @@ namespace App.Domain.Entities
 
         [MaxLength(30)]
         public string NickName { get; set; }
+
+        [MaxLength(250)]
+        public string RefreshToken { get; set; }
+
+        public DateTime? RefreshTokenExpiration { get; set; }
     }
 }
