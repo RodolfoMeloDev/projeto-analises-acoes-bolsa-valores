@@ -64,10 +64,6 @@ namespace App.CrossCutting.Mappings
             CreateMap<BaseTickerDto, BaseTickerEntity>().ReverseMap();
             CreateMap<BaseTickerDtoComplete, BaseTickerEntity>().ReverseMap();
             #endregion
-
-            #region  Login
-            CreateMap<LoginDtoRefreshTokenUpdateResult, UserEntity>().ReverseMap();
-            #endregion
         }
     }
 }
