@@ -3,6 +3,7 @@ import { Button, Card, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 import apiFilesImport from "../../api/fileImport";
+import { refreshTokenExec } from '../../utils/funcoesLogin';
 import "../../utils/funcoesUsuario";
 
 import { retornarDadosUsuarioLogado } from "../../utils/funcoesUsuario";
@@ -33,6 +34,17 @@ const linkPage = [
 
 const Dashboard = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {    
+    async function atualizaRefreshToken(){
+      if (localStorage.getItem("login") === "null" || localStorage.getItem("login") === null)
+        return;
+
+      await refreshTokenExec(localStorage.getItem("login"), localStorage.getItem("refreshToken"));
+    }
+
+    atualizaRefreshToken();
+  },[]);
 
   const [filesImported, setFilesImported] = useState([]);
   const [filesGrid, setFilesGrid] = useState([]);

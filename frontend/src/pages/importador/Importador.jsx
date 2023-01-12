@@ -16,6 +16,7 @@ import {
   ToastContainer,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { refreshTokenExec } from '../../utils/funcoesLogin';
 
 const initialFileImport = {
   UserId: 0,
@@ -35,6 +36,17 @@ const Importador = () => {
   const [fileImported, setFileImported] = useState(null);
   const [importando, setImportando] = useState(false);
   const [show, setShow] = useState(false);
+
+  useEffect(() => {    
+    async function atualizaRefreshToken(){
+      if (localStorage.getItem("login") === "null" || localStorage.getItem("login") === null)
+        return;
+
+      await refreshTokenExec(localStorage.getItem("login"), localStorage.getItem("refreshToken"));          
+    }
+
+    atualizaRefreshToken();
+  },[]);
 
   const handleFileImport = (e) => {
     const { name, value } = e.target;
@@ -115,11 +127,9 @@ const Importador = () => {
         form.reset();
         setShow(true);
       } else {
-        console.log(response);
         setError(response.data.message);
       }
     } catch (e) {
-      console.log(e);
       setError(
         e.response.data
           .substr(

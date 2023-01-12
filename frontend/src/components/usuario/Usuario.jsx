@@ -66,8 +66,6 @@ const Usuario = ({ open, closeModal, backModalLogin, userLogin }) => {
         password: newUser.password,
       });
 
-      console.log(response);
-
       if (response.status === 201) {
         const dadosLogin = await getLogin(newUser.login, newUser.password);
         userLogin(dadosLogin.user);
@@ -75,11 +73,9 @@ const Usuario = ({ open, closeModal, backModalLogin, userLogin }) => {
         handleCloseModal();
         navigate("/dashboard");
       } else {
-        console.log(response);
         setError(response.data.message);
       }
     } catch (e) {
-      console.log(e);
       setError(
         e.response.data
           .substr(

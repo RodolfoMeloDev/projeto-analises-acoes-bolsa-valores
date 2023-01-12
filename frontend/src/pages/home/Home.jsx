@@ -1,6 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { refreshTokenExec } from '../../utils/funcoesLogin';
 
 const Home = () => {
+  useEffect(() => {    
+    async function atualizaRefreshToken(){
+      console.log('antigo:' +  localStorage.getItem("refreshToken"));
+      
+      if (localStorage.getItem("login") === "null" || localStorage.getItem("login") === null)
+        return;
+
+      await refreshTokenExec(localStorage.getItem("login"), localStorage.getItem("refreshToken"))
+      
+      console.log('novo:' +  localStorage.getItem("refreshToken"));
+    }
+
+    atualizaRefreshToken();
+  },[]);
+
   return (
     <>
       <br />

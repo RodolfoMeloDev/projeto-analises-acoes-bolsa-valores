@@ -7,6 +7,7 @@ import PaginacaoGrid from "../../components/paginacaoGrid/PaginacaoGrid";
 import SelectSegmentos from "../../components/segmentos/SelectSegmentos";
 import SelectSetores from "../../components/setores/SelectSetores";
 import SelectSubSetores from "../../components/subSetores/SelectSubSetores";
+import { refreshTokenExec } from '../../utils/funcoesLogin';
 
 const Acoes = () => {
   const [valueSetor, setValueSetor] = useState(0);
@@ -18,6 +19,17 @@ const Acoes = () => {
   const [campoPesquisa, setCampoPesquisa] = useState("");
   const [itemInicial, setItemInicial] = useState(0);
   const [itemFinal, setItemFinal] = useState(10);
+
+  useEffect(() => {    
+    async function atualizaRefreshToken(){
+      if (localStorage.getItem("login") === "null" || localStorage.getItem("login") === null)
+        return;
+
+      await refreshTokenExec(localStorage.getItem("login"), localStorage.getItem("refreshToken"));
+    }
+
+    atualizaRefreshToken();
+  },[]);
 
   //* ************************************** */
   //Metódos utilizados para filtros do grid

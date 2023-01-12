@@ -54,7 +54,7 @@ import {
   tooltipTextoRoic,
   tooltipTextoVpa,
 } from "../../../constantes/constantes";
-import { validaSeTokenEstaExpirado } from "../../../utils/funcoesLogin";
+import { refreshTokenExec } from '../../../utils/funcoesLogin';
 
 const initialFilters = {
   fileImportId: null,
@@ -156,7 +156,7 @@ const cabecalhoTabela = [
   },
 ];
 
-const Bazin = () => {
+const Bazin = ({ logout }) => {
   const [filters, setFilters] = useState(initialFilters);
   const [tickers, setTickres] = useState([]);
   const [tickersFiltrados, setTickersFiltrados] = useState([]);
@@ -167,6 +167,17 @@ const Bazin = () => {
   const [messageError, setMessageError] = useState(";");
   const [campoPesquisa, setCampoPesquisa] = useState("");
 
+  useEffect(() => {    
+    async function atualizaRefreshToken(){
+      if (localStorage.getItem("login") === "null" || localStorage.getItem("login") === null)
+        return;
+
+      await refreshTokenExec(localStorage.getItem("login"), localStorage.getItem("refreshToken"));
+    }
+
+    atualizaRefreshToken();
+  },[]);
+
   const limparFiltros = () => {
     setFilters(initialFilters);
     setTickres([]);
@@ -175,14 +186,6 @@ const Bazin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // if (!validaSeTokenEstaExpirado()) {
-    //   setMessageError(
-    //     "Sua sessão está expirada, é necessário que realize novamente o Login"
-    //   );
-    //   setShow(true);
-    //   return;
-    // }
 
     if (filters.fileImportId === null) {
       setMessageError(
@@ -196,12 +199,11 @@ const Bazin = () => {
 
     if (responseFormula.statusCode === 200) {
       setTickres(responseFormula.dados);
-      setTickersFiltrados(tickers);
+      setTickersFiltrados(tickersFiltrados);
     } else {
       setTickres([]);
       setTickersFiltrados([]);
-      setMessageError(responseFormula.mensagem);
-      setShow(true);
+      logout();
     }
   };
 

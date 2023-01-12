@@ -10,23 +10,14 @@ import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import Login from "../login/Login";
 
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-
-const Menu = ({ user, setUserLogado }) => {
-  const navigate = useNavigate();
+const Menu = ({ user, logout, setUserLogado }) => {
   const getActiveRoute = useLocation().pathname ? "Active" : "";
   const [showLogin, setShowLogin] = useState(false);
 
   const deslogar = (e) => {
     e.preventDefault();
 
-    localStorage.setItem("data-validade", null);
-    localStorage.setItem("token", null);
-    localStorage.setItem("nickName", null);
-    localStorage.setItem("login", null);
-    setUserLogado("");
-    navigate("/");
+    logout();
   };
 
   const handleOpenCloseModalLogin = () => {
@@ -40,10 +31,6 @@ const Menu = ({ user, setUserLogado }) => {
   const setUserLogin = (value) => {
     setUserLogado(value);
   };
-
-  useEffect(() => {
-    console.log("teste 2");
-  }, []);
 
   return (
     <>

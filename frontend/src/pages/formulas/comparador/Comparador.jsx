@@ -27,6 +27,7 @@ import {
 import "./comparador.css";
 
 import imgArrowUp from "../../../icons/arrow-up.svg";
+import { refreshTokenExec } from '../../../utils/funcoesLogin';
 
 const initialFilters = {
   fileImportId: null,
@@ -35,7 +36,7 @@ const initialFilters = {
   marketRisk: null,
 };
 
-const Comparador = () => {
+const Comparador = ({ logout }) => {
   const [filters, setFilters] = useState(initialFilters);
   const [show, setShow] = useState(false);
   const [dataTicker, setDataTicker] = useState(null);
@@ -43,6 +44,17 @@ const Comparador = () => {
   const [cardsInfoAdicionais, setCardsInfoAdicionais] = useState(null);
   const [showAccordion, setShowAccordion] = useState(0);
   const [imgCss, setImgCss] = useState("");
+
+  useEffect(() => {    
+    async function atualizaRefreshToken(){
+      if (localStorage.getItem("login") === "null" || localStorage.getItem("login") === null)
+        return;
+
+      await refreshTokenExec(localStorage.getItem("login"), localStorage.getItem("refreshToken"));
+    }
+
+    atualizaRefreshToken();
+  },[]);
 
   const limparFiltros = () => {
     setFilters(initialFilters);
@@ -311,9 +323,16 @@ const Comparador = () => {
       setShow(true);
       return;
     }
-    const response = await getTickersCompareFormulas(filters);
-    setDataTicker(response);
-    preencheCards(response);
+    const responseFormula = await getTickersCompareFormulas(filters);
+
+    if (responseFormula.statusCode === 200) {
+      setDataTicker(responseFormula.dados);
+      preencheCards(responseFormula.dados);
+    } else {
+      preencheCards([]);
+      preencheCards([]);
+      logout();
+    }
   };
 
   const montaCardsResultadoBusca = () => {
