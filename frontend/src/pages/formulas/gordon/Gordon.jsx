@@ -56,6 +56,7 @@ import {
   tooltipTextoRoic,
   tooltipTextoVpa,
 } from "../../../constantes/constantes";
+import { refreshTokenExec } from '../../../utils/funcoesLogin';
 
 const initialFilters = {
   fileImportId: null,
@@ -157,7 +158,7 @@ const cabecalhoTabela = [
   },
 ];
 
-const Gordon = () => {
+const Gordon = ({ logout }) => {
   const [filters, setFilters] = useState(initialFilters);
   const [tickers, setTickres] = useState([]);
   const [tickersFiltrados, setTickersFiltrados] = useState([]);
@@ -166,6 +167,17 @@ const Gordon = () => {
   const [itemFinal, setItemFinal] = useState(10);
   const [show, setShow] = useState(false);
   const [campoPesquisa, setCampoPesquisa] = useState("");
+
+  useEffect(() => {    
+    async function atualizaRefreshToken(){
+      if (localStorage.getItem("login") === "null" || localStorage.getItem("login") === null)
+        return;
+
+      await refreshTokenExec(localStorage.getItem("login"), localStorage.getItem("refreshToken"));
+    }
+
+    atualizaRefreshToken();
+  },[]);
 
   const limparFiltros = () => {
     setFilters(initialFilters);
@@ -183,8 +195,14 @@ const Gordon = () => {
 
     const responseFormula = await getTickersGordon(filters);
 
-    setTickres(responseFormula);
-    setTickersFiltrados(tickers);
+    if (responseFormula.statusCode === 200) {
+      setTickres(responseFormula.dados);
+      setTickersFiltrados(tickersFiltrados);
+    } else {
+      setTickres([]);
+      setTickersFiltrados([]);
+      logout();
+    }
   };
 
   useEffect(() => {

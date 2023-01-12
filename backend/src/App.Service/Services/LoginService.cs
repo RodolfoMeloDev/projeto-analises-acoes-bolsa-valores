@@ -39,7 +39,7 @@ namespace App.Service.Services
                     return new
                     {
                         authenticated = false,
-                        message = "Falha ao autenticar: Login n„o encontrado!"
+                        message = "Falha ao autenticar: Login nÔøΩo encontrado!"
                     };
                 }
                 else
@@ -49,7 +49,7 @@ namespace App.Service.Services
                         return new
                         {
                             authenticated = false,
-                            message = "Falha ao autenticar: Senha inv·lida!"
+                            message = "Falha ao autenticar: Senha invÔøΩlida!"
                         };
                     }
                 }
@@ -73,7 +73,7 @@ namespace App.Service.Services
 
                 await _repository.UpdateRefreshToken(baseUser.Id, refreshToken, refreshTokenexpirationDate);
 
-                return SuccessObject(createDate, expirationDate, token, baseUser, refreshToken);
+                return SuccessObject(createDate, refreshTokenexpirationDate, token, baseUser, refreshToken);
             }
 
             return new
@@ -88,10 +88,13 @@ namespace App.Service.Services
             var user = await _repository.GetByLogin(refreshToken.Login);
 
             if (user == null)
-                throw new IntegrityException("Login n„o encontrado");
+                throw new IntegrityException("Login n√£o encontrado");
 
-            if (user.RefreshToken != refreshToken.RefreshToken || DateTime.UtcNow >= user.RefreshTokenExpiration)
-                throw new IntegrityException("RefreshToken inv·lido!");
+            if (user.RefreshToken != refreshToken.RefreshToken) 
+                throw new IntegrityException("RefreshToken inv√°lido!");
+
+            if (DateTime.UtcNow >= user.RefreshTokenExpiration)
+                throw new IntegrityException("RefreshToken expirado!");
 
             ClaimsIdentity identity = new ClaimsIdentity(new GenericIdentity(user.Login),
                     new[]
@@ -115,7 +118,7 @@ namespace App.Service.Services
             return new
             {
                 login = user.Login,
-                expiration = expirationDate.ToString("yyyy-MM-dd HH:mm:ss"),
+                expiration = refreshTokenexpirationDate.ToString("yyyy-MM-dd HH:mm:ss"),
                 accessToken = newToken,
                 refreshToken = newRefreshToken,
             };
@@ -157,7 +160,7 @@ namespace App.Service.Services
                 Login = user.Login,
                 Name = user.Name,
                 NickName = user.NickName,
-                message = "Usu·rio Logado com sucesso"
+                message = "Usu√°rio Logado com sucesso"
             };
         }
     }

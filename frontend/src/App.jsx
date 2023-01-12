@@ -14,17 +14,32 @@ import Bazin from "./pages/formulas/bazin/Bazin";
 import Graham from "./pages/formulas/graham/Graham";
 import Gordon from "./pages/formulas/gordon/Gordon";
 
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import PrivateRoute from "./components/privateRoute/PrivateRoute";
 import Menu from "./components/menu/Menu";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { usuarioToken } from './utils/funcoesLogin';
 
 function App() {
   const [userLogado, setUserLogado] = useState("");
 
+  const logout = () => {
+    localStorage.setItem("data-validade", null);
+    localStorage.setItem("token", null);
+    localStorage.setItem("refreshToken", null);
+    localStorage.setItem("nickName", null);
+    localStorage.setItem("login", null);
+    setUserLogado("");
+    Navigate("/");
+  };
+
+  useEffect(() => {    
+    setUserLogado(usuarioToken());
+  },[]);
+  
   return (
     <>
-      <Menu user={userLogado} setUserLogado={setUserLogado} />
+      <Menu user={userLogado} logout={logout} setUserLogado={setUserLogado} />
       <div className="container">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -34,21 +49,21 @@ function App() {
             path="/dashboard"
             element={<PrivateRoute setUserLogado={setUserLogado} />}
           >
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard" element={<Dashboard logout={logout} />} />
           </Route>
 
           <Route
             path="/importador"
             element={<PrivateRoute setUserLogado={setUserLogado} />}
           >
-            <Route path="/importador" element={<Importador />} />
+            <Route path="/importador" element={<Importador logout={logout} />} />
           </Route>
 
           <Route
             path="/formula/comparador"
             element={<PrivateRoute setUserLogado={setUserLogado} />}
           >
-            <Route path="/formula/comparador" element={<Comparador />} />
+            <Route path="/formula/comparador" element={<Comparador logout={logout} />} />
           </Route>
 
           <Route
@@ -57,7 +72,7 @@ function App() {
           >
             <Route
               path="/formula/comparadorGeral"
-              element={<ComparadorGeral />}
+              element={<ComparadorGeral logout={logout} />}
             />
           </Route>
 
@@ -65,42 +80,42 @@ function App() {
             path="/formula/greenblatt"
             element={<PrivateRoute setUserLogado={setUserLogado} />}
           >
-            <Route path="/formula/greenblatt" element={<Greenblatt />} />
+            <Route path="/formula/greenblatt" element={<Greenblatt logout={logout} />} />
           </Route>
 
           <Route
             path="/formula/pl"
             element={<PrivateRoute setUserLogado={setUserLogado} />}
           >
-            <Route path="/formula/pl" element={<Precolucro />} />
+            <Route path="/formula/pl" element={<Precolucro logout={logout} />} />
           </Route>
 
           <Route
             path="/formula/evEbit"
             element={<PrivateRoute setUserLogado={setUserLogado} />}
           >
-            <Route path="/formula/evEbit" element={<Evebit />} />
+            <Route path="/formula/evEbit" element={<Evebit logout={logout} />} />
           </Route>
 
           <Route
             path="/formula/bazin"
             element={<PrivateRoute setUserLogado={setUserLogado} />}
           >
-            <Route path="/formula/bazin" element={<Bazin />} />
+            <Route path="/formula/bazin" element={<Bazin logout={logout} />} />
           </Route>
 
           <Route
             path="/formula/graham"
             element={<PrivateRoute setUserLogado={setUserLogado} />}
           >
-            <Route path="/formula/graham" element={<Graham />} />
+            <Route path="/formula/graham" element={<Graham logout={logout} />} />
           </Route>
 
           <Route
             path="/formula/gordon"
             element={<PrivateRoute setUserLogado={setUserLogado} />}
           >
-            <Route path="/formula/gordon" element={<Gordon />} />
+            <Route path="/formula/gordon" element={<Gordon logout={logout} />} />
           </Route>
         </Routes>
       </div>

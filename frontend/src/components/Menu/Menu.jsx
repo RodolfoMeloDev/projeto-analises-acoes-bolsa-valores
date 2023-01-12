@@ -10,23 +10,14 @@ import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import Login from "../login/Login";
 
-import { useNavigate } from "react-router-dom";
-
-const Menu = ({ user, setUserLogado }) => {
-  const navigate = useNavigate();
+const Menu = ({ user, logout, setUserLogado }) => {
   const getActiveRoute = useLocation().pathname ? "Active" : "";
   const [showLogin, setShowLogin] = useState(false);
 
   const deslogar = (e) => {
     e.preventDefault();
 
-    localStorage.setItem("data-validade", null);
-    localStorage.setItem("token", null);
-    localStorage.setItem("refreshToken", null);
-    localStorage.setItem("nickName", null);
-    localStorage.setItem("login", null);
-    setUserLogado("");
-    navigate("/");
+    logout();
   };
 
   const handleOpenCloseModalLogin = () => {

@@ -21,8 +21,8 @@
         "INSERT_SEED": "true", 
         "Audience": "https://localhost:7206", 
         "Issuer": "http://localhost:3000",
-        "TokenSeconds": "20",
-        "RefreshTokenSeconds": "60"
+        "TokenSeconds": "43200",
+        "RefreshTokenSeconds": "86400"
       }
     },
     "IIS Express": {

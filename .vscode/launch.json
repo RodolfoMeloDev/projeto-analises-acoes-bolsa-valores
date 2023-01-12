@@ -1,5 +1,25 @@
 {
     "configurations": [
+    {
+        "name": ".NET Core Launch (web)",
+        "type": "coreclr",
+        "request": "launch",
+        "preLaunchTask": "build",
+        "program": "${workspaceFolder}/backend/src/App.Api/bin/Debug/net6.0/App.Api.dll",
+        "args": [],
+        "cwd": "${workspaceFolder}/backend/src/App.Api",
+        "stopAtEntry": false,
+        "serverReadyAction": {
+            "action": "openExternally",
+            "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+        },
+        "env": {
+            "ASPNETCORE_ENVIRONMENT": "Development"
+        },
+        "sourceFileMap": {
+            "/Views": "${workspaceFolder}/Views"
+        }
+    },
         {
             "type": "msedge",
             "name": "http://localhost:3000/",
