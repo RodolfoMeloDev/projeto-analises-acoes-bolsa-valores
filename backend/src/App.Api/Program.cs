@@ -1,4 +1,3 @@
-using System.Text;
 using System.Text.Json;
 using App.CrossCutting.DependencyInjection;
 using App.CrossCutting.Mappings;
@@ -8,11 +7,22 @@ using App.Domain.Security;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using NLog;
+using NLog.Extensions.Logging;
+using NLog.Web;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var configLog = new ConfigurationBuilder()
+   .SetBasePath(Directory.GetCurrentDirectory())
+   .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+   .Build();
+
+LogManager.Configuration = new NLogLoggingConfiguration(configLog.GetSection("NLog"));
+
+//LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
 
 // Add services to the container.
 
@@ -130,6 +140,9 @@ builder.Services.AddSwaggerGen(
 builder.Services.AddCors();
 
 builder.Services.AddMvc(opt => opt.EnableEndpointRouting = false);
+
+//builder.Logging.ClearProviders();
+builder.Host.UseNLog();
 
 var app = builder.Build();
 
